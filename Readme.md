@@ -6,6 +6,8 @@
 
 3.[Error logging with GLCall](https://github.com/ShantanuJamble/OpenglTest/commit/210222b8c2be6eaa9d60cad6827b9e30cc12cb8d) 
 
+4.[Using Uniforms](https://github.com/ShantanuJamble/OpenglTest/commit/3ac3cbb1e6e2100c7efae8ee2839c4f52de2157b)
+
 
 
 
