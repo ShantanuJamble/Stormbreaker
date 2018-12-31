@@ -8,8 +8,12 @@
 
 4.[Using Uniforms](https://github.com/ShantanuJamble/OpenglTest/commit/3ac3cbb1e6e2100c7efae8ee2839c4f52de2157b)
 
-
+5.[Vertex Arrays and OpenGL profiles](https://github.com/ShantanuJamble/OpenglTest/commit/2427c6540b6c43f4cdb669202aaa18249e9c065d)
 
 
 # Reading Links:
 1.[Buffer Objects](https://www.khronos.org/opengl/wiki/Buffer_Object)
+
+2.[NVIDIA presentation about VBO slide 57](https://developer.nvidia.com/sites/default/files/akamai/gamedev/docs/Porting%20Source%20to%20Linux.pdf) 
+
+3.[Vertex Specification](https://www.khronos.org/opengl/wiki/Vertex_Specification)
