@@ -96,6 +96,8 @@ static unsigned int CreateShader(const std::string & vertexShader, const std::st
 
 	return program;
 }
+
+
 int main(void)
 {
 	GLFWwindow* window;
@@ -104,6 +106,9 @@ int main(void)
 	if (!glfwInit())
 		return -1;
 
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	/* Create a windowed mode window and its OpenGL context */
 	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
@@ -133,11 +138,15 @@ int main(void)
 		3,2,0
 	};
 
-	//Code with Vertices
+	unsigned int vbo;
+	GLCall(glGenVertexArrays(1, &vbo));
+	GLCall(glBindVertexArray(vbo));
+
+	//Code with Vertex Buffer
 	unsigned int buffer;
 	GLCall(glGenBuffers(1, &buffer));
 	GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
-	GLCall(glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW));
+	GLCall(glBufferData(GL_ARRAY_BUFFER, 4 * 2 * sizeof(float), positions, GL_STATIC_DRAW));
 
 	GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
 	GLCall(glEnableVertexAttribArray(0));
@@ -153,6 +162,12 @@ int main(void)
 	ShaderProgramSource source = ParseShader("res/shaders/basic.shader");
 	unsigned int shader = CreateShader(source.VertexSource,source.FragmentSource);
 	GLCall(glUseProgram(shader));
+	
+
+	GLCall(glBindVertexArray(0));
+	GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+	GLCall(glUseProgram(0));
 
 	//Using the uniform
 	int location = glGetUniformLocation(shader, "u_Color");
@@ -164,7 +179,15 @@ int main(void)
 	{
 		/* Render here */
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
+
+		
+		GLCall(glUseProgram(shader));
 		GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
+
+		GLCall(glBindVertexArray(vbo));
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+		
+
 		//glDrawArrays(GL_TRIANGLES, 0, 6);
 		GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
