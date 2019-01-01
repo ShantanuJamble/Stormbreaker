@@ -6,8 +6,10 @@
 #include <GLFW/glfw3.h>
 
 #include "Renderer.h"
+#include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+
 
 struct ShaderProgramSource
 {
@@ -121,17 +123,11 @@ int main(void)
 		3,2,0
 	};
 
-	unsigned int vbo;
-	GLCall(glGenVertexArrays(1, &vbo));
-	GLCall(glBindVertexArray(vbo));
-
-	//Code with Vertex Buffer
-	unsigned int buffer;
+	VertexArray *va = new VertexArray();
 	VertexBuffer * vb = new VertexBuffer(positions, 4 * 2 * sizeof(float));
-	
-	GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
-	GLCall(glEnableVertexAttribArray(0));
-
+	VertexBufferLayout *layout = new VertexBufferLayout();
+	layout->Push<float>(2);
+	va->AddBuffer(*vb,*layout);
 
 	//Code with index buffer
 	IndexBuffer * ib = new IndexBuffer(indices, 6);
@@ -161,7 +157,7 @@ int main(void)
 		GLCall(glUseProgram(shader));
 		GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
 
-		GLCall(glBindVertexArray(vbo));
+		va->Bind();
 		ib->Bind();
 		
 
@@ -182,7 +178,7 @@ int main(void)
 	}
 	GLCall(glDeleteProgram(shader));
 	delete(ib);
-	delete(vb);
+	delete(va);
 	glfwTerminate();
 	return 0;
 }
