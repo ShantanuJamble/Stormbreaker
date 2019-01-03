@@ -12,6 +12,8 @@
 
 6.[Vertex and Index buffer abstractions](https://github.com/ShantanuJamble/OpenglTest/commit/2427c6540b6c43f4cdb669202aaa18249e9c065d)
 
+7.[VertexArray abstraction](https://github.com/ShantanuJamble/OpenglTest/commit/e8bf5ee078168ffb5c76ef9ac551c56831a3da3c)
+
 
 # Reading Links:
 1.[Buffer Objects](https://www.khronos.org/opengl/wiki/Buffer_Object)
