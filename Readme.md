@@ -16,6 +16,8 @@
 
 8.[Shader Abstraction](https://github.com/ShantanuJamble/OpenglTest/commit/f50e4cc34f711cc82ea73f93577fe2db2bce3892)
 
+9.[Renderer class added](https://github.com/ShantanuJamble/OpenglTest/commit/d289cbea2843bceed89584dc48d794ee420fb5e0)
+
 
 # Reading Links:
 1.[Buffer Objects](https://www.khronos.org/opengl/wiki/Buffer_Object)
