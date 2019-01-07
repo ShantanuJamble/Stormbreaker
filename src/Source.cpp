@@ -12,7 +12,10 @@
 #include "VertexBufferLayout.h"
 #include "Shader.h"
 
-
+#include "GLM/glm.hpp"
+#include "GLM/gtc/type_ptr.hpp"
+#include "GLM/mat4x4.hpp"
+#include "GLM/gtc/matrix_transform.hpp"
 
 int main(void)
 {
@@ -42,26 +45,24 @@ int main(void)
 	}
 
 	float positions[] = {
-		-0.5f, -0.5f,
-		 0.5f, -0.5f,
-		 0.5f, 0.5f,
-		 -0.5f,0.5f
+		-0.4f, -0.4f,
+		 0.4f, -0.4f,
+		 0.0f,  0.4f
 
 	};
 
 	unsigned int indices[] = {
 		0,1,2,
-		3,2,0
 	};
 
 	VertexArray *va = new VertexArray();
-	VertexBuffer * vb = new VertexBuffer(positions, 4 * 2 * sizeof(float));
+	VertexBuffer * vb = new VertexBuffer(positions, 3* 2 * sizeof(float));
 	VertexBufferLayout *layout = new VertexBufferLayout();
 	layout->Push<float>(2);
 	va->AddBuffer(*vb,*layout);
 
 	//Code with index buffer
-	IndexBuffer * ib = new IndexBuffer(indices, 6);
+	IndexBuffer * ib = new IndexBuffer(indices, 3);
 	
 	
 	Shader *shader = new Shader("res/shaders/basic.shader");
@@ -73,17 +74,40 @@ int main(void)
 	shader->Unbind();
 	
 	Renderer renderer;
+	//Animation stuff
 	float r = 0.0f;
 	float incr = 0.05f;
+
+	float trans_incr = 0.005f;
+	float triOffset = 0.0f;
+	float max_limit = 0.7f;
+	int direction = 1 ;
+	
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
 		renderer.Clear();
+		
+		//Tramnslation stuff
+		if (direction)
+		{
+			triOffset += trans_incr;
+		}
+		else {
+			triOffset -= trans_incr;
+		}
 
+		if (abs(triOffset) >= max_limit)
+		{
+			direction = !direction;
+		}
+			
+		glm::mat4 model{ 1.0f };
+		model = glm::translate(model, glm::vec3(triOffset, 0.0f,  triOffset));
 		shader->Bind();
 		shader->SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
-		
+		shader->SetUniformMatrix4f("u_Model", model);
 
 		//glDrawArrays(GL_TRIANGLES, 0, 6);
 		renderer.Draw(*va, *ib, *shader);

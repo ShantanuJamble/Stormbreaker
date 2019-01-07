@@ -35,6 +35,18 @@ void Shader::SetUniform4f(const std::string & name, float r, float g, float b, f
 	GLCall(glUniform4f(GetUniformLocation(name), r, g, b, a));
 }
 
+void Shader::SetUniform1f(const std::string & name, float v0)
+{
+	GLCall(glUniform1f(GetUniformLocation(name), v0));
+}
+
+void Shader::SetUniformMatrix4f(const std::string & name, glm::mat4 &v_mat)
+{
+
+	std::cout << GetUniformLocation(name) << std::endl;
+	GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(v_mat)));
+}
+
 ShaderProgramSource Shader::ParseShader(const std::string & filepath)
 {
 	std::ifstream stream(filepath);
@@ -107,7 +119,7 @@ int Shader::GetUniformLocation(const std::string & name)
 	if (m_UniformLocations.find(name) != m_UniformLocations.end())
 		return m_UniformLocations[name];
 	else
-		GLCall(location = glGetUniformLocation(m_RendererId, "u_Color"));
+		GLCall(location = glGetUniformLocation(m_RendererId, name.c_str()));
 	m_UniformLocations[name] = location;
 	return location;
 
