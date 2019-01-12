@@ -18,6 +18,8 @@
 
 9.[Renderer class added](https://github.com/ShantanuJamble/OpenglTest/commit/d289cbea2843bceed89584dc48d794ee420fb5e0)
 
+10.[GLM and translations](https://github.com/ShantanuJamble/OpenglTest/commit/2ebbd9521de86a6fbb7095382d1f62a248fe0bf0)
+
 
 # Reading Links:
 1.[Buffer Objects](https://www.khronos.org/opengl/wiki/Buffer_Object)
