@@ -20,6 +20,8 @@
 
 10.[GLM and translations](https://github.com/ShantanuJamble/OpenglTest/commit/2ebbd9521de86a6fbb7095382d1f62a248fe0bf0)
 
+11.[Interpolation Example](https://github.com/ShantanuJamble/OpenglTest/commit/d4242c893c4fba349201841edfb6b201bdb4a560)
+
 
 # Reading Links:
 1.[Buffer Objects](https://www.khronos.org/opengl/wiki/Buffer_Object)
