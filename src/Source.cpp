@@ -104,7 +104,7 @@ int main(void)
 		}
 			
 		glm::mat4 model{ 1.0f };
-		model = glm::translate(model, glm::vec3(triOffset, 0.0f,  triOffset));
+		//model = glm::translate(model, glm::vec3(triOffset, 0.0f,  triOffset));
 		shader->Bind();
 		shader->SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
 		shader->SetUniformMatrix4f("u_Model", model);
