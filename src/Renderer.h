@@ -3,6 +3,7 @@
 #include "VertexArray.h"
 #include "IndexBuffer.h"
 #include "Shader.h"
+#include <vector>
 
 #define ASSERT(X) if(!(X)) __debugbreak();
 #define GLCall(X) GLCleanError();\
@@ -18,4 +19,5 @@ class Renderer
 public:
 	void Clear() const;
 	void Draw(VertexArray &va, IndexBuffer &ib, Shader &shader) const;
+	void EnableFetures(unsigned int feature);
 };

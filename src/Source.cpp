@@ -45,24 +45,27 @@ int main(void)
 	}
 
 	float positions[] = {
-		-0.4f, -0.4f,
-		 0.4f, -0.4f,
-		 0.0f,  0.4f
-
+		-1.0f, -1.0f, 0.0f,
+		 0.0f, -1.0f, 1.0f,
+		 1.0f, -1.0f, 0.0f,
+		 0.0f,  1.0f, 0.0f
 	};
 
 	unsigned int indices[] = {
-		0,1,2,
+		0, 3, 1,
+		1, 3, 2,
+		2, 3, 0,
+		0, 1, 2
 	};
 
 	VertexArray *va = new VertexArray();
-	VertexBuffer * vb = new VertexBuffer(positions, 3* 2 * sizeof(float));
+	VertexBuffer * vb = new VertexBuffer(positions, 4* 3 * sizeof(float));
 	VertexBufferLayout *layout = new VertexBufferLayout();
-	layout->Push<float>(2);
+	layout->Push<float>(3);
 	va->AddBuffer(*vb,*layout);
 
 	//Code with index buffer
-	IndexBuffer * ib = new IndexBuffer(indices, 3);
+	IndexBuffer * ib = new IndexBuffer(indices, 12);
 	
 	
 	Shader *shader = new Shader("res/shaders/basic.shader");
@@ -74,6 +77,7 @@ int main(void)
 	shader->Unbind();
 	
 	Renderer renderer;
+	renderer.EnableFetures(GL_DEPTH_TEST);
 	//Animation stuff
 	float r = 0.0f;
 	float incr = 0.05f;
@@ -83,6 +87,9 @@ int main(void)
 	float max_limit = 0.7f;
 	int direction = 1 ;
 	
+	float curAngle = 0.0f;
+	const float toRadians = 3.14159265f / 180.0f;
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
@@ -102,9 +109,18 @@ int main(void)
 		{
 			direction = !direction;
 		}
-			
+		
+		//Rotation stuff
+		curAngle += 0.5f;
+		if (curAngle >= 360)
+		{
+			curAngle -= 360;
+		}
+
 		glm::mat4 model{ 1.0f };
+		model = glm::rotate(model, curAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		//model = glm::translate(model, glm::vec3(triOffset, 0.0f,  triOffset));
+		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
 		shader->Bind();
 		shader->SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
 		shader->SetUniformMatrix4f("u_Model", model);
