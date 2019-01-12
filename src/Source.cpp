@@ -36,7 +36,9 @@ int main(void)
 		glfwTerminate();
 		return -1;
 	}
-
+	//Getting frame buffer height and width
+	int bufferHeight, bufferWidth;
+	glfwGetWindowSize(window, &bufferWidth, &bufferHeight);
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1);
@@ -90,6 +92,9 @@ int main(void)
 	float curAngle = 0.0f;
 	const float toRadians = 3.14159265f / 180.0f;
 
+	//Projection
+	
+	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)bufferWidth / (GLfloat)bufferHeight, 0.1f, 100.0f);
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
@@ -118,12 +123,13 @@ int main(void)
 		}
 
 		glm::mat4 model{ 1.0f };
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -2.0f));
 		model = glm::rotate(model, curAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::translate(model, glm::vec3(triOffset, 0.0f,  triOffset));
 		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
 		shader->Bind();
 		shader->SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
 		shader->SetUniformMatrix4f("u_Model", model);
+		shader->SetUniformMatrix4f("u_Projection", projection);
 
 		//glDrawArrays(GL_TRIANGLES, 0, 6);
 		renderer.Draw(*va, *ib, *shader);
