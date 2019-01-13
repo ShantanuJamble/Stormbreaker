@@ -2,9 +2,8 @@
 #include<fstream>
 #include<string>
 #include<sstream>
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
+#include "Window.h"
 #include "Renderer.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
@@ -19,32 +18,8 @@
 
 int main(void)
 {
-	GLFWwindow* window;
-
-	/* Initialize the library */
-	if (!glfwInit())
-		return -1;
-
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-	if (!window)
-	{
-		glfwTerminate();
-		return -1;
-	}
-	//Getting frame buffer height and width
-	int bufferHeight, bufferWidth;
-	glfwGetWindowSize(window, &bufferWidth, &bufferHeight);
-	/* Make the window's context current */
-	glfwMakeContextCurrent(window);
-	glfwSwapInterval(1);
-	if (glewInit() != GLEW_OK) {
-		std::cout << "Error" << std::endl;
-	}
+	Window mainWindow = Window(800, 600);
+	mainWindow.Initialise();
 
 	float positions[] = {
 		-1.0f, -1.0f, 0.0f,
@@ -93,10 +68,12 @@ int main(void)
 	const float toRadians = 3.14159265f / 180.0f;
 
 	//Projection
-	
+	int bufferWidth, bufferHeight;
+	bufferHeight = mainWindow.GetBufferHeight();
+	bufferWidth =  mainWindow.GetBufferWidth();
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)bufferWidth / (GLfloat)bufferHeight, 0.1f, 100.0f);
 	/* Loop until the user closes the window */
-	while (!glfwWindowShouldClose(window))
+	while (!mainWindow.GetShouldClose())
 	{
 		/* Render here */
 		renderer.Clear();
@@ -116,7 +93,7 @@ int main(void)
 		}
 		
 		//Rotation stuff
-		curAngle += 0.5f;
+		curAngle += 0.05f;
 		if (curAngle >= 360)
 		{
 			curAngle -= 360;
@@ -140,11 +117,11 @@ int main(void)
 			incr = 0.05f;
 		r += incr;
 		/* Swap front and back buffers */
-		GLCall(glfwSwapBuffers(window));
+		mainWindow.SwapBuffers();
 
 
 		/* Poll for and process events */
-		GLCall(glfwPollEvents());
+		mainWindow.PollEvents();
 	}
 	
 	delete(va);
@@ -152,6 +129,6 @@ int main(void)
 	delete(ib);
 	delete(shader);
 
-	glfwTerminate();
+	//mainWindow.Terminate();
 	return 0;
 }
