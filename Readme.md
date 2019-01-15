@@ -26,6 +26,8 @@
 
 13.[Perspective and projections](https://github.com/ShantanuJamble/OpenglTest/commit/e1a92b42fac7895263e576924a10ad5d32e55e14)
 
+14.[Camera Controls and camera movement](https://github.com/ShantanuJamble/OpenglTest/commit/36197df8b95223a18e987cf1e5971efd2e80d2f2)
+
 # Reading Links:
 1.[Buffer Objects](https://www.khronos.org/opengl/wiki/Buffer_Object)
 
