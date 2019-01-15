@@ -4,12 +4,20 @@ Window::Window()
 {
 	m_Width = 800;
 	m_Height = 600;
+	m_deltaTime = 0.0f;
+	m_lastTime = 0.0f;
+	for (size_t i = 0; i < 1024; i++)
+		m_keys[i] = 0;
 }
 
 Window::Window(GLint windowWidth, GLint windowHeight)
 {
 	m_Width = windowWidth;
 	m_Height = windowHeight;
+	m_deltaTime = 0.0f;
+	m_lastTime = 0.0f;
+	for (size_t i = 0; i < 1024; i++)
+		m_keys[i] = 0;
 }
 
 int Window::Initialise()
@@ -40,10 +48,14 @@ int Window::Initialise()
 	}
 
 	// Get buffer size information
-	glfwGetFramebufferSize(m_Window, &bufferWidth, &bufferHeight);
+	glfwGetFramebufferSize(m_Window, &m_BufferWidth, &m_BufferHeight);
 
 	// Set the current context
 	glfwMakeContextCurrent(m_Window);
+
+	//Handle Input
+	CreatCallback();
+	glfwSetInputMode(m_Window,GLFW_CURSOR,GLFW_CURSOR_DISABLED);
 
 	// Allow modern extension access
 	glewExperimental = GL_TRUE;
@@ -60,7 +72,10 @@ int Window::Initialise()
 	glEnable(GL_DEPTH_TEST);
 
 	// Create Viewport
-	glViewport(0, 0, bufferWidth, bufferHeight);
+	glViewport(0, 0, m_BufferWidth, m_BufferHeight);
+
+	//Setting pointer to call static methods from callback
+	glfwSetWindowUserPointer(m_Window, this);
 }
 
 
@@ -68,4 +83,75 @@ Window::~Window()
 {
 	glfwDestroyWindow(m_Window);
 	glfwTerminate();
+}
+
+void Window::CreatCallback()
+{
+	glfwSetKeyCallback(m_Window, KeyHandler);
+	glfwSetCursorPosCallback(m_Window, MouseHandler);
+}
+
+void Window::KeyHandler(GLFWwindow * window, int key, int code, int action, int mode)
+{
+	Window * theWindow =static_cast<Window *>( glfwGetWindowUserPointer(window));
+	
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) 
+	{
+		glfwSetWindowShouldClose(window, GL_TRUE);
+	}
+	
+	if (key >= 0 && key <= 1024)
+	{
+		if (action == GLFW_PRESS)
+		{
+			theWindow->m_keys[key] = true;
+		}
+		else if (action == GLFW_RELEASE)
+		{
+			theWindow->m_keys[key] = false;
+		}
+	}
+
+}
+
+void Window::MouseHandler(GLFWwindow * window, double xPos, double yPos)
+{
+	Window * theWindow = static_cast<Window *>(glfwGetWindowUserPointer(window));
+
+	if (theWindow->m_mouseFirstmoved)
+	{
+		theWindow->m_mouseFirstmoved = false;
+		theWindow->m_lastX = xPos;
+		theWindow->m_lastY = yPos;
+	}
+	else
+	{
+		theWindow->m_xchanged = xPos - theWindow->m_lastX;
+		theWindow->m_ychanged = theWindow->m_lastY - yPos;
+		theWindow->m_lastX = xPos;
+		theWindow->m_lastY = yPos;
+	}
+}
+
+GLfloat Window::GetXchanged()
+{
+	GLfloat change = m_xchanged;
+	m_xchanged = 0.0f;
+	return change;
+}
+
+GLfloat Window::GetYchanged()
+{
+	GLfloat change = m_ychanged;
+	m_ychanged = 0.0f;
+	return change;
+}
+
+GLfloat Window::GetTimeDelta()
+{
+	GLfloat now = glfwGetTime(); // SDL_GetPerformanceCounter();
+	m_deltaTime = now - m_lastTime; // (now - lastTime)*1000/SDL_GetPerformanceFrequency();
+	m_lastTime = now;
+
+	return m_deltaTime;
 }

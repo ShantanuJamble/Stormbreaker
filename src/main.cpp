@@ -10,6 +10,7 @@
 #include "IndexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "Shader.h"
+#include "Camera.h"
 
 #include "GLM/glm.hpp"
 #include "GLM/gtc/type_ptr.hpp"
@@ -72,9 +73,17 @@ int main(void)
 	bufferHeight = mainWindow.GetBufferHeight();
 	bufferWidth =  mainWindow.GetBufferWidth();
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)bufferWidth / (GLfloat)bufferHeight, 0.1f, 100.0f);
+
+	//Camera
+	Camera camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 0.01f);
+	glm::mat4 view;
 	/* Loop until the user closes the window */
 	while (!mainWindow.GetShouldClose())
 	{
+		//Camera Input
+		camera.KeyControl(mainWindow.GetKeys(), mainWindow.GetTimeDelta());
+		camera.MouseControl(mainWindow.GetXchanged(), mainWindow.GetYchanged());
+
 		/* Render here */
 		renderer.Clear();
 		
@@ -107,8 +116,9 @@ int main(void)
 		shader->SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
 		shader->SetUniformMatrix4f("u_Model", model);
 		shader->SetUniformMatrix4f("u_Projection", projection);
+		view = camera.CalculateViewMatrix();
+		shader->SetUniformMatrix4f("u_View", view);
 
-		//glDrawArrays(GL_TRIANGLES, 0, 6);
 		renderer.Draw(*va, *ib, *shader);
 
 		if (r > 1)
