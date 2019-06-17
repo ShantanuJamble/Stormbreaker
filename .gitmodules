@@ -1,0 +1,3 @@
+[submodule "StormBreaker/StormBreaker/vendor/spdlog"]
+	path = StormBreaker/StormBreaker/vendor/spdlog
+	url = https://github.com/gabime/spdlog.git
