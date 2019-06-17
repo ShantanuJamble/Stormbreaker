@@ -10,7 +10,7 @@ namespace Engine {
 	void Log::Init()
 	{
 		spdlog::set_pattern("%^[%T] %n: %v%$");
-		m_EngineLogger = spdlog::stdout_color_mt("FALCON");
+		m_EngineLogger = spdlog::stdout_color_mt("Engine");
 		m_EngineLogger->set_level(spdlog::level::trace);
 		
 		m_GameLogger = spdlog::stdout_color_mt("Game");

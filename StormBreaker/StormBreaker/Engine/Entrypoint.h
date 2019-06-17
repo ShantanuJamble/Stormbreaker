@@ -3,11 +3,13 @@
 
 #include "Core.h"
 #include "Application.h"
-
+#include "Log.h"
 extern Engine::Application* Engine::CreateApplication();
 
 int main(int argc, char **argv)
 {
+	Engine::Log::Init();
+	SB_ENGINE_INFO("Logs reporting for duty.");
 	auto app = Engine::CreateApplication();
 	app->Run();
 	delete app;

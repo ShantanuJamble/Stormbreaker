@@ -24,18 +24,18 @@ namespace Engine {
 #ifdef SB_DEBUG_BUILD
 
 	//Engine Logger
-	#define SB_ENGINE_INFO(...)  ::Falcon::Log::GetEngineLogger()->info(__VA_ARGS__)
-	#define SB_ENGINE_TRACE(...) ::Falcon::Log::GetEngineLogger()->trace(__VA_ARGS__)
-	#define SB_ENGINE_WARN(...)  ::Falcon::Log::GetEngineLogger()->warn(__VA_ARGS__)
-	#define SB_ENGINE_ERROR(...) ::Falcon::Log::GetEngineLogger()->error(__VA_ARGS__)
-	#define SB_ENGINE_FATAL(...) ::Falcon::Log::GetEngineLogger()->fatal(__VA_ARGS__)
+	#define SB_ENGINE_INFO(...)  ::Engine::Log::GetEngineLogger()->info(__VA_ARGS__)
+	#define SB_ENGINE_TRACE(...) ::Engine::Log::GetEngineLogger()->trace(__VA_ARGS__)
+	#define SB_ENGINE_WARN(...)  ::Engine::Log::GetEngineLogger()->warn(__VA_ARGS__)
+	#define SB_ENGINE_ERROR(...) ::Engine::Log::GetEngineLogger()->error(__VA_ARGS__)
+	#define SB_ENGINE_FATAL(...) ::Engine::Log::GetEngineLogger()->fatal(__VA_ARGS__)
 
 	//Game Logger
-	#define SB_GAME_INFO(...)    ::Falcon::Log::GetGameLogger()->info(__VA_ARGS__)
-	#define SB_GAME_TRACE(...)   ::Falcon::Log::GetGameLogger()->trace(__VA_ARGS__)
-	#define SB_GAME_WARN(...)    ::Falcon::Log::GetGameLogger()->warn(__VA_ARGS__)
-	#define SB_GAME_ERROR(...)   ::Falcon::Log::GetGameLogger()->error(__VA_ARGS__)
-	#define SB_GAME_FATAL(...)   ::Falcon::Log::GetGameLogger()->fatal(__VA_ARGS__)
+	#define SB_GAME_INFO(...)    ::Engine::Log::GetGameLogger()->info(__VA_ARGS__)
+	#define SB_GAME_TRACE(...)   ::Engine::Log::GetGameLogger()->trace(__VA_ARGS__)
+	#define SB_GAME_WARN(...)    ::Engine::Log::GetGameLogger()->warn(__VA_ARGS__)
+	#define SB_GAME_ERROR(...)   ::Engine::Log::GetGameLogger()->error(__VA_ARGS__)
+	#define SB_GAME_FATAL(...)   ::Engine::Log::GetGameLogger()->fatal(__VA_ARGS__)
 
 #else
 	#define SB_ENGINE_INFO(...)  
