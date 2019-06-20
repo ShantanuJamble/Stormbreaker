@@ -65,7 +65,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>SB_BUILD_DLL;SB_PLATFORM_WINDOWS;SB_DEBUG_BUILD;</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)vendor\spdlog\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)vendor\spdlog\include;$(ProjectDir);</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -102,6 +102,10 @@
     <ClInclude Include="Engine\Core.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Engine\Entrypoint.h" />
+    <ClInclude Include="Engine\Events\ApplicationEvent.h" />
+    <ClInclude Include="Engine\Events\Event.h" />
+    <ClInclude Include="Engine\Events\KeyEvent.h" />
+    <ClInclude Include="Engine\Events\MouseEvent.h" />
     <ClInclude Include="Engine\Log.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

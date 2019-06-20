@@ -2,6 +2,8 @@
 #define APPLICATION_H
 
 #include "Core.h"
+#include "Events/Event.h"
+
 namespace Engine {
 	class SB_API Application
 	{
