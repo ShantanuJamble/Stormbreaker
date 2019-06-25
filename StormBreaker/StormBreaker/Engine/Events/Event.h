@@ -1,7 +1,7 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-#include "Engine/Core.h"
+#include "Core.h"
 
 #include <string>
 #include <functional>
