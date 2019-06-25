@@ -18,8 +18,7 @@ variables:
 steps:
 - checkout: self
   submodules: true| resucrsive
-
-steps:
+  
 - task: NuGetToolInstaller@0
 
 - task: NuGetCommand@2
