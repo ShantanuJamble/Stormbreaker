@@ -15,7 +15,12 @@ variables:
   buildConfiguration: 'Release'
   appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
 
+
+
 steps:
+- checkout: self
+  submodules: true | recursive
+
 - task: NuGetToolInstaller@0
 
 - task: NuGetCommand@2
