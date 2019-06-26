@@ -16,14 +16,10 @@ variables:
   appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
 
 
-resources:
-  repositories:
-  - repository: self
-    checkoutOptions:
-      submodules: true | recursive
 
 steps:
 - checkout: self
+  submodules: true | recursive
 - task: NuGetToolInstaller@0
 
 - task: NuGetCommand@2
