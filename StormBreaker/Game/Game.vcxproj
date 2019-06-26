@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)StormBreaker\;$(SolutionDir)StormBreaker\vendor\spdlog\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)StormBreaker\Engine\;$(SolutionDir)StormBreaker\;$(SolutionDir)StormBreaker\vendor\spdlog\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SB_PLATFORM_WINDOWS;SB_DEBUG_BUILD;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
