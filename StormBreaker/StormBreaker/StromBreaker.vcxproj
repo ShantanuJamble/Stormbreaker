@@ -96,6 +96,9 @@
   <ItemGroup>
     <ClCompile Include="Engine\Application.cpp" />
     <ClCompile Include="Engine\Log.cpp" />
+    <ClCompile Include="Engine\Memory\Allocator.cpp" />
+    <ClCompile Include="Engine\Memory\MemoryInterface.cpp" />
+    <ClCompile Include="Engine\Memory\PoolAllocator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Application.h" />
@@ -107,6 +110,11 @@
     <ClInclude Include="Engine\Events\KeyEvent.h" />
     <ClInclude Include="Engine\Events\MouseEvent.h" />
     <ClInclude Include="Engine\Log.h" />
+    <ClInclude Include="Engine\Memory\Allocator.hpp" />
+    <ClInclude Include="Engine\Memory\MemoryInterface.h" />
+    <ClInclude Include="Engine\Memory\PoolAllocator.hpp" />
+    <ClInclude Include="Engine\Memory\STLMemoryInterface.h" />
+    <ClInclude Include="sbmemory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
