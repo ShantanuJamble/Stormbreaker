@@ -8,10 +8,10 @@
 
 /**
 * STL container constructors take in an allocators which they use to allocate memory for intenal object allocations.
-* By defualt it uses, std::allocators. Following class provides similar interface which enables STL containers to use 
+* By defualt it uses, std::allocators. Following class provides similar interface which enables STL containers to use
 * our custome allocators.Please use following link to understand std::allocator,
 * https://en.cppreference.com/w/cpp/memory/allocator
-* 
+*
 * All standard containers access these via std::allocators. Thus we don't need to override the construct and destroy methods.
 * Construct creats object inplace with placement new and destroy method calls destructors for the same object without freeing the pointer.
 * Please refer following link for details,
@@ -20,9 +20,9 @@
 
 namespace sbmemory {
 
-	
+
 	template <class T>
-	class STLAllocator 
+	class STLAllocator
 	{
 
 	public:
@@ -58,13 +58,13 @@ namespace sbmemory {
 		*/
 		pointer allocate(size_t count)
 		{
-			SB_ENGINE_INFO("Allocating using STLAllocator Requesting {0}" ,count);
+			SB_ENGINE_INFO("Allocating using STLAllocator Requesting {0}", count);
 			return reinterpret_cast<T*>(Allocate(sizeof(T) * count));
 		}
 
 		/**
 		* Deallocator for the stl containers.
-		* Takes in variable count and pointer to specified type. 
+		* Takes in variable count and pointer to specified type.
 		* Then calls custom deallocator.
 		*/
 		void deallocate(pointer p, size_t count)
@@ -73,16 +73,16 @@ namespace sbmemory {
 			Free(p, sizeof(T) * count);
 		}
 
-		
+
 		/**
-		* obtains the address of an object, even if operator& is overloaded 
+		* obtains the address of an object, even if operator& is overloaded
 		*/
 		pointer address(reference x) const
 		{
 			return &x;
 		}
-		
-	}; 
+
+	};
 
 
 	/**

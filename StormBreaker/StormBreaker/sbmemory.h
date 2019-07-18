@@ -6,7 +6,7 @@
 #include "Engine/Memory/MemoryInterface.h"
 #include "Engine/Memory/STLMemoryInterface.h"
 
-#define fnew(size)        sbmemory::Allocate(size)
-#define fdelete(ptr,size) sbmemory::Free(ptr,size)
+#define sbnew(size)        sbmemory::Allocate(size)
+#define sbdelete(ptr,size) sbmemory::Free(ptr,size)
 
 #endif // !MEMORY_H

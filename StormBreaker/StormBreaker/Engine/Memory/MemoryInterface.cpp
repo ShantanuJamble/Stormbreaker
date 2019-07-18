@@ -19,15 +19,15 @@ namespace sbmemory {
 		//704, 768, 832, 896, 960, 1024
 
 	};
-	
-	static const unsigned POOL_SIZE   = 4096; // Each pool will alocate 4096 bytes
+
+	static const unsigned POOL_SIZE = 4096; // Each pool will alocate 4096 bytes
 
 
-	static const std::size_t BLOCK_SIZE_LIST_COUNT = sizeof(BLOCK_SIZES) / sizeof(BLOCK_SIZES[0]); 
-	static const std::size_t MAX_BLOCK_SIZE        = BLOCK_SIZES[BLOCK_SIZE_LIST_COUNT - 1];
+	static const std::size_t BLOCK_SIZE_LIST_COUNT = sizeof(BLOCK_SIZES) / sizeof(BLOCK_SIZES[0]);
+	static const std::size_t MAX_BLOCK_SIZE = BLOCK_SIZES[BLOCK_SIZE_LIST_COUNT - 1];
 
 	static unsigned* pool_lookup = nullptr;
-	static PoolAllocator pool_allocators [BLOCK_SIZE_LIST_COUNT];
+	static PoolAllocator* pool_allocators = static_cast<PoolAllocator*>(sbmemory::AllocateUnaligned(sizeof(PoolAllocator) * BLOCK_SIZE_LIST_COUNT));
 
 
 	//This is the method which initializes the memory manager. 
@@ -39,6 +39,7 @@ namespace sbmemory {
 		//intializing the lookup pointer
 		try
 		{
+			PoolAllocator* tmp;
 			pool_lookup = new unsigned[MAX_BLOCK_SIZE + 1];
 			unsigned block_index = 0;
 			for (unsigned index = 0; index <= MAX_BLOCK_SIZE; ++index)
@@ -51,8 +52,10 @@ namespace sbmemory {
 			for (unsigned index = 0; index < BLOCK_SIZE_LIST_COUNT; ++index)
 			{
 				SB_ENGINE_INFO("INFO: Creating pool for {0},  {1}", index, BLOCK_SIZES[index]);
-				pool_allocators[index].Alloc(BLOCK_SIZES[index], POOL_SIZE / BLOCK_SIZES[index], 
-					(BLOCK_SIZES[index] < 16)? 4 : 16);
+				tmp = pool_allocators + index;
+				tmp = new (tmp) PoolAllocator;
+				tmp->Alloc(BLOCK_SIZES[index], POOL_SIZE / BLOCK_SIZES[index],
+					(BLOCK_SIZES[index] < 16) ? 4 : 16);
 			}
 			IsInitialized = true;
 		}
@@ -67,9 +70,9 @@ namespace sbmemory {
 
 
 	//This functions returns apropriate pool for requested size. 
-	static PoolAllocator* LookUp(const size_t size , const unsigned alignement = 4) 
+	static PoolAllocator* LookUp(const size_t size, const unsigned alignement = 4)
 	{
-			
+
 		//Return the block if available
 		if (size > MAX_BLOCK_SIZE)
 		{
@@ -87,7 +90,7 @@ namespace sbmemory {
 		TODO: Overriding new and delete to call allocate and free. Also need to add STL compatible allocators.
 	*/
 
-	
+
 
 	void* Allocate(const std::size_t size)
 	{
@@ -100,13 +103,13 @@ namespace sbmemory {
 		else
 		{
 			//If size is greater than the max block size, it is allocated using std::malloc and needs to be freed the same way.
-		    //Planning to use our allocators instead once we override new and delete 
+			//Planning to use our allocators instead once we override new and delete 
 			SB_ENGINE_WARN("WARNING: Allocating memeory with the std functions.");
 			return std::malloc(size);
 		}
 	}
 
-	
+
 
 
 	void Free(void* ref, const std::size_t size)
@@ -136,6 +139,7 @@ namespace sbmemory {
 		{
 
 			delete pool_lookup;
+			sbmemory::Deallocate(pool_allocators);
 			//allocators are on stack so no need to delete them here
 			SB_ENGINE_INFO("INFO: Memory Manger shut down properly.");
 			return true;
@@ -146,6 +150,6 @@ namespace sbmemory {
 			return false;
 		}
 	}
-	
+
 
 }
