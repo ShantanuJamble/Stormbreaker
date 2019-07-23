@@ -4,9 +4,9 @@
 #include <cstddef>
 namespace sbmemory
 {
-	SB_API extern bool  MemoryManagetInit();
-	SB_API extern void* Allocate(const std::size_t size);
-	SB_API extern void  Free(void * ref, const std::size_t size);
-	SB_API extern bool  MeoryManagerShutDown();
+	extern bool  MemoryManagetInit();
+	extern void* Allocate(const std::size_t size);
+	extern void  Free(void * ref, const std::size_t size);
+	extern bool  MeoryManagerShutDown();
 }
 #endif // !MEMORYINTERFACE_H

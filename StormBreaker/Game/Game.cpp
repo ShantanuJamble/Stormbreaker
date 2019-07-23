@@ -10,6 +10,5 @@ public:
 
 Engine::Application* Engine::CreateApplication()
 {
-
 		return new Game();
 }

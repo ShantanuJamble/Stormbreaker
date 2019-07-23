@@ -4,6 +4,8 @@
 
 #include "Log.h"
 
+#include <vector>
+
 namespace sbmemory {
 	//memory block size list
 	static const size_t BLOCK_SIZES[] = {
@@ -28,8 +30,8 @@ namespace sbmemory {
 
 	static unsigned* pool_lookup = nullptr;
 	static PoolAllocator* pool_allocators = static_cast<PoolAllocator*>(sbmemory::AllocateUnaligned(sizeof(PoolAllocator) * BLOCK_SIZE_LIST_COUNT));
-
-
+	
+	
 	//This is the method which initializes the memory manager. 
 	//Needs to be called when all the subsystems are initiated. And should be the first one.
 	//For now alignement is default to 4. In future need to add the feature to pass in user specified value.
@@ -51,10 +53,11 @@ namespace sbmemory {
 
 			for (unsigned index = 0; index < BLOCK_SIZE_LIST_COUNT; ++index)
 			{
-				SB_ENGINE_INFO("INFO: Creating pool for {0},  {1}", index, BLOCK_SIZES[index]);
+				
 				tmp = pool_allocators + index;
 				tmp = new (tmp) PoolAllocator;
-				tmp->Alloc(BLOCK_SIZES[index], POOL_SIZE / BLOCK_SIZES[index],
+				SB_ENGINE_INFO("INFO: Creating pool for {0},  {1}, {2}", index, BLOCK_SIZES[index],static_cast<void*>(tmp));
+				tmp->CreatePool(BLOCK_SIZES[index], POOL_SIZE / BLOCK_SIZES[index],
 					(BLOCK_SIZES[index] < 16) ? 4 : 16);
 			}
 			IsInitialized = true;
@@ -138,7 +141,14 @@ namespace sbmemory {
 		try
 		{
 
-			delete pool_lookup;
+			//delete pool_lookup;
+			PoolAllocator* tmp;
+			for (int i = BLOCK_SIZE_LIST_COUNT - 1; i > 0; --i)
+			{
+				tmp = pool_allocators + i;
+				SB_ENGINE_INFO("{0}, {1}", (void*)tmp, tmp->GetPoolMemLocation());
+				tmp->~PoolAllocator();
+			}
 			sbmemory::Deallocate(pool_allocators);
 			//allocators are on stack so no need to delete them here
 			SB_ENGINE_INFO("INFO: Memory Manger shut down properly.");

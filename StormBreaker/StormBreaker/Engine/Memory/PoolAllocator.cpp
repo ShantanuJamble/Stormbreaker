@@ -7,7 +7,7 @@
 namespace sbmemory {
 	
 	PoolAllocator::PoolAllocator()
-		:m_poolref(0),m_free_list_head(0),m_num_of_elements(0),m_element_size_in_bytes(0),m_alignment(4)
+		:m_poolref(nullptr),m_free_list_head(nullptr),m_num_of_elements(0),m_element_size_in_bytes(0),m_alignment(4)
 	{
 	}
 
@@ -15,11 +15,11 @@ namespace sbmemory {
 	{
 		m_poolref = nullptr;
 		m_free_list_head = nullptr;
-		Alloc(element_size_in_bytes, num_of_elements,alignment);
+		CreatePool(element_size_in_bytes, num_of_elements,alignment);
 		
 	}
 
-	void PoolAllocator::Alloc(const std::size_t element_size_in_bytes, const std::size_t num_of_elements, const std::size_t alignment)
+	void PoolAllocator::CreatePool(const std::size_t element_size_in_bytes, const std::size_t num_of_elements, const std::size_t alignment)
 	{
 		//Check if pool is not initalized.Doen't allow the memory to be allocated again for same pool.
 		assert(m_poolref == nullptr);
@@ -34,6 +34,7 @@ namespace sbmemory {
 		std::size_t pool_size = m_num_of_elements * element_size_in_bytes;
 
 		//Allocating memory
+		SB_ENGINE_INFO("INFO: Creating memory for pool");
 		m_poolref = AllocateAligned(pool_size,alignment);
 
 		if (m_poolref)
@@ -66,6 +67,7 @@ namespace sbmemory {
 		}
 
 	}
+
 
 	void * PoolAllocator::GetBlocKFromPool()
 	{
@@ -115,10 +117,16 @@ namespace sbmemory {
 
 	}
 
+	void* PoolAllocator::GetPoolMemLocation()
+	{
+		return m_poolref;
+	}
+
 
 	PoolAllocator::~PoolAllocator()
 	{
 		DeallocateAligned(m_poolref);
+		m_poolref = m_free_list_head = nullptr;
 	}
 
 }

@@ -5,7 +5,7 @@
 #include "Events/Event.h"
 
 namespace Engine {
-	class SB_API Application
+	class Application
 	{
 	public:
 		Application();

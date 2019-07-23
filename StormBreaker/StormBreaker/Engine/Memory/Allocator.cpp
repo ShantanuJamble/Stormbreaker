@@ -13,6 +13,7 @@ namespace sbmemory {
 		try
 		{
 			void * main_memory_block = malloc(sz_in_byte);
+			std::cout << "INFO: Creating memory block at " << main_memory_block << std::endl;;
 			return main_memory_block;
 		}
 		catch (std::exception& e)
@@ -30,6 +31,7 @@ namespace sbmemory {
 	{
 		try 
 		{
+			SB_ENGINE_INFO("Deallocating {0}", memref);
 			free(memref);
 		}
 		catch (std::exception& e)
@@ -51,7 +53,7 @@ namespace sbmemory {
 
 		//Allocating unaligned memory
 		std::uintptr_t raw_memory_address = reinterpret_cast<std::uintptr_t>(AllocateUnaligned(total_size));
-		//SB_ENGINE_INFO("Raw address = {0}", raw_memory_address);
+		//std::cout << reinterpret_cast<void*>(raw_memory_address) << std::endl;;
 
 		//Calculating the adjustment for address by masking of lower bits
 		//Using gregory aproach
@@ -75,6 +77,7 @@ namespace sbmemory {
 		
 		try
 		{
+			
 			const std::uint8_t* paligned_memory = reinterpret_cast<const std::uint8_t*>(memref);
 			if (paligned_memory == nullptr)
 				return;

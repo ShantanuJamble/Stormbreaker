@@ -10,10 +10,10 @@ namespace Engine {
 	{
 
 	public:
-		SB_API static void Init();
 		
-		SB_API inline static std::shared_ptr<spdlog::logger>& GetEngineLogger() { return m_EngineLogger; }
-		SB_API inline static std::shared_ptr<spdlog::logger>& GetGameLogger()   { return m_GameLogger; }
+		static void Init();
+		inline static std::shared_ptr<spdlog::logger>& GetEngineLogger() { return m_EngineLogger; }
+		inline static std::shared_ptr<spdlog::logger>& GetGameLogger()   { return m_GameLogger; }
 
 	private:
 		static std::shared_ptr<spdlog::logger> m_EngineLogger;

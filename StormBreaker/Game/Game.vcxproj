@@ -83,7 +83,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>copy /Y $(SolutionDir)build\$(Platform)\$(Configuration)\StormBreaker\bin\*.dll $(SolutionDir)build\$(Platform)\$(Configuration)\$(ProjectName)\bin\</Command>
+      <Command>copy /Y $(SolutionDir)build\$(Platform)\$(Configuration)\StormBreaker\bin\* $(SolutionDir)build\$(Platform)\$(Configuration)\$(ProjectName)\bin\</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
