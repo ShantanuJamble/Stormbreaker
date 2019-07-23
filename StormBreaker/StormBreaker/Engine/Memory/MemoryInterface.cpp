@@ -143,7 +143,7 @@ namespace sbmemory {
 
 			//delete pool_lookup;
 			PoolAllocator* tmp;
-			for (int i = BLOCK_SIZE_LIST_COUNT - 1; i > 0; --i)
+			for (int i = BLOCK_SIZE_LIST_COUNT - 1; i >= 0; --i)
 			{
 				tmp = pool_allocators + i;
 				SB_ENGINE_INFO("{0}, {1}", (void*)tmp, tmp->GetPoolMemLocation());
