@@ -10,7 +10,7 @@ namespace sbmemory {
 	//memory block size list
 	static const size_t BLOCK_SIZES[] = {
 		//4 bytes increaments
-		4,8,12,16,20,24,28,32,36,40,44,48,52,56,60,
+		8,12,16,20,24,28,32,36,40,44,48,52,56,60,
 		64,68,72,76,80,84,88,92,96,
 
 		//32 bytes increaments
