@@ -20,6 +20,7 @@ namespace Engine {
 				//  - You may want to use something more advanced, like Visual Leak Detector
 				_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 		#endif
+		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 		SB_GAME_INFO("Inititaitng memory manager.");
 		sbmemory::MemoryManagetInit();
 	}
@@ -33,10 +34,10 @@ namespace Engine {
 	void Application::Run()
 	{
 		WindowResizeEvent e(1280, 720);
-		std::vector<int, sbmemory::STLAllocator<int>> mynewvec = { 10,20,30 };
+		/*std::vector<int, sbmemory::STLAllocator<int>> mynewvec = { 10,20,30 };
 		
 		for (int i : mynewvec)
-			SB_GAME_INFO("{0}", i);
+			SB_GAME_INFO("{0}", i);*/
 
 		if (e.IsInCategory(EventCategoryApplication))
 		{

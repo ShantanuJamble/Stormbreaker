@@ -58,7 +58,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)StormBreaker\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)StormBreaker\Engine\;$(SolutionDir)StormBreaker\;$(SolutionDir)StormBreaker\vendor\spdlog\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SB_PLATFORM_WINDOWS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>

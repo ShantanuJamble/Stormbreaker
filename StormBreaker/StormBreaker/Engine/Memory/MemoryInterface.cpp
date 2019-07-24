@@ -22,7 +22,7 @@ namespace sbmemory {
 
 	};
 
-	static const unsigned POOL_SIZE = 4096; // Each pool will alocate 4096 bytes
+	static const unsigned POOL_SIZE = 8192; // Each pool will alocate 4096 bytes
 
 
 	static const std::size_t BLOCK_SIZE_LIST_COUNT = sizeof(BLOCK_SIZES) / sizeof(BLOCK_SIZES[0]);
@@ -72,8 +72,40 @@ namespace sbmemory {
 	}
 
 
+
+	//This method will clear all the memory pools and shut down the manager. 
+	//Needs to be called at very end of engine shut down.
+	bool MeoryManagerShutDown()
+	{
+		try
+		{
+
+			//delete pool_lookup;
+			PoolAllocator* tmp;
+			for (int i = BLOCK_SIZE_LIST_COUNT - 1; i >= 0; --i)
+			{
+				tmp = pool_allocators + i;
+				SB_ENGINE_INFO("{0}, {1}", (void*)tmp, tmp->GetPoolMemLocation());
+				tmp->~PoolAllocator();
+			}
+			sbmemory::Deallocate(pool_allocators);
+			delete pool_lookup;
+			//allocators are on stack so no need to delete them here
+			SB_ENGINE_INFO("INFO: Memory Manger shut down properly.");
+			return true;
+		}
+		catch (std::exception& e)
+		{
+			SB_ENGINE_ERROR("ERROR: Failed to shut down the memory manager.{0}", e.what());
+			return false;
+		}
+	}
+
+
+
+
 	//This functions returns apropriate pool for requested size. 
-	static PoolAllocator* LookUp(const size_t size, const unsigned alignement = 4)
+	static PoolAllocator* LookUp(const size_t size)
 	{
 
 		//Return the block if available
@@ -134,32 +166,6 @@ namespace sbmemory {
 
 
 
-	//This method will clear all the memory pools and shut down the manager. 
-	//Needs to be called at very end of engine shut down.
-	bool MeoryManagerShutDown()
-	{
-		try
-		{
-
-			//delete pool_lookup;
-			PoolAllocator* tmp;
-			for (int i = BLOCK_SIZE_LIST_COUNT - 1; i >= 0; --i)
-			{
-				tmp = pool_allocators + i;
-				SB_ENGINE_INFO("{0}, {1}", (void*)tmp, tmp->GetPoolMemLocation());
-				tmp->~PoolAllocator();
-			}
-			sbmemory::Deallocate(pool_allocators);
-			//allocators are on stack so no need to delete them here
-			SB_ENGINE_INFO("INFO: Memory Manger shut down properly.");
-			return true;
-		}
-		catch (std::exception& e)
-		{
-			SB_ENGINE_ERROR("ERROR: Failed to shut down the memory manager.{0}", e.what());
-			return false;
-		}
-	}
 
 
 }
