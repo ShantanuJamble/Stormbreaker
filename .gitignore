@@ -21,7 +21,8 @@ StromBreaker/build/*
 
 # Mono auto generated files
 mono_crash.*
-
+[Aa]ssets/
+[Aa]ssets/*
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

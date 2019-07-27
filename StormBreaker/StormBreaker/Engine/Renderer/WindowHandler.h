@@ -18,7 +18,7 @@ class WindowClass
 public:
 	WindowClass(const char*, int, int);
 	~WindowClass();
-
+		
 	void Init();
 	void Update();
 

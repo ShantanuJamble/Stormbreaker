@@ -58,13 +58,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)StormBreaker\Engine\;$(SolutionDir)StormBreaker\;$(SolutionDir)StormBreaker\vendor\spdlog\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)StormBreaker\Engine\util;$(SolutionDir)StormBreaker\Engine\;$(SolutionDir)StormBreaker\;$(SolutionDir)vendor\include\assimp;$(SolutionDir)vendor\include\glad;$(SolutionDir)vendor\include\GLFW;$(SolutionDir)vendor\include\KHR;$(SolutionDir)vendor\include\spdlog;$(SolutionDir)vendor\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SB_PLATFORM_WINDOWS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\libs\assimp\Release;$(SolutionDir)vendor\libs\GLFW\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;assimp-vc140-mt.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>copy /Y $(SolutionDir)build\$(Platform)\$(Configuration)\StormBreaker\bin\*.dll $(SolutionDir)build\$(Platform)\$(Configuration)\$(ProjectName)\bin\</Command>
@@ -76,11 +78,14 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)StormBreaker\Engine\;$(SolutionDir)StormBreaker\;$(SolutionDir)StormBreaker\vendor\spdlog\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)StormBreaker\Engine\util;$(SolutionDir)StormBreaker\Engine\;$(SolutionDir)StormBreaker\;$(SolutionDir)vendor\include\assimp;$(SolutionDir)vendor\include\glad;$(SolutionDir)vendor\include\GLFW;$(SolutionDir)vendor\include\KHR;$(SolutionDir)vendor\include\spdlog;$(SolutionDir)vendor\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SB_PLATFORM_WINDOWS;SB_DEBUG_BUILD;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\libs\assimp\Debug;$(SolutionDir)vendor\libs\GLFW\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;assimp-vc140-mt.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <PerUserRedirection>true</PerUserRedirection>
     </Link>
     <PreBuildEvent>
       <Command>copy /Y $(SolutionDir)build\$(Platform)\$(Configuration)\StormBreaker\bin\* $(SolutionDir)build\$(Platform)\$(Configuration)\$(ProjectName)\bin\</Command>

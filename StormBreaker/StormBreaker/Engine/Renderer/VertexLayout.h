@@ -2,8 +2,6 @@
 #define VERTEX_LAYOUT_H
 
 #include "framework.h"
-
-#include <boost/container/vector.hpp>
 #include <vector>
 #include <cassert>
 
@@ -29,13 +27,13 @@ struct VertexElements
 	}
 };
 
-typedef boost::container::vector<VertexElements> boost_elements_vector;
+typedef std::vector<VertexElements> elements_vector;
 
 //class that stores all the attributes attributed to a single vertex buffer
 class VertexLayout
 {
 private:
-	boost_elements_vector m_elements;//stores a list of attributes
+	elements_vector m_elements;//stores a list of attributes
 	unsigned int m_stride;					//stores the stride of all those attributes
 
 public:
@@ -43,7 +41,7 @@ public:
 	VertexLayout() :m_stride(0), m_elements({}) {};
 	~VertexLayout() {};
 
-	inline const boost_elements_vector GetElements() const { return m_elements; }
+	inline const elements_vector GetElements() const { return m_elements; }
 	inline unsigned int GetStride() const { return m_stride; }
 
 	// templated function to add attributes to

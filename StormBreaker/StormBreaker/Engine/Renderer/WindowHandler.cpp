@@ -49,7 +49,7 @@ void WindowClass::Init()
 	//Load OpenGL Function Pointers
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
-		FL_ENGINE_ERROR( "ERROR: Failed to initialize GLAD." );
+		SB_ENGINE_ERROR( "ERROR: Failed to initialize GLAD." );
 	}
 
 	glfwMakeContextCurrent(gameWindow);

@@ -4,11 +4,13 @@
 
 
 #include "Events/ApplicationEvent.h"
+#include "Renderer/WindowHandler.h"
 #include "Log.h"
 #include "sbmemory.h"
 
 
 namespace Engine {
+	WindowClass* window1 = nullptr;
 	Application::Application()
 	{
 
@@ -22,17 +24,20 @@ namespace Engine {
 		#endif
 		SB_GAME_INFO("Inititaitng memory manager.");
 		sbmemory::MemoryManagetInit();
+		window1 = new WindowClass("Test", 1280, 720);
 	}
 
 
 	Application::~Application()
 	{
 		sbmemory::MeoryManagerShutDown();
+		delete window1;
 	}
 
 	void Application::Run()
 	{
 		WindowResizeEvent e(1280, 720);
+		
 		/*std::vector<int, sbmemory::STLAllocator<int>> mynewvec = { 10,20,30 };
 		
 		for (int i : mynewvec)
@@ -47,7 +52,7 @@ namespace Engine {
 			SB_GAME_TRACE(e.ToString());
 		}
 
-		//while (true);
+		while (true);
 		return;
 	}
 }

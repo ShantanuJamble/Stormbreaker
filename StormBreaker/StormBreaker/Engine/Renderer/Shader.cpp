@@ -1,5 +1,5 @@
 #include "Shader.h"
-#include <boost/filesystem/fstream.hpp>
+#include <fstream>
 #include <sstream>
 #include <iostream>
 #include <cassert>
@@ -24,7 +24,7 @@ SimpleShader Shader::LoadShader(const std::string& path)
 
 	if (getline(input, line))// reads first line
 	{
-		 FL_ENGINE_INFO("INFO: File found");
+		 SB_ENGINE_INFO("INFO: File found");
 	}
 	std::string  finalstring;
 	unsigned int shaderType = 0;
@@ -51,9 +51,9 @@ SimpleShader Shader::LoadShader(const std::string& path)
 		}
 
 		if (shaderType == GL_VERTEX_SHADER)
-			FL_ENGINE_INFO("INFO: Loading {0} shader.", (shaderType == GL_VERTEX_SHADER)?"vertex":"fragment");
+			SB_ENGINE_INFO("INFO: Loading {0} shader.", (shaderType == GL_VERTEX_SHADER)?"vertex":"fragment");
 		else
-			FL_ENGINE_INFO("INFO: Loading Vertex shader.");
+			SB_ENGINE_INFO("INFO: Loading Vertex shader.");
 
 	}
 	else
@@ -88,7 +88,7 @@ void Shader::CompileShader(unsigned int type, std::string source)
 
 
 		
-		FL_ENGINE_ERROR("ERROR: Failed to compile {0} , {1}", (type == GL_VERTEX_SHADER ? "Vertex" : "Fragment"), message);
+		SB_ENGINE_ERROR("ERROR: Failed to compile {0} , {1}", (type == GL_VERTEX_SHADER ? "Vertex" : "Fragment"), message);
 		
 		/*std::
 		
