@@ -24,7 +24,7 @@ struct timer
 
 		float ms = duration.count()*1000.0f;
 		//std::cout << jobTitle << " took " << ms << "\n";
-		FL_ENGINE_INFO("JOBSYSTEM INFO:{0} took {1}."jobTitle, ms);
+		SB_ENGINE_INFO("JOBSYSTEM INFO:{0} took {1}.",jobTitle, ms);
 	}
 };
 
@@ -47,7 +47,7 @@ struct boostTimer
 		duration = end - start;
 
 		float ms = duration.count()* 1000.0f;
-		FL_ENGINE_INFO("JOBSYSTEM INFO:{0} took {1}."jobTitle, ms);
+		SB_ENGINE_INFO("JOBSYSTEM INFO:{0} took {1}.",jobTitle, ms);
 	}
 };
 

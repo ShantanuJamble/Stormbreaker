@@ -114,16 +114,6 @@
     <ClCompile Include="Engine\Memory\Allocator.cpp" />
     <ClCompile Include="Engine\Memory\MemoryInterface.cpp" />
     <ClCompile Include="Engine\Memory\PoolAllocator.cpp" />
-    <ClCompile Include="Engine\Renderer\glad.c" />
-    <ClCompile Include="Engine\Renderer\IndexBuffer.cpp" />
-    <ClCompile Include="Engine\Renderer\Renderer.cpp" />
-    <ClCompile Include="Engine\Renderer\RenderTexture.cpp" />
-    <ClCompile Include="Engine\Renderer\Shader.cpp" />
-    <ClCompile Include="Engine\Renderer\ShaderProgram.cpp" />
-    <ClCompile Include="Engine\Renderer\stb_image_implementation.cpp" />
-    <ClCompile Include="Engine\Renderer\VertexArray.cpp" />
-    <ClCompile Include="Engine\Renderer\VertexBuffer.cpp" />
-    <ClCompile Include="Engine\Renderer\WindowHandler.cpp" />
     <ClCompile Include="Engine\util\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -141,23 +131,22 @@
     <ClInclude Include="Engine\Memory\MemoryInterface.h" />
     <ClInclude Include="Engine\Memory\PoolAllocator.hpp" />
     <ClInclude Include="Engine\Memory\STLMemoryInterface.h" />
-    <ClInclude Include="Engine\Renderer\IndexBuffer.h" />
-    <ClInclude Include="Engine\Renderer\OpenGLErrorHandler.h" />
-    <ClInclude Include="Engine\Renderer\Renderer.h" />
-    <ClInclude Include="Engine\Renderer\RenderTexture.h" />
-    <ClInclude Include="Engine\Renderer\Shader.h" />
-    <ClInclude Include="Engine\Renderer\ShaderProgram.h" />
-    <ClInclude Include="Engine\Renderer\stb_image.h" />
-    <ClInclude Include="Engine\Renderer\VertexArray.h" />
-    <ClInclude Include="Engine\Renderer\VertexBuffer.h" />
-    <ClInclude Include="Engine\Renderer\VertexLayout.h" />
-    <ClInclude Include="Engine\Renderer\WindowHandler.h" />
     <ClInclude Include="Engine\targetver.h" />
     <ClInclude Include="Engine\util\TimeBenchmark.h" />
     <ClInclude Include="Engine\util\Timer.h" />
     <ClInclude Include="sbmemory.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\glm.0.9.9.500\build\native\glm.targets" Condition="Exists('..\packages\glm.0.9.9.500\build\native\glm.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\glm.0.9.9.500\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glm.0.9.9.500\build\native\glm.targets'))" />
+  </Target>
 </Project>

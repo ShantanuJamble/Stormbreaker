@@ -4,13 +4,11 @@
 
 
 #include "Events/ApplicationEvent.h"
-#include "Renderer/WindowHandler.h"
 #include "Log.h"
 #include "sbmemory.h"
 
 
 namespace Engine {
-	WindowClass* window1 = nullptr;
 	Application::Application()
 	{
 
@@ -24,14 +22,12 @@ namespace Engine {
 		#endif
 		SB_GAME_INFO("Inititaitng memory manager.");
 		sbmemory::MemoryManagetInit();
-		window1 = new WindowClass("Test", 1280, 720);
 	}
 
 
 	Application::~Application()
 	{
 		sbmemory::MeoryManagerShutDown();
-		delete window1;
 	}
 
 	void Application::Run()
