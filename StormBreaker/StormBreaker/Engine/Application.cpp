@@ -6,9 +6,10 @@
 #include "Events/ApplicationEvent.h"
 #include "Log.h"
 #include "sbmemory.h"
-
+#include "Renderer/WindowHandler.h"
 
 namespace Engine {
+	Window *testWindow;
 	Application::Application()
 	{
 
@@ -22,12 +23,16 @@ namespace Engine {
 		#endif
 		SB_GAME_INFO("Inititaitng memory manager.");
 		sbmemory::MemoryManagetInit();
+		testWindow = new Window(400, 400);
+		testWindow->Initialise();
+		
 	}
 
 
 	Application::~Application()
 	{
 		sbmemory::MeoryManagerShutDown();
+		delete testWindow;
 	}
 
 	void Application::Run()
