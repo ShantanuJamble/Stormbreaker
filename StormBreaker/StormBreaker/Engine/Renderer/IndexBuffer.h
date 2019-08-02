@@ -3,6 +3,7 @@
 
 #include "framework.h"
 #include <vector>
+#include "OpenGLErrorHandler.h"
 class IndexBuffer
 {
 private:

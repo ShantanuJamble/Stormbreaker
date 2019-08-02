@@ -5,13 +5,14 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <unordered_map>
 
 //GLM
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-
+#include "OpenGLErrorHandler.h"
 
 
 struct SimpleShader
@@ -32,7 +33,7 @@ class Shader
 private:
 	void LoadShaderCode(const GLchar* vertexPath, GLenum& type);
 	void CompileShaderCode(SimpleShader& shader);
-
+	mutable std::unordered_map< std::string, int> m_UniformLocations;
 public:
 	//Program ID
 	unsigned int m_programID = 0;
@@ -45,12 +46,14 @@ public:
 	void LinkShaders();
 
 	//Use the shader
-	void UseShader();
+	void UseShader() const;
 
 	//Utility uniform functions
+	int GetUniformLocation(const std::string& name) const;
 	void SetBool(const std::string& name, bool value) const;
 	void SetInt(const std::string& name, int value) const;
 	void SetFloat(const std::string& name, float value) const;
+	void SetFloat4(const std::string& name, float r, float g, float b, float a);
 	void SetVec2(const std::string& name, const glm::vec2& value) const;
 	void SetVec2(const std::string& name, float x, float y) const;
 	void SetVec3(const std::string& name, const glm::vec3& value) const;

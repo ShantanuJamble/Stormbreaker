@@ -34,7 +34,6 @@ namespace sbmemory {
 		std::size_t pool_size = m_num_of_elements * element_size_in_bytes;
 
 		//Allocating memory
-		SB_ENGINE_INFO("INFO: Creating memory for pool");
 		m_poolref = AllocateAligned(pool_size,alignment);
 
 		if (m_poolref)
@@ -63,7 +62,7 @@ namespace sbmemory {
 		}
 		else
 		{
-			SB_ENGINE_ERROR("ERROR: Failed to allocate the memory");
+			SB_ENGINE_ERROR("ERROR: Failed to allocate pool memory");
 		}
 
 	}

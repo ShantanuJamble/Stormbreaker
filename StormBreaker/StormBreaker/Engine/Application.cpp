@@ -1,12 +1,20 @@
 #include "Application.h"
 
 #include <vector>
-
+#include <glm/mat4x4.hpp>
 
 #include "Events/ApplicationEvent.h"
 #include "Log.h"
 #include "sbmemory.h"
+#include "Renderer/Renderer.h"
 #include "Renderer/WindowHandler.h"
+#include "Renderer/VertexArray.h"
+#include "Renderer/VertexBuffer.h"
+#include "Renderer/VertexLayout.h"
+#include "Renderer/IndexBuffer.h"
+#include "Renderer/Shader.h"
+#include "Renderer/Camera.h"
+#include "Renderer/OpenGLErrorHandler.h"
 
 namespace Engine {
 	Window *testWindow;
@@ -23,9 +31,9 @@ namespace Engine {
 		#endif
 		SB_GAME_INFO("Inititaitng memory manager.");
 		sbmemory::MemoryManagetInit();
-		testWindow = new Window(400, 400);
+		testWindow = new Window(1200,780);
 		testWindow->Initialise();
-		
+				
 	}
 
 
@@ -44,6 +52,7 @@ namespace Engine {
 		for (int i : mynewvec)
 			SB_GAME_INFO("{0}", i);*/
 
+		
 		if (e.IsInCategory(EventCategoryApplication))
 		{
 			SB_GAME_TRACE(e.ToString());
@@ -53,7 +62,43 @@ namespace Engine {
 			SB_GAME_TRACE(e.ToString());
 		}
 
-		while (true);
+		Renderer renderer;
+
+		float positions[3*3] = {
+			-0.5f,-0.5f,0.0f,
+			 0.5f,-0.5f,0.0f,
+			 0.0f, 0.5f,0.0f,
+		};
+
+		unsigned int indices[] = {
+			0, 1, 2
+		};
+		
+
+
+		VertexBuffer* vbo = new VertexBuffer(positions, sizeof(positions));
+		IndexBuffer* ibo = new  IndexBuffer(indices,3);
+
+		VertexArray *vao = new VertexArray();
+		
+		vao->AddBuffer(vbo);
+
+		Shader tempShader("Engine/Shader/VertexShader.vert", "Engine/Shader/FragmentShader.frag");
+		tempShader.UseShader();
+		while (!testWindow->GetShouldClose())
+		{
+			renderer.Clear();
+
+			glClearColor(0.0f, 0.5f, 0.5f, 1.0f);
+
+			renderer.Draw(*vao,*ibo,tempShader);
+			testWindow->SwapBuffers();
+			testWindow->PollEvents();
+		}
+		delete vao;
+		delete vbo;
+		delete ibo;
+
 		return;
 	}
 }

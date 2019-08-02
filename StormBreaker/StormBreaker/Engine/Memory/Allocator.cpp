@@ -13,7 +13,6 @@ namespace sbmemory {
 		try
 		{
 			void * main_memory_block = malloc(sz_in_byte);
-			std::cout << "INFO: Creating memory block at " << main_memory_block << std::endl;;
 			return main_memory_block;
 		}
 		catch (std::exception& e)
@@ -31,7 +30,7 @@ namespace sbmemory {
 	{
 		try 
 		{
-			SB_ENGINE_INFO("Deallocating {0}", memref);
+			//SB_ENGINE_INFO("Deallocating {0}", memref);
 			free(memref);
 		}
 		catch (std::exception& e)

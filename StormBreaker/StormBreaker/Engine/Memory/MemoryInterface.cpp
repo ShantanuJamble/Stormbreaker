@@ -56,11 +56,12 @@ namespace sbmemory {
 				
 				tmp = pool_allocators + index;
 				tmp = new (tmp) PoolAllocator;
-				SB_ENGINE_INFO("INFO: Creating pool for {0},  {1}, {2}", index, BLOCK_SIZES[index],static_cast<void*>(tmp));
+				//SB_ENGINE_INFO("INFO: Creating pool for {0},  {1}, {2}", index, BLOCK_SIZES[index],static_cast<void*>(tmp));
 				tmp->CreatePool(BLOCK_SIZES[index], POOL_SIZE / BLOCK_SIZES[index],
 					(BLOCK_SIZES[index] < 16) ? 4 : 16);
 			}
 			IsInitialized = true;
+			SB_ENGINE_INFO("INFO: Memory manager initialized.");
 		}
 		catch (std::exception& e)
 		{
@@ -85,7 +86,7 @@ namespace sbmemory {
 			for (int i = BLOCK_SIZE_LIST_COUNT - 1; i >= 0; --i)
 			{
 				tmp = pool_allocators + i;
-				SB_ENGINE_INFO("{0}, {1}", (void*)tmp, tmp->GetPoolMemLocation());
+				//SB_ENGINE_INFO("{0}, {1}", (void*)tmp, tmp->GetPoolMemLocation());
 				tmp->~PoolAllocator();
 			}
 			sbmemory::Deallocate(pool_allocators);

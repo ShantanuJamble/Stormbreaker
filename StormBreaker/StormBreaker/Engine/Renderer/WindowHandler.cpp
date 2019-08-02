@@ -1,5 +1,7 @@
 #include "WindowHandler.h"
 #include "Log.h"
+#include "OpenGLErrorHandler.h"
+
 
 Window::Window()
 {
@@ -9,6 +11,9 @@ Window::Window()
 	m_lastTime = 0.0f;
 	for (size_t i = 0; i < 1024; i++)
 		m_keys[i] = 0;
+
+	//Setting up openGL error handler
+	glfwSetErrorCallback(&GLErrorHandler::glfwError);
 }
 
 Window::Window(GLint windowWidth, GLint windowHeight)
@@ -19,6 +24,9 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	m_lastTime = 0.0f;
 	for (size_t i = 0; i < 1024; i++)
 		m_keys[i] = 0;
+
+	//Setting up openGL error handler
+	glfwSetErrorCallback(&GLErrorHandler::glfwError);
 }
 
 int Window::Initialise()
@@ -32,8 +40,8 @@ int Window::Initialise()
 
 	// Setup GLFW Windows Properties
 	// OpenGL version
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	// Core Profile
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	// Allow forward compatiblity
@@ -64,7 +72,9 @@ int Window::Initialise()
 	if (!status)
 		SB_ENGINE_ERROR("ERROR: Failed to load glad.");
 
-	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);//Want this to be default thing. Renderer methods can later on be used to change.
+	glEnable(GL_DEBUG_OUTPUT);
+	glDebugMessageCallback(GLErrorHandler::MessageCallback, nullptr);
 
 	// Create Viewport
 	glViewport(0, 0, m_BufferWidth, m_BufferHeight);

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef WINDOWHANDLER_H
+#define WINDOWHANDLER_H
 
 #include "stdio.h"
 
@@ -32,14 +33,14 @@ public:
 
 	int Initialise();
 
-	GLint GetBufferWidth() { return m_BufferWidth; }
-	GLint GetBufferHeight() { return m_BufferHeight; }
+	inline GLint GetBufferWidth()  const { return m_BufferWidth; }
+	inline GLint GetBufferHeight() const { return m_BufferHeight; }
 
-	bool GetShouldClose() { return glfwWindowShouldClose(m_Window); }
+	inline bool GetShouldClose() const { return glfwWindowShouldClose(m_Window); }
 
-	void SwapBuffers() { glfwSwapBuffers(m_Window); }
+	inline void SwapBuffers() const { glfwSwapBuffers(m_Window); }
 
-	void PollEvents() { glfwPollEvents(); }
+	inline void PollEvents() const { glfwPollEvents(); }
 
 	~Window();
 
@@ -55,3 +56,5 @@ public:
 	GLfloat GetTimeDelta();
 
 };
+
+#endif //WINDOWHANDLER_H
