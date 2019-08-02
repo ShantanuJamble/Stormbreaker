@@ -84,7 +84,6 @@ namespace Engine {
 		vao->AddBuffer(vbo);
 
 		Shader tempShader("Engine/Shader/VertexShader.vert", "Engine/Shader/FragmentShader.frag");
-		tempShader.UseShader();
 		while (!testWindow->GetShouldClose())
 		{
 			renderer.Clear();
