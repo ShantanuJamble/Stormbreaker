@@ -55,6 +55,8 @@ public:
 	GLfloat GetYchanged();
 	GLfloat GetTimeDelta();
 
+	GLFWwindow* GetGLFWWindow() const { return m_Window; }
+
 };
 
 #endif //WINDOWHANDLER_H

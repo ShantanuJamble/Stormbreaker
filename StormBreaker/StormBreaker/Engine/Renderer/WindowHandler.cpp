@@ -61,10 +61,13 @@ int Window::Initialise()
 
 	// Set the current context
 	glfwMakeContextCurrent(m_Window);
+	//enable vsync
+	glfwSwapInterval(1.0f);
+
 
 	//Handle Input
 	CreatCallback();
-	glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
 	// Allow modern extension access
 	int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
@@ -79,6 +82,7 @@ int Window::Initialise()
 	// Create Viewport
 	glViewport(0, 0, m_BufferWidth, m_BufferHeight);
 
+	
 	//Setting pointer to call static methods from callback
 	glfwSetWindowUserPointer(m_Window, this);
 }

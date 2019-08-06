@@ -64,7 +64,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>SB_BUILD_LIB;SB_PLATFORM_WINDOWS;SB_DEBUG_BUILD;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SB_BUILD_LIB;SB_PLATFORM_WINDOWS;SB_DEBUG_BUILD;IMGUI_IMPL_OPENGL_LOADER_GLAD;</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\Engine\util;$(ProjectDir)\Engine;$(SolutionDir)vendor\include\KHR;$(SolutionDir)vendor\include\glad;$(SoluitionDir)vendor\include\GLFW;$(SolutionDir)vendor\include\spdlog;$(SolutionDir)vendor\include\;$(ProjectDir)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
@@ -88,7 +88,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>SB_BUILD_DLL;SB_PLATFORM_WINDOWS;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SB_BUILD_DLL;SB_PLATFORM_WINDOWS;IMGUI_IMPL_OPENGL_LOADER_GLAD;</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\Engine\util;$(ProjectDir)\Engine;$(SolutionDir)vendor\include\KHR;$(SolutionDir)vendor\include\glad;$(SoluitionDir)vendor\include\GLFW;$(SolutionDir)vendor\include\spdlog;$(SolutionDir)vendor\include\;$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -110,6 +110,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Application.cpp" />
+    <ClCompile Include="Engine\ImGui\imgui.cpp" />
+    <ClCompile Include="Engine\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="Engine\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="Engine\ImGui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="Engine\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Engine\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Engine\Log.cpp" />
     <ClCompile Include="Engine\Memory\Allocator.cpp" />
     <ClCompile Include="Engine\Memory\MemoryInterface.cpp" />
@@ -126,6 +132,9 @@
     <ClCompile Include="Engine\Renderer\WindowHandler.cpp" />
     <ClCompile Include="Engine\util\Timer.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Engine\Layer.cpp" />
+    <ClCompile Include="Engine\LayerStack.cpp" />
+    <ClCompile Include="Engine\Renderer\ImGuiLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Application.h" />
@@ -137,6 +146,14 @@
     <ClInclude Include="Engine\Events\KeyEvent.h" />
     <ClInclude Include="Engine\Events\MouseEvent.h" />
     <ClInclude Include="Engine\framework.h" />
+    <ClInclude Include="Engine\ImGui\imconfig.h" />
+    <ClInclude Include="Engine\ImGui\imgui.h" />
+    <ClInclude Include="Engine\ImGui\imgui_impl_glfw.h" />
+    <ClInclude Include="Engine\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Engine\ImGui\imgui_internal.h" />
+    <ClInclude Include="Engine\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="Engine\ImGui\imstb_textedit.h" />
+    <ClInclude Include="Engine\ImGui\imstb_truetype.h" />
     <ClInclude Include="Engine\Log.h" />
     <ClInclude Include="Engine\Memory\Allocator.hpp" />
     <ClInclude Include="Engine\Memory\MemoryInterface.h" />
@@ -155,6 +172,9 @@
     <ClInclude Include="Engine\targetver.h" />
     <ClInclude Include="Engine\util\TimeBenchmark.h" />
     <ClInclude Include="Engine\util\Timer.h" />
+    <ClInclude Include="Engine\Layer.h" />
+    <ClInclude Include="Engine\LayerStack.h" />
+    <ClInclude Include="Engine\Renderer\ImGuiLayer.h" />
     <ClInclude Include="sbmemory.h" />
   </ItemGroup>
   <ItemGroup>

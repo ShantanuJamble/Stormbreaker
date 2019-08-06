@@ -3,7 +3,7 @@
 
 #include "Event.h"
 
-#include <sstream>
+
 
 namespace Engine {
 
@@ -18,9 +18,7 @@ namespace Engine {
 
 		std::string ToString() const override
 		{
-			std::stringstream ss;
-			ss << "MouseMovedEvent: " << m_MouseX << ", " << m_MouseY;
-			return ss.str();
+			return "MouseMovedEvent: ";
 		}
 
 		EVENT_CLASS_TYPE(MouseMoved)
@@ -40,9 +38,7 @@ namespace Engine {
 
 		std::string ToString() const override
 		{
-			std::stringstream ss;
-			ss << "MouseScrolledEvent: " << GetXOffset() << ", " << GetYOffset();
-			return ss.str();
+			return "MouseScrolledEvent: ";
 		}
 
 		EVENT_CLASS_TYPE(MouseScrolled)
@@ -72,9 +68,7 @@ namespace Engine {
 
 		std::string ToString() const override
 		{
-			std::stringstream ss;
-			ss << "MouseButtonPressedEvent: " << m_Button;
-			return ss.str();
+			return "MouseButtonPressedEvent: ";
 		}
 
 		EVENT_CLASS_TYPE(MouseButtonPressed)
@@ -88,9 +82,7 @@ namespace Engine {
 
 		std::string ToString() const override
 		{
-			std::stringstream ss;
-			ss << "MouseButtonReleasedEvent: " << m_Button;
-			return ss.str();
+			return "MouseButtonReleasedEvent: ";
 		}
 
 		EVENT_CLASS_TYPE(MouseButtonReleased)

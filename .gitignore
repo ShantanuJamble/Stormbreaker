@@ -9,6 +9,9 @@ StromBreaker/StromBreaker/vendor/*
 #Ignoring build files
 StromBreaker/build/*
 
+#imgui ini 
+*imgui.ini*
+
 # User-specific files
 *.rsuser
 *.suo

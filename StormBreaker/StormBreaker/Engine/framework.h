@@ -7,12 +7,11 @@
 
 #ifdef SB_PLATFORM_WINDOWS
 
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
-
-// Windows Header Files
-#include "targetver.h"
-#include <windows.h>
-#include <tchar.h>
+	#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows 
+	// Windows Header Files
+	#include "targetver.h"
+	#include <windows.h>
+	#include <tchar.h>
 
 #endif
 
@@ -21,6 +20,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <memory.h>
+
 
 
 
