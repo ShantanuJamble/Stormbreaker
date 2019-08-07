@@ -58,15 +58,59 @@ namespace Engine {
 			SB_GAME_INFO("{0}", i);*/
 
 		
-	
-		//Testing imgui
+		Renderer renderer;
+
+		float positions[] = {
+			-1.0f, -1.0f, 0.0f,
+			0.0f, -1.0f, 1.0f,
+			1.0f, -1.0f, 0.0f,
+			0.0f,  1.0f, 0.0f
+		};
+
+		unsigned int indices[] = {
+			0, 3, 1,
+			1, 3, 2,
+			2, 3, 0,
+			0, 1, 2
+		};
 
 
-		
-		
-		GLFWwindow* window = static_cast<GLFWwindow*>(m_Window->GetGLFWWindow());
 
-		
+		VertexBuffer* vbo = new VertexBuffer(positions, sizeof(positions));
+		IndexBuffer* ibo = new  IndexBuffer(indices, 12);
+
+		VertexArray* vao = new VertexArray();
+
+		vao->AddBuffer(vbo);
+
+		Shader tempShader("Engine/Shader/VertexShader.vert", "Engine/Shader/FragmentShader.frag");
+
+
+		//Animation stuff
+		float r = 0.0f;
+		float incr = 0.05f;
+
+		float trans_incr = 0.005f;
+		float triOffset = 0.0f;
+		float max_limit = 0.7f;
+		int direction = 1;
+
+		float curAngle = 0.0f;
+		const float toRadians = 3.14159265f / 180.0f;
+
+
+		int bufferWidth, bufferHeight;
+		bufferHeight = m_Window->GetBufferHeight();
+		bufferWidth = m_Window->GetBufferWidth();
+		glm::mat4 projection = glm::perspective(45.0f, (GLfloat)bufferWidth / (GLfloat)bufferHeight, 0.1f, 100.0f);
+		//glm::mat4 ortho = glm::ortho(-1.6f, 1.6f, -0.9f, 0.9f);
+
+		//Camera
+		Camera camera = Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 0.01f);
+		glm::mat4 view;
+
+		glm::mat4 model{ 1.0f };
+		glm::vec3 scaling_vec(0.4f, 0.4f, 1.0f);
 
 		// Main loop
 		while (!m_Window->GetShouldClose())
@@ -78,12 +122,56 @@ namespace Engine {
 			// Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
 			m_Window->PollEvents();
 
+			//Camera Input
+			camera.KeyControl(m_Window->GetKeys(), m_Window->GetTimeDelta());
+			camera.MouseControl(m_Window->GetXchanged(), m_Window->GetYchanged());
+
+			renderer.Clear();
 			m_ImGuiLayer->Begin();
 			
+
+			//Tramnslation stuff
+			if (direction)
+			{
+				triOffset += trans_incr;
+			}
+			else {
+				triOffset -= trans_incr;
+			}
+
+			if (abs(triOffset) >= max_limit)
+			{
+				direction = !direction;
+			}
+
+			//Rotation stuff
+			curAngle += 0.5f;
+			if (curAngle >= 360)
+			{
+				curAngle -= 360;
+			}
+			
+
 			// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+			glm::mat4 model{ 1.0f };
+			model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
+			model = glm::rotate(model, curAngle * toRadians, glm::vec3(0.0f, 1.0f, 1.0f));
+			model = glm::scale(model,scaling_vec );
+
+			tempShader.UseShader();
+			tempShader.SetMat4("u_Model", model);
+			tempShader.SetMat4("u_Projection", projection);
+			view = camera.CalculateViewMatrix();
+			/*view = glm::translate(glm::mat4(1.0f), camera.GetPostion()) *
+				glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(0, 0, 1));
+				*/
+			tempShader.SetMat4("u_View", view);
+			renderer.Draw(*vao, *ibo, tempShader);
+
 			
+
 			m_ImGuiLayer->OnImGuiRender();
-			
+	
 			m_ImGuiLayer->End();
 
 			m_Window->SwapBuffers();
@@ -92,9 +180,9 @@ namespace Engine {
 	
 		m_ImGuiLayer->OnDetach();
 		
-	//	delete vao;
-	//	delete vbo;
-	//	delete ibo;
+		delete vao;
+		delete vbo;
+		delete ibo;
 
 		return;
 	}

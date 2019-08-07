@@ -110,6 +110,8 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	//Link Shaders
 	LinkShaders();
 
+	SB_ENGINE_INFO("INFO: Shaders compiled and linked.");
+
 	//Delete the Shaders after they're linked to the program
 	glDeleteShader(m_vertexShader.m_shaderId);
 	glDeleteShader(m_fragmentShader.m_shaderId);
