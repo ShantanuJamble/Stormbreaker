@@ -36,7 +36,7 @@ public:
 	inline GLint GetBufferWidth()  const { return m_BufferWidth; }
 	inline GLint GetBufferHeight() const { return m_BufferHeight; }
 
-	inline bool GetShouldClose() const { return glfwWindowShouldClose(m_Window); }
+	inline bool GetWindowShouldClose() const { return glfwWindowShouldClose(m_Window); }
 
 	inline void SwapBuffers() const { glfwSwapBuffers(m_Window); }
 
@@ -45,7 +45,7 @@ public:
 	~Window();
 
 	void CreatCallback();
-	//Keyhit callback
+	//Key hit callback
 	static void KeyHandler(GLFWwindow* window, int key, int code, int action, int mode);
 	//Mouse Handler
 	static void MouseHandler(GLFWwindow* window, double xPos, double yPos);

@@ -15,12 +15,13 @@
 #include "Renderer/Shader.h"
 #include "Renderer/Camera.h"
 #include "Renderer/OpenGLErrorHandler.h"
+#include "Renderer/Texture.h"
 
 namespace Engine {
 	
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application()
+	Application::Application():scaling(glm::vec3(0.4f, 0.4f, 1.0f))
 	{
 		#ifdef SB_DEBUG_BUILD
 				// Enable memory leak detection as a quick and dirty
@@ -61,10 +62,11 @@ namespace Engine {
 		Renderer renderer;
 
 		float positions[] = {
-			-1.0f, -1.0f, 0.0f,
-			0.0f, -1.0f, 1.0f,
-			1.0f, -1.0f, 0.0f,
-			0.0f,  1.0f, 0.0f
+			//x		y		z	u	 v
+		   -1.0f, -1.0f, 0.0f,  0.0f, 0.0f,
+			0.0f, -1.0f, 1.0f,  0.5f, 0.0f,
+ 			1.0f, -1.0f, 0.0f,  1.0f, 0.0f,
+			0.0f,  1.0f, 0.0f,  0.5f, 1.0f
 		};
 
 		unsigned int indices[] = {
@@ -85,6 +87,9 @@ namespace Engine {
 
 		Shader tempShader("Engine/Shader/VertexShader.vert", "Engine/Shader/FragmentShader.frag");
 
+		std::string path("../Assets/Textures/paint_albedo.png");
+		Texture texture(path);
+		texture.Bind();
 
 		//Animation stuff
 		float r = 0.0f;
@@ -113,7 +118,7 @@ namespace Engine {
 		glm::vec3 scaling_vec(0.4f, 0.4f, 1.0f);
 
 		// Main loop
-		while (!m_Window->GetShouldClose())
+		while (!m_Window->GetWindowShouldClose())
 		{
 			// Poll and handle events (inputs, window resize, etc.)
 			// You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
@@ -130,7 +135,7 @@ namespace Engine {
 			m_ImGuiLayer->Begin();
 			
 
-			//Tramnslation stuff
+			//Translation stuff
 			if (direction)
 			{
 				triOffset += trans_incr;
@@ -156,7 +161,7 @@ namespace Engine {
 			glm::mat4 model{ 1.0f };
 			model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
 			model = glm::rotate(model, curAngle * toRadians, glm::vec3(0.0f, 1.0f, 1.0f));
-			model = glm::scale(model,scaling_vec );
+			model = glm::scale(model,scaling );
 
 			tempShader.UseShader();
 			tempShader.SetMat4("u_Model", model);
@@ -166,6 +171,7 @@ namespace Engine {
 				glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(0, 0, 1));
 				*/
 			tempShader.SetMat4("u_View", view);
+			tempShader.SetInt("u_Texture", 0);
 			renderer.Draw(*vao, *ibo, tempShader);
 
 			

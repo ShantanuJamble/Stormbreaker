@@ -5,6 +5,10 @@
 #include "Events/Event.h"
 #include "Renderer/WindowHandler.h"
 #include "Renderer/ImGuiLayer.h"
+#include "ImGui/SBImGuiWindow.h"
+#include <glm/vec3.hpp>
+//#include "ImGui/imgui.h"
+
 namespace Engine {
 	class Application
 	{
@@ -13,6 +17,9 @@ namespace Engine {
 		static Application* s_Instance;
 		Window* m_Window;
 		ImGuiLayer * m_ImGuiLayer;
+
+		//Imgui values
+		glm::vec3 scaling;
 	public:
 		static inline Application& GetInstance() { return *s_Instance; }
 		Application();
@@ -20,11 +27,12 @@ namespace Engine {
 		virtual ~Application();
 		void Run();
 		inline const Window&  GetWindow() const { return *m_Window; }
+	
+	
 	};
+
 
 	//To be defined by client
 	Application* CreateApplication();
-
-
 }
 #endif // !APPLICATION_H

@@ -36,8 +36,8 @@ void GLAPIENTRY GLErrorHandler::MessageCallback(GLenum source,
 	if(type == GL_DEBUG_TYPE_ERROR)
 		SB_ENGINE_INFO("GL ERROR:type = {0}, severity = {1}, message ={2}\n",
 			type, severity, message);
-	else 
+	/*else
 		SB_ENGINE_INFO("INFO:GL CALLBACK:type = {0}, severity = {1}, message ={2}\n",
-			type, severity, message);
+			type, severity, message);*/
 	
 }

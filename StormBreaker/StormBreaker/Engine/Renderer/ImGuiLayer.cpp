@@ -1,6 +1,6 @@
 #include "ImGuiLayer.h"
 #include "Application.h"
-
+#include "ImGui/SBImGuiWindow.h"
 ImGuiLayer::ImGuiLayer()
 {
 }
@@ -48,6 +48,7 @@ void ImGuiLayer::OnImGuiRender()
 {
 	static bool show_window = true;
 	ImGui::ShowDemoWindow(&show_window);
+	//ImGUI::TestWindow(&show_window)
 }
 
 

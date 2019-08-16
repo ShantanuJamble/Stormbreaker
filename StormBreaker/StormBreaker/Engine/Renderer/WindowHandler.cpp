@@ -33,7 +33,7 @@ int Window::Initialise()
 {
 	if (!glfwInit())
 	{
-		printf("Error Initialising GLFW");
+		printf("Error Initializing GLFW");
 		glfwTerminate();
 		return 1;
 	}
@@ -44,7 +44,7 @@ int Window::Initialise()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	// Core Profile
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	// Allow forward compatiblity
+	// Allow forward compatibility
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 	// Create the window
@@ -147,7 +147,7 @@ GLfloat Window::GetXchanged()
 	GLfloat change = m_xchanged;
 	m_xchanged = 0.0f;
 	return change;
-}
+}	
 
 GLfloat Window::GetYchanged()
 {

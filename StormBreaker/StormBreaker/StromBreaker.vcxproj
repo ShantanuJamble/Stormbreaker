@@ -116,6 +116,7 @@
     <ClCompile Include="Engine\ImGui\imgui_impl_glfw.cpp" />
     <ClCompile Include="Engine\ImGui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Engine\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Engine\ImGui\SBImGuiWindow.cpp" />
     <ClCompile Include="Engine\Log.cpp" />
     <ClCompile Include="Engine\Memory\Allocator.cpp" />
     <ClCompile Include="Engine\Memory\MemoryInterface.cpp" />
@@ -135,6 +136,7 @@
     <ClCompile Include="Engine\Layer.cpp" />
     <ClCompile Include="Engine\LayerStack.cpp" />
     <ClCompile Include="Engine\Renderer\ImGuiLayer.cpp" />
+    <ClCompile Include="Engine\Renderer\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Application.h" />
@@ -154,6 +156,7 @@
     <ClInclude Include="Engine\ImGui\imstb_rectpack.h" />
     <ClInclude Include="Engine\ImGui\imstb_textedit.h" />
     <ClInclude Include="Engine\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Engine\ImGui\SBImGuiWindow.h" />
     <ClInclude Include="Engine\Log.h" />
     <ClInclude Include="Engine\Memory\Allocator.hpp" />
     <ClInclude Include="Engine\Memory\MemoryInterface.h" />
@@ -176,6 +179,7 @@
     <ClInclude Include="Engine\LayerStack.h" />
     <ClInclude Include="Engine\Renderer\ImGuiLayer.h" />
     <ClInclude Include="sbmemory.h" />
+    <ClInclude Include="Engine\Renderer\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Shader\FragmentShader.frag" />

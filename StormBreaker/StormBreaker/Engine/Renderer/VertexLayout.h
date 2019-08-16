@@ -8,8 +8,8 @@ struct Vertex {
 	glm::vec3 Position;
 	//Normal
 	//glm::vec3 Normal;
-	////Texture Coordinates
-	//glm::vec2 TexCoords;
+	//Texture Coordinates
+	glm::vec2 TexCoords;
 	////Tangent
 	//glm::vec3 Tangent;
 	////Bitangent
