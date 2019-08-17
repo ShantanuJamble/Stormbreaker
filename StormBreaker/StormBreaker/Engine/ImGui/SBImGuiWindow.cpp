@@ -78,4 +78,8 @@ ImGUI::SBImGuiWinodw::SBImGuiWinodw(std::string& title, bool no_titlebar /*= fal
 	ImGui::SetNextWindowSize(ImVec2(550, 680), ImGuiCond_FirstUseEver);
 }
 
+ImGUI::SBImGuiWinodw::~SBImGuiWinodw()
+{
+	delete m_pOpen;
+}
 

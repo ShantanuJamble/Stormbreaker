@@ -16,24 +16,25 @@
 #include "Renderer/Camera.h"
 #include "Renderer/OpenGLErrorHandler.h"
 #include "Renderer/Texture.h"
+#include "Renderer/Mesh.h"
 
 namespace Engine {
-	
+
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application():scaling(glm::vec3(0.4f, 0.4f, 1.0f))
+	Application::Application() :scaling(glm::vec3(2.0f, 2.0f, 2.0f))
 	{
-		#ifdef SB_DEBUG_BUILD
-				// Enable memory leak detection as a quick and dirty
-				// way of determining if we forgot to clean something up
-				//  - You may want to use something more advanced, like Visual Leak Detector
-				_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-		#endif
+#ifdef SB_DEBUG_BUILD
+		// Enable memory leak detection as a quick and dirty
+		// way of determining if we forgot to clean something up
+		//  - You may want to use something more advanced, like Visual Leak Detector
+		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
 		//SB_ASSERT(s_Instance == nullptr_t,"Application already exists");
 		s_Instance = this;
 		SB_GAME_INFO("Inititaitng memory manager.");
 		sbmemory::MemoryManagetInit();
-		m_Window = new Window(1200,780);
+		m_Window = new Window(1200, 780);
 		m_Window->Initialise();
 
 		m_ImGuiLayer = new ImGuiLayer();
@@ -46,50 +47,41 @@ namespace Engine {
 		delete m_Window;
 		delete m_ImGuiLayer;
 		sbmemory::MeoryManagerShutDown();
-		
+
 	}
 
 	void Application::Run()
 	{
-		WindowResizeEvent e(1280, 720);
-		
 		/*std::vector<int, sbmemory::STLAllocator<int>> mynewvec = { 10,20,30 };
-		
+
 		for (int i : mynewvec)
 			SB_GAME_INFO("{0}", i);*/
 
-		
+
 		Renderer renderer;
 
-		float positions[] = {
+		/*float positions[] =*/
+
+		std::vector<float> positions{
 			//x		y		z	u	 v
 		   -1.0f, -1.0f, 0.0f,  0.0f, 0.0f,
 			0.0f, -1.0f, 1.0f,  0.5f, 0.0f,
- 			1.0f, -1.0f, 0.0f,  1.0f, 0.0f,
+			1.0f, -1.0f, 0.0f,  1.0f, 0.0f,
 			0.0f,  1.0f, 0.0f,  0.5f, 1.0f
 		};
 
-		unsigned int indices[] = {
+		//unsigned int indices[] = 
+		std::vector<unsigned int> indices{
 			0, 3, 1,
 			1, 3, 2,
 			2, 3, 0,
 			0, 1, 2
 		};
-
-
-
-		VertexBuffer* vbo = new VertexBuffer(positions, sizeof(positions));
-		IndexBuffer* ibo = new  IndexBuffer(indices, 12);
-
-		VertexArray* vao = new VertexArray();
-
-		vao->AddBuffer(vbo);
-
+		std::string texturepath("../Assets/Textures/meme.png");
+		std::string objpath ("../Assets/obj_files/sphere.obj");
+		//Mesh mesh(positions, indices, new Texture(path));
+		Mesh mesh(objpath, texturepath);
 		Shader tempShader("Engine/Shader/VertexShader.vert", "Engine/Shader/FragmentShader.frag");
-
-		std::string path("../Assets/Textures/paint_albedo.png");
-		Texture texture(path);
-		texture.Bind();
 
 		//Animation stuff
 		float r = 0.0f;
@@ -117,6 +109,9 @@ namespace Engine {
 		glm::mat4 model{ 1.0f };
 		glm::vec3 scaling_vec(0.4f, 0.4f, 1.0f);
 
+
+
+		Texture tmpTexture;
 		// Main loop
 		while (!m_Window->GetWindowShouldClose())
 		{
@@ -133,7 +128,7 @@ namespace Engine {
 
 			renderer.Clear();
 			m_ImGuiLayer->Begin();
-			
+
 
 			//Translation stuff
 			if (direction)
@@ -155,13 +150,13 @@ namespace Engine {
 			{
 				curAngle -= 360;
 			}
-			
+
 
 			// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 			glm::mat4 model{ 1.0f };
 			model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
-			model = glm::rotate(model, curAngle * toRadians, glm::vec3(0.0f, 1.0f, 1.0f));
-			model = glm::scale(model,scaling );
+			model = glm::rotate(model, curAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::scale(model, scaling);
 
 			tempShader.UseShader();
 			tempShader.SetMat4("u_Model", model);
@@ -170,25 +165,24 @@ namespace Engine {
 			/*view = glm::translate(glm::mat4(1.0f), camera.GetPostion()) *
 				glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(0, 0, 1));
 				*/
+			tmpTexture = *(mesh.GetTexture());
+			tmpTexture.Bind();
 			tempShader.SetMat4("u_View", view);
-			tempShader.SetInt("u_Texture", 0);
-			renderer.Draw(*vao, *ibo, tempShader);
-
 			
+			tempShader.SetInt("u_Texture", 0);
+			renderer.Draw(*mesh.GetVertexArray(), *mesh.GetIndexBuffer(), tempShader);
+
+
 
 			m_ImGuiLayer->OnImGuiRender();
-	
+
 			m_ImGuiLayer->End();
 
 			m_Window->SwapBuffers();
 		}
 
-	
+
 		m_ImGuiLayer->OnDetach();
-		
-		delete vao;
-		delete vbo;
-		delete ibo;
 
 		return;
 	}

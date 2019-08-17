@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -64,7 +64,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>SB_BUILD_LIB;SB_PLATFORM_WINDOWS;SB_DEBUG_BUILD;IMGUI_IMPL_OPENGL_LOADER_GLAD;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SB_BUILD_LIB;SB_PLATFORM_WINDOWS;SB_DEBUG_BUILD;IMGUI_IMPL_OPENGL_LOADER_GLAD; _CRT_SECURE_NO_WARNINGS;</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\Engine\util;$(ProjectDir)\Engine;$(SolutionDir)vendor\include\KHR;$(SolutionDir)vendor\include\glad;$(SoluitionDir)vendor\include\GLFW;$(SolutionDir)vendor\include\spdlog;$(SolutionDir)vendor\include\;$(ProjectDir)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
@@ -88,7 +88,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>SB_BUILD_DLL;SB_PLATFORM_WINDOWS;IMGUI_IMPL_OPENGL_LOADER_GLAD;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SB_BUILD_DLL;SB_PLATFORM_WINDOWS;IMGUI_IMPL_OPENGL_LOADER_GLAD; _CRT_SECURE_NO_WARNINGS;</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\Engine\util;$(ProjectDir)\Engine;$(SolutionDir)vendor\include\KHR;$(SolutionDir)vendor\include\glad;$(SoluitionDir)vendor\include\GLFW;$(SolutionDir)vendor\include\spdlog;$(SolutionDir)vendor\include\;$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -131,12 +131,14 @@
     <ClCompile Include="Engine\Renderer\VertexArray.cpp" />
     <ClCompile Include="Engine\Renderer\VertexBuffer.cpp" />
     <ClCompile Include="Engine\Renderer\WindowHandler.cpp" />
+    <ClCompile Include="Engine\util\ObjLoader.cpp" />
     <ClCompile Include="Engine\util\Timer.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Engine\Layer.cpp" />
     <ClCompile Include="Engine\LayerStack.cpp" />
     <ClCompile Include="Engine\Renderer\ImGuiLayer.cpp" />
     <ClCompile Include="Engine\Renderer\Texture.cpp" />
+    <ClCompile Include="Engine\Renderer\Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Application.h" />
@@ -173,11 +175,13 @@
     <ClInclude Include="Engine\Renderer\VertexLayout.h" />
     <ClInclude Include="Engine\Renderer\WindowHandler.h" />
     <ClInclude Include="Engine\targetver.h" />
+    <ClInclude Include="Engine\util\ObjLoader.h" />
     <ClInclude Include="Engine\util\TimeBenchmark.h" />
     <ClInclude Include="Engine\util\Timer.h" />
     <ClInclude Include="Engine\Layer.h" />
     <ClInclude Include="Engine\LayerStack.h" />
     <ClInclude Include="Engine\Renderer\ImGuiLayer.h" />
+    <ClInclude Include="Engine\Renderer\Mesh.h" />
     <ClInclude Include="sbmemory.h" />
     <ClInclude Include="Engine\Renderer\Texture.h" />
   </ItemGroup>

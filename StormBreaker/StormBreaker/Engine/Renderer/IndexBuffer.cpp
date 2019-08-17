@@ -19,6 +19,7 @@ IndexBuffer::IndexBuffer(const std::vector<unsigned int>& indices, size_t count)
 	unsigned int * indicesArr = new unsigned int [count];
 	std::copy(indices.begin(), indices.end(), indicesArr);
 	SetupIndexBuffer(indicesArr);// unbinds the index buffer	
+	delete indicesArr;
 }
 
 

@@ -45,7 +45,7 @@ namespace ImGUI {
 			bool no_bring_to_front = false,
 			bool no_docking = false
 		);
-		~SBImGuiWinodw() = default;
+		~SBImGuiWinodw();
 
 		virtual void AddWidgets() = 0;
 
