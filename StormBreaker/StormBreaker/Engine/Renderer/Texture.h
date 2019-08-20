@@ -13,9 +13,10 @@ private:
 	int m_Width, m_Height, m_BPP;
 
 public:
+
+	static enum TextureType {ALBEDO,ROUGHNESS,METALNESS};
 	Texture() = default;
 	Texture(std::string& path);
-	Texture(Texture&) = default;
 	~Texture();
 
 	void Bind (unsigned int slot = 0) ;

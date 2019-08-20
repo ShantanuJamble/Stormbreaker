@@ -17,16 +17,16 @@ void Mesh::SetupMesh()
 
 
 
-Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, Texture* texture)
-		:m_vertices(vertices), m_indices(indices), m_texture(texture),
+Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, Material* material)
+		:m_vertices(vertices), m_indices(indices), m_material(material),
 		 m_VAO(nullptr), m_VBO(nullptr), m_IBO(nullptr)
 {
 	SetupMesh();
 	SB_ENGINE_INFO("INFO: Mesh set up correctly.");
 }
 
-Mesh::Mesh(std::string& file_path, std::string& texture_path)
-	:m_vertices(NULL), m_indices(NULL), m_texture(new Texture(texture_path)),
+Mesh::Mesh(std::string& file_path, Material* material)
+	:m_vertices(NULL), m_indices(NULL), m_material(material),
 	m_VAO(nullptr), m_VBO(nullptr), m_IBO(nullptr)
 {
 	ReadFromFile(file_path);
@@ -50,5 +50,5 @@ Mesh::~Mesh()
 	delete m_VAO;
 	delete m_VBO;
 	delete m_IBO;
-	delete m_texture;
+	delete m_material;
 }

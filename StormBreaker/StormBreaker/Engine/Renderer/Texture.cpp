@@ -36,7 +36,7 @@ Texture::~Texture()
 	glDeleteTextures(1, &m_RenderId);
 }
 
-void Texture::Bind (unsigned slot /*=0*/)
+void Texture::Bind (unsigned int slot /*=0*/)
 {
 	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, m_RenderId); 

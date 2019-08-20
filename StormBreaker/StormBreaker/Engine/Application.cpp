@@ -60,28 +60,18 @@ namespace Engine {
 
 		Renderer renderer;
 
-		/*float positions[] =*/
 
-		std::vector<float> positions{
-			//x		y		z	u	 v
-		   -1.0f, -1.0f, 0.0f,  0.0f, 0.0f,
-			0.0f, -1.0f, 1.0f,  0.5f, 0.0f,
-			1.0f, -1.0f, 0.0f,  1.0f, 0.0f,
-			0.0f,  1.0f, 0.0f,  0.5f, 1.0f
-		};
-
-		//unsigned int indices[] = 
-		std::vector<unsigned int> indices{
-			0, 3, 1,
-			1, 3, 2,
-			2, 3, 0,
-			0, 1, 2
-		};
+		//Setup material for the object
 		std::string texturepath("../Assets/Textures/meme.png");
+		Texture* texture = new Texture(texturepath);
+		Shader * tempShader = new Shader("Engine/Shader/VertexShader.vert", "Engine/Shader/FragmentShader.frag");
+		Material material(texture, tempShader);
+
+		//Setup mesh for the object
 		std::string objpath ("../Assets/obj_files/sphere.obj");
 		//Mesh mesh(positions, indices, new Texture(path));
-		Mesh mesh(objpath, texturepath);
-		Shader tempShader("Engine/Shader/VertexShader.vert", "Engine/Shader/FragmentShader.frag");
+		Mesh mesh(objpath, &material);
+		
 
 		//Animation stuff
 		float r = 0.0f;
@@ -111,7 +101,8 @@ namespace Engine {
 
 
 
-		Texture tmpTexture;
+		Texture* tmpTexture = mesh.GetMaterial()->GetTexture();
+		Shader*  materialShader = mesh.GetMaterial()->GetShader();
 		// Main loop
 		while (!m_Window->GetWindowShouldClose())
 		{
@@ -158,19 +149,20 @@ namespace Engine {
 			model = glm::rotate(model, curAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 			model = glm::scale(model, scaling);
 
-			tempShader.UseShader();
-			tempShader.SetMat4("u_Model", model);
-			tempShader.SetMat4("u_Projection", projection);
+			materialShader->UseShader();
+			materialShader->SetMat4("u_Model", model);
+			materialShader->SetMat4("u_Projection", projection);
 			view = camera.CalculateViewMatrix();
 			/*view = glm::translate(glm::mat4(1.0f), camera.GetPostion()) *
 				glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(0, 0, 1));
 				*/
-			tmpTexture = *(mesh.GetTexture());
-			tmpTexture.Bind();
-			tempShader.SetMat4("u_View", view);
+
+			mesh.GetMaterial()->GetTexture()->Bind();
 			
-			tempShader.SetInt("u_Texture", 0);
-			renderer.Draw(*mesh.GetVertexArray(), *mesh.GetIndexBuffer(), tempShader);
+			materialShader->SetMat4("u_View", view);
+			
+			materialShader->SetInt("u_Texture", 0);
+			renderer.Draw(*mesh.GetVertexArray(), *mesh.GetIndexBuffer(), *materialShader);
 
 
 

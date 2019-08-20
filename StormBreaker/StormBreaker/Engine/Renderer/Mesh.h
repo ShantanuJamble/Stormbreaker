@@ -4,15 +4,14 @@
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
 #include "VertexArray.h"
-#include "Texture.h"
 #include "VertexLayout.h"
-
+#include "Material.h"
 class Mesh
 {
 private:
 	std::vector<Vertex> m_vertices;
 	std::vector<unsigned int> m_indices;
-	Texture *m_texture;
+	Material* m_material;
 
 	VertexArray* m_VAO;
 	VertexBuffer* m_VBO;
@@ -24,16 +23,16 @@ private:
 
 	
 public:
-	Mesh(std::string& file_path,std::string& texture_path);
+	Mesh(std::string& file_path,Material* material);
 	Mesh(std::vector<Vertex>& vertices,
 		std::vector<unsigned int>& indices,
-		Texture* textures);
+		Material* m_material);
 
 	~Mesh();
 
 	inline const VertexArray* GetVertexArray() const { return m_VAO; }
 	inline const IndexBuffer* GetIndexBuffer() const { return m_IBO; }
-	inline const Texture*     GetTexture()	   const { return m_texture; }
+	inline const Material* GetMaterial() const { return m_material; }
 };
 
 #endif

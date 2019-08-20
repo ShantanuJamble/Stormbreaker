@@ -139,6 +139,7 @@
     <ClCompile Include="Engine\Renderer\ImGuiLayer.cpp" />
     <ClCompile Include="Engine\Renderer\Texture.cpp" />
     <ClCompile Include="Engine\Renderer\Mesh.cpp" />
+    <ClCompile Include="Engine\Renderer\Material.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Application.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Engine\LayerStack.h" />
     <ClInclude Include="Engine\Renderer\ImGuiLayer.h" />
     <ClInclude Include="Engine\Renderer\Mesh.h" />
+    <ClInclude Include="Engine\Renderer\Material.h" />
     <ClInclude Include="sbmemory.h" />
     <ClInclude Include="Engine\Renderer\Texture.h" />
   </ItemGroup>
