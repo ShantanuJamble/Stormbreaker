@@ -51,6 +51,7 @@ public:
 	static void MouseHandler(GLFWwindow* window, double xPos, double yPos);
 
 	bool* GetKeys() { return m_keys; };
+	inline bool isKeyDown(int code) const { return m_keys[code]; }
 	GLfloat GetXchanged();
 	GLfloat GetYchanged();
 	GLfloat GetTimeDelta();

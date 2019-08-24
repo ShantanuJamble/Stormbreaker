@@ -6,6 +6,8 @@
 #include "Renderer/WindowHandler.h"
 #include "Renderer/ImGuiLayer.h"
 #include "ImGui/SBImGuiWindow.h"
+#include "Renderer/Mesh.h"
+#include "Renderer/Renderer.h"
 #include <glm/vec3.hpp>
 //#include "ImGui/imgui.h"
 
@@ -18,6 +20,9 @@ namespace Engine {
 		Window* m_Window;
 		ImGuiLayer * m_ImGuiLayer;
 
+		//Demo stuff
+		Renderer m_renderer;
+		std::vector<Mesh*> m_meshes;
 		//Imgui values
 		glm::vec3 scaling;
 	public:

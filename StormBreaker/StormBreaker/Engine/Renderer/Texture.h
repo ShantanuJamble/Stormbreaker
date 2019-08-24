@@ -3,6 +3,8 @@
 #include "Renderer.h"
 #include "framework.h"
 
+enum TextureType { ALBEDO, ROUGHNESS, METALNESS };
+
 class Texture
 {
 
@@ -14,7 +16,7 @@ private:
 
 public:
 
-	static enum TextureType {ALBEDO,ROUGHNESS,METALNESS};
+	
 	Texture() = default;
 	Texture(std::string& path);
 	~Texture();

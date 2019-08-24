@@ -8,7 +8,7 @@ class IndexBuffer
 {
 private:
 	unsigned int m_renderBufferId;
-	size_t m_Count;
+	size_t  m_Count;
 	void SetupIndexBuffer(const unsigned int* indices);
 
 public:
@@ -17,7 +17,7 @@ public:
 	IndexBuffer(const std::vector<unsigned int>& indices, size_t count);
 	~IndexBuffer();
 	
-	inline unsigned int GetCount() const { return m_Count; }
+	inline size_t GetCount() const { return m_Count; }
 
 	void Bind() const;
 	void Unbind() const;

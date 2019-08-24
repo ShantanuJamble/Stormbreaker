@@ -2,7 +2,7 @@
 #include <cassert>
 
 //creates and binds an index buffer with int array
-IndexBuffer::IndexBuffer(const unsigned int* indices,size_t count) 
+IndexBuffer::IndexBuffer(const unsigned int* indices, size_t count)
 	:m_Count(count),m_renderBufferId(0)
 {
 	assert(sizeof(unsigned int) == sizeof(GLuint));// makes sure that both GLuint and unsigned int have same size on the system
@@ -19,7 +19,7 @@ IndexBuffer::IndexBuffer(const std::vector<unsigned int>& indices, size_t count)
 	unsigned int * indicesArr = new unsigned int [count];
 	std::copy(indices.begin(), indices.end(), indicesArr);
 	SetupIndexBuffer(indicesArr);// unbinds the index buffer	
-	delete indicesArr;
+	delete [] indicesArr;
 }
 
 
@@ -27,9 +27,9 @@ IndexBuffer::IndexBuffer(const std::vector<unsigned int>& indices, size_t count)
 //Geneartes and bind data to the index buffer
 void IndexBuffer::SetupIndexBuffer(const unsigned int* indices)
 {
-	GLCall(glGenBuffers(1, &m_renderBufferId));// generates a buffer
-	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_renderBufferId));// binds that buffer to the context
-	GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Count * sizeof(unsigned int), indices, GL_STATIC_DRAW));
+	glGenBuffers(1, &m_renderBufferId);// generates a buffer
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_renderBufferId);// binds that buffer to the context
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Count * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 	//passes in the data of the index array
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -38,15 +38,15 @@ void IndexBuffer::SetupIndexBuffer(const unsigned int* indices)
 
 IndexBuffer::~IndexBuffer()
 {
-	GLCall(glDeleteBuffers(1, &m_renderBufferId));// deletes the index buffer
+	glDeleteBuffers(1, &m_renderBufferId);// deletes the index buffer
 }
 
 void IndexBuffer::Bind() const
 {
-	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_renderBufferId));//binds the index buffer to the current context
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_renderBufferId);//binds the index buffer to the current context
 }
 
 void IndexBuffer::Unbind() const
 {
-	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));//unbinds the index buffer from the current context
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);//unbinds the index buffer from the current context
 }

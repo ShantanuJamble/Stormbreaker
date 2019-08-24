@@ -62,7 +62,7 @@ int Window::Initialise()
 	// Set the current context
 	glfwMakeContextCurrent(m_Window);
 	//enable vsync
-	glfwSwapInterval(1.0f);
+	glfwSwapInterval(1);
 
 
 	//Handle Input
@@ -85,6 +85,7 @@ int Window::Initialise()
 	
 	//Setting pointer to call static methods from callback
 	glfwSetWindowUserPointer(m_Window, this);
+	return 0;
 }
 
 
@@ -123,24 +124,28 @@ void Window::KeyHandler(GLFWwindow* window, int key, int code, int action, int m
 
 }
 
+
+
 void Window::MouseHandler(GLFWwindow* window, double xPos, double yPos)
 {
 	Window* theWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
-
+	GLfloat tmpXpos = (GLfloat)xPos;
+	GLfloat tmpYpos = (GLfloat)yPos;
 	if (theWindow->m_mouseFirstmoved)
 	{
 		theWindow->m_mouseFirstmoved = false;
-		theWindow->m_lastX = xPos;
-		theWindow->m_lastY = yPos;
+		theWindow->m_lastX = tmpXpos;
+		theWindow->m_lastY = tmpYpos;
 	}
 	else
 	{
-		theWindow->m_xchanged = xPos - theWindow->m_lastX;
-		theWindow->m_ychanged = theWindow->m_lastY - yPos;
-		theWindow->m_lastX = xPos;
-		theWindow->m_lastY = yPos;
+		theWindow->m_xchanged = tmpXpos - theWindow->m_lastX;
+		theWindow->m_ychanged = theWindow->m_lastY - tmpYpos;
+		theWindow->m_lastX = tmpXpos;
+		theWindow->m_lastY = tmpYpos;
 	}
 }
+
 
 GLfloat Window::GetXchanged()
 {
@@ -158,7 +163,7 @@ GLfloat Window::GetYchanged()
 
 GLfloat Window::GetTimeDelta()
 {
-	GLfloat now = glfwGetTime(); // SDL_GetPerformanceCounter();
+	GLfloat now = (GLfloat) glfwGetTime(); // SDL_GetPerformanceCounter();
 	m_deltaTime = now - m_lastTime; // (now - lastTime)*1000/SDL_GetPerformanceFrequency();
 	m_lastTime = now;
 

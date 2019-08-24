@@ -24,11 +24,20 @@ Material::Material(std::string& albedoTexturePath, Shader* shader)
 
 Material::~Material()
 {
-	delete m_shader;
-	delete m_albedoTexture;
+
+	try {
+		if (m_shader)
+			delete m_shader;
+		if (m_albedoTexture)
+			delete m_albedoTexture;
+	}
+	catch (std::exception& e)
+	{
+		SB_ENGINE_ERROR("ERROR: Error while deleting material. {0}", e.what());
+	}
 }
 
-void Material::SetTexture(Texture* texture, Texture::TextureType type)
+void Material::SetTexture(Texture* texture, TextureType type)
 {
 	if (texture == nullptr)
 	{
@@ -37,34 +46,33 @@ void Material::SetTexture(Texture* texture, Texture::TextureType type)
 	}
 	switch (type)
 	{
-		case  Texture::TextureType::ALBEDO :
-			
+		case  TextureType::ALBEDO :
 			m_albedoTexture = texture;
 			break;
 
-		case Texture::TextureType::METALNESS:
+		case TextureType::METALNESS:
 			break;
 
-		case Texture::TextureType::ROUGHNESS:
+		case TextureType::ROUGHNESS:
 			break;
 	}
 }
 
-void Material::SetTexture(std::string& texturePath, Texture::TextureType type)
+void Material::SetTexture(std::string& texturePath, TextureType type)
 {
 	
 	Texture* texture = new Texture(texturePath);
 	switch (type)
 	{
-	case  Texture::TextureType::ALBEDO:
+	case  TextureType::ALBEDO:
 
 		m_albedoTexture = texture;
 		break;
 
-	case Texture::TextureType::METALNESS:
+	case TextureType::METALNESS:
 		break;
 
-	case Texture::TextureType::ROUGHNESS:
+	case TextureType::ROUGHNESS:
 		break;
 	}
 }

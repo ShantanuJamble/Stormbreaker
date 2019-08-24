@@ -20,8 +20,8 @@ public:
 	Material(Texture* albedo, Shader* shader);
 	Material(std::string& albedoTexturePath, Shader* shader);
 	~Material();
-	void SetTexture(Texture* texture, Texture::TextureType type);
-	void SetTexture(std::string& texturePath, Texture::TextureType type);
+	void SetTexture(Texture* texture, TextureType type);
+	void SetTexture(std::string& texturePath, TextureType type);
 	void SetShader(Shader* shader);
 
 	inline Texture* GetTexture() const { return m_albedoTexture; }

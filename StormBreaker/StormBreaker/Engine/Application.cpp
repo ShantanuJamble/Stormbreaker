@@ -34,11 +34,37 @@ namespace Engine {
 		s_Instance = this;
 		SB_GAME_INFO("Inititaitng memory manager.");
 		sbmemory::MemoryManagetInit();
-		m_Window = new Window(1200, 780);
+		m_Window = new Window(1600, 900);
 		m_Window->Initialise();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		m_ImGuiLayer->OnAttach();
+
+
+		//Setup material for the object
+		std::string texturepath1("../Assets/Textures/paint_albedo.png");
+		Texture* texture1 = new Texture(texturepath1);
+		
+		Shader* tempShader1 = new Shader("Engine/Shader/VertexShader.vert", "Engine/Shader/FragmentShader.frag");
+		
+		Material* sphereMaterial = new Material(texture1, tempShader1);
+
+		//Setup mesh for the object
+		std::string objpath("../Assets/obj_files/sphere.obj");
+		//Mesh mesh(positions, indices, new Texture(path));
+		Mesh* mesh = new Mesh(objpath, sphereMaterial);
+
+		std::string texturepath2("../Assets/Textures/meme.png");
+		Texture* texture2 = new Texture(texturepath2);
+		Shader* tempShader2 = new Shader("Engine/Shader/VertexShader.vert", "Engine/Shader/FragmentShader.frag");
+		Material* cubeMaterial = new Material(texture2, tempShader2);
+
+		std::string objpath2("../Assets/obj_files/cube.obj");
+		//Mesh mesh(positions, indices, new Texture(path));
+		Mesh* cubemesh = new Mesh(objpath2, cubeMaterial);
+
+		m_meshes.push_back(mesh);
+		m_meshes.push_back(cubemesh);
 	}
 
 
@@ -46,6 +72,9 @@ namespace Engine {
 	{
 		delete m_Window;
 		delete m_ImGuiLayer;
+		SB_ENGINE_INFO("I am here!!");
+		for (auto& mesh : m_meshes) delete mesh;
+		m_meshes.clear();
 		sbmemory::MeoryManagerShutDown();
 
 	}
@@ -58,19 +87,6 @@ namespace Engine {
 			SB_GAME_INFO("{0}", i);*/
 
 
-		Renderer renderer;
-
-
-		//Setup material for the object
-		std::string texturepath("../Assets/Textures/meme.png");
-		Texture* texture = new Texture(texturepath);
-		Shader * tempShader = new Shader("Engine/Shader/VertexShader.vert", "Engine/Shader/FragmentShader.frag");
-		Material material(texture, tempShader);
-
-		//Setup mesh for the object
-		std::string objpath ("../Assets/obj_files/sphere.obj");
-		//Mesh mesh(positions, indices, new Texture(path));
-		Mesh mesh(objpath, &material);
 		
 
 		//Animation stuff
@@ -93,16 +109,16 @@ namespace Engine {
 		//glm::mat4 ortho = glm::ortho(-1.6f, 1.6f, -0.9f, 0.9f);
 
 		//Camera
-		Camera camera = Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 0.01f);
-		glm::mat4 view;
+		Camera camera = Camera(glm::vec3(0.0f, 0.0f, 7.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 0.01f);
 
 		glm::mat4 model{ 1.0f };
-		glm::vec3 scaling_vec(0.4f, 0.4f, 1.0f);
+		glm::vec3 scaling_vec(5.0f, 5.0f, 5.0f);
 
-
-
-		Texture* tmpTexture = mesh.GetMaterial()->GetTexture();
-		Shader*  materialShader = mesh.GetMaterial()->GetShader();
+		
+		Mesh* currentmesh = m_meshes[0];
+		int index = 0;
+		Texture* tmpTexture = currentmesh->GetMaterial()->GetTexture();
+		Shader*  materialShader = currentmesh->GetMaterial()->GetShader();
 		// Main loop
 		while (!m_Window->GetWindowShouldClose())
 		{
@@ -113,18 +129,31 @@ namespace Engine {
 			// Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
 			m_Window->PollEvents();
 
+			if (m_Window->isKeyDown(GLFW_KEY_X))
+			{
+				currentmesh = m_meshes[0];
+				tmpTexture = currentmesh->GetMaterial()->GetTexture();
+				materialShader = currentmesh->GetMaterial()->GetShader();
+			}
+			if(m_Window->isKeyDown(GLFW_KEY_C))
+			{
+				currentmesh = m_meshes[1];
+				tmpTexture = currentmesh->GetMaterial()->GetTexture();
+				materialShader = currentmesh->GetMaterial()->GetShader();
+			}
+	
 			//Camera Input
 			camera.KeyControl(m_Window->GetKeys(), m_Window->GetTimeDelta());
 			camera.MouseControl(m_Window->GetXchanged(), m_Window->GetYchanged());
 
-			renderer.Clear();
+			m_renderer.Clear();
 			m_ImGuiLayer->Begin();
 
 
 			//Translation stuff
 			if (direction)
 			{
-				triOffset += trans_incr;
+				triOffset += trans_incr; 
 			}
 			else {
 				triOffset -= trans_incr;
@@ -145,24 +174,20 @@ namespace Engine {
 
 			// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 			glm::mat4 model{ 1.0f };
-			model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
+			//model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
 			model = glm::rotate(model, curAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-			model = glm::scale(model, scaling);
+			model = glm::scale(model, scaling_vec);
+			
+
 
 			materialShader->UseShader();
 			materialShader->SetMat4("u_Model", model);
 			materialShader->SetMat4("u_Projection", projection);
-			view = camera.CalculateViewMatrix();
-			/*view = glm::translate(glm::mat4(1.0f), camera.GetPostion()) *
-				glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(0, 0, 1));
-				*/
-
-			mesh.GetMaterial()->GetTexture()->Bind();
-			
-			materialShader->SetMat4("u_View", view);
+			currentmesh->GetMaterial()->GetTexture()->Bind();
+			materialShader->SetMat4("u_View", camera.CalculateViewMatrix());
 			
 			materialShader->SetInt("u_Texture", 0);
-			renderer.Draw(*mesh.GetVertexArray(), *mesh.GetIndexBuffer(), *materialShader);
+			m_renderer.Draw(*currentmesh->GetVertexArray(), *currentmesh->GetIndexBuffer(), *materialShader);
 
 
 

@@ -2,6 +2,7 @@
 #include "stb_image.h"
 #include "Log.h"
 
+
 Texture::Texture(std::string& path)
 	:m_RenderId(0),m_FilePath(path),m_LocalBuffer(nullptr),
 	m_Width(0),m_Height(0),m_BPP(0)

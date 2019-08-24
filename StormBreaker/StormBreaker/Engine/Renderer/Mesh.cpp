@@ -10,7 +10,7 @@ void Mesh::SetupMesh()
 	m_VAO = new VertexArray();
 	m_VAO->Bind();
 	m_VBO = new VertexBuffer(&m_vertices[0], m_vertices.size() * sizeof(Vertex));
-	m_IBO = new IndexBuffer(m_indices, m_indices.size());
+	m_IBO = new IndexBuffer(m_indices,m_indices.size());
 	m_VAO->AddBuffer(m_VBO);
 	m_VAO->Unbind();
 }
@@ -47,8 +47,16 @@ void Mesh::ReadFromFile(std::string& file_path)
 
 Mesh::~Mesh()
 {
-	delete m_VAO;
-	delete m_VBO;
-	delete m_IBO;
-	delete m_material;
+	try
+	{
+		delete m_VAO;
+		delete m_VBO;
+		delete m_IBO;
+		delete m_material;
+	}
+	catch (std::exception& e)
+	{
+		SB_ENGINE_ERROR("ERROR: Failed while delteing mesh. {0}", e.what());
+	}
+	
 }
