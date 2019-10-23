@@ -32,7 +32,8 @@ void Shader::LoadShaderCode(const GLchar* filePath, GLenum& type)
 	}
 	catch (std::exception e)
 	{
-		SB_ENGINE_ERROR("ERROR::Failed to read shader code.{0} at {1}",e.what(),__FUNCTION__);
+		SB_ENGINE_ERROR("ERROR::Failed to read shader code.{0} at {1} from {2}",
+											e.what(),__FUNCTION__, std::string(filePath).c_str());
 	}
 }
 
@@ -146,6 +147,19 @@ int Shader::GetUniformLocation(const std::string& name) const
 }
 
 
+int Shader::GetUniformBufferIndex(const std::string& name ) const
+{
+	int location;
+	if (m_UniformLocations.find(name) != m_UniformLocations.end())
+		return m_UniformLocations[name];
+	else
+		location = glGetUniformBlockIndex(this->m_programID, name.c_str());
+	m_UniformLocations[name] = location;
+	SB_ENGINE_INFO("INFO: {0} : {1}", name, location);
+	return location;
+}
+
+
 void Shader::SetBool(const std::string& name, bool value) const
 {
 	glUniform1i(GetUniformLocation(name), (int)value);
@@ -209,5 +223,11 @@ void Shader::SetMat3(const std::string& name, const glm::mat3& mat) const
 void Shader::SetMat4(const std::string& name, const glm::mat4& mat) const
 {
 	glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
+}
+
+void Shader::SetUniformBlock(const std::string& name, const unsigned int slot /*=0*/)
+{
+	SB_ENGINE_INFO("Setting up {0},{1}.{2}", name.c_str(), slot, GetUniformBufferIndex(name));
+	glUniformBlockBinding(m_programID, GetUniformBufferIndex(name), slot);
 }
 

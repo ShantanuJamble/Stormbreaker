@@ -8,16 +8,15 @@
 #include "sbmemory.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/WindowHandler.h"
-#include "Renderer/VertexArray.h"
-#include "Renderer/VertexBuffer.h"
-#include "Renderer/VertexLayout.h"
 #include "Renderer/IndexBuffer.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Camera.h"
 #include "Renderer/OpenGLErrorHandler.h"
 #include "Renderer/Texture.h"
 #include "Renderer/Mesh.h"
-
+#include "Renderer/Light.h"
+#include "Renderer/UniformBuffer.h"
+#include "Log.h"
 namespace Engine {
 
 	Application* Application::s_Instance = nullptr;
@@ -45,7 +44,7 @@ namespace Engine {
 		std::string texturepath1("../Assets/Textures/paint_albedo.png");
 		Texture* texture1 = new Texture(texturepath1);
 		
-		Shader* tempShader1 = new Shader("Engine/Shader/VertexShader.vert", "Engine/Shader/FragmentShader.frag");
+		Shader* tempShader1 = new Shader("Engine/Shader/VertexShader.glsl", "Engine/Shader/FragmentShader.glsl");
 		
 		Material* sphereMaterial = new Material(texture1, tempShader1);
 
@@ -56,7 +55,7 @@ namespace Engine {
 
 		std::string texturepath2("../Assets/Textures/meme.png");
 		Texture* texture2 = new Texture(texturepath2);
-		Shader* tempShader2 = new Shader("Engine/Shader/VertexShader.vert", "Engine/Shader/FragmentShader.frag");
+		Shader* tempShader2 = new Shader("Engine/Shader/VertexShader.glsl", "Engine/Shader/FragmentShader.glsl");
 		Material* cubeMaterial = new Material(texture2, tempShader2);
 
 		std::string objpath2("../Assets/obj_files/cube.obj");
@@ -85,10 +84,43 @@ namespace Engine {
 
 		for (int i : mynewvec)
 			SB_GAME_INFO("{0}", i);*/
-
-
 		
 
+		///Setting up uniform buffer
+
+		Light light;
+		light.AmbientIntensity = 2.0f;
+		light.Direction = glm::vec3(1, 0, 0);
+		light.Position = glm::vec3(1, 1, 0);
+		light.Color = glm::vec3(1, 1, 0);
+		light.Type = 0;
+		light.padding1 = 0;
+	
+
+		SB_ENGINE_INFO("SIZEOF LIGHT = {0}, {1}, {2}", sizeof(int), sizeof(float),sizeof(light));
+
+		//unsigned int uboLights;
+		//glGenBuffers(1, &uboLights);
+
+		//glBindBuffer(GL_UNIFORM_BUFFER, uboLights);
+		//glBufferData(GL_UNIFORM_BUFFER, sizeof(Light), NULL,GL_STATIC_DRAW);
+		//glBindBufferRange(GL_UNIFORM_BUFFER, 0, uboLights, 0, sizeof(Light));
+		//glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+
+		////Setting up the bufferdata
+
+		//glBindBuffer(GL_UNIFORM_BUFFER, uboLights);
+		//glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Light), (void*) &light);
+		//glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+
+
+		UniformBuffer lightBlock(sizeof(Light));
+		lightBlock.BindBufferRange(0, sizeof(Light));
+		SB_ENGINE_INFO("{0}", reinterpret_cast<uintptr_t>((void*)&light));
+		lightBlock.UpdateBufferSubData(0, sizeof(Light), (void*)& light);
+		 
 		//Animation stuff
 		float r = 0.0f;
 		float incr = 0.05f;
@@ -112,13 +144,14 @@ namespace Engine {
 		Camera camera = Camera(glm::vec3(0.0f, 0.0f, 7.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 0.01f);
 
 		glm::mat4 model{ 1.0f };
-		glm::vec3 scaling_vec(5.0f, 5.0f, 5.0f);
+		glm::vec3 scaling_vec(3.0f, 3.0f, 3.0f);
 
 		
 		Mesh* currentmesh = m_meshes[0];
 		int index = 0;
 		Texture* tmpTexture = currentmesh->GetMaterial()->GetTexture();
 		Shader*  materialShader = currentmesh->GetMaterial()->GetShader();
+		materialShader->SetUniformBlock("Lights",0);
 		// Main loop
 		while (!m_Window->GetWindowShouldClose())
 		{
@@ -134,12 +167,15 @@ namespace Engine {
 				currentmesh = m_meshes[0];
 				tmpTexture = currentmesh->GetMaterial()->GetTexture();
 				materialShader = currentmesh->GetMaterial()->GetShader();
+				materialShader->SetUniformBlock("Lights");
+				
 			}
 			if(m_Window->isKeyDown(GLFW_KEY_C))
 			{
 				currentmesh = m_meshes[1];
 				tmpTexture = currentmesh->GetMaterial()->GetTexture();
 				materialShader = currentmesh->GetMaterial()->GetShader();
+				materialShader->SetUniformBlock("Lights");
 			}
 	
 			//Camera Input
@@ -187,6 +223,7 @@ namespace Engine {
 			materialShader->SetMat4("u_View", camera.CalculateViewMatrix());
 			
 			materialShader->SetInt("u_Texture", 0);
+
 			m_renderer.Draw(*currentmesh->GetVertexArray(), *currentmesh->GetIndexBuffer(), *materialShader);
 
 

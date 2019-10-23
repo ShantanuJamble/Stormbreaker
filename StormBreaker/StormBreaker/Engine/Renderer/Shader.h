@@ -34,6 +34,11 @@ private:
 	void LoadShaderCode(const GLchar* vertexPath, GLenum& type);
 	void CompileShaderCode(SimpleShader& shader);
 	mutable std::unordered_map< std::string, int> m_UniformLocations;
+
+	//Uniform Mapping methods
+	int GetUniformLocation(const std::string& name) const;
+	int GetUniformBufferIndex(const std::string& name) const;
+
 public:
 	//Program ID
 	unsigned int m_programID = 0;
@@ -49,7 +54,7 @@ public:
 	void UseShader() const;
 
 	//Utility uniform functions
-	int GetUniformLocation(const std::string& name) const;
+	
 	void SetBool(const std::string& name, bool value) const;
 	void SetInt(const std::string& name, int value) const;
 	void SetFloat(const std::string& name, float value) const;
@@ -63,6 +68,7 @@ public:
 	void SetMat2(const std::string& name, const glm::mat2& mat) const;
 	void SetMat3(const std::string& name, const glm::mat3& mat) const;
 	void SetMat4(const std::string& name, const glm::mat4& mat) const;
+	void SetUniformBlock(const std::string& name, const unsigned int slot = 0);
 	
 };
 

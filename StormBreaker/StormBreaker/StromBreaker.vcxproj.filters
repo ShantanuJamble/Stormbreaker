@@ -108,6 +108,9 @@
     <ClCompile Include="Engine\Renderer\Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Renderer\UniformBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Application.h">
@@ -242,10 +245,16 @@
     <ClInclude Include="Engine\Renderer\Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Renderer\Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\UniformBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Engine\Shader\FragmentShader.frag" />
-    <None Include="Engine\Shader\VertexShader.vert" />
+    <None Include="Engine\Shader\VertexShader.glsl" />
+    <None Include="Engine\Shader\FragmentShader.glsl" />
   </ItemGroup>
 </Project>
