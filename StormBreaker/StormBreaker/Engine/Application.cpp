@@ -36,12 +36,12 @@ namespace Engine {
 		m_Window = new Window(1600, 900);
 		m_Window->Initialise();
 
-		m_ImGuiLayer = new ImGuiLayer();
-		m_ImGuiLayer->OnAttach();
+		//m_ImGuiLayer = new ImGuiLayer();
+		//m_ImGuiLayer->OnAttach();
 
 
 		//Setup material for the object
-		std::string texturepath1("../Assets/Textures/paint_albedo.png");
+		std::string texturepath1("D:/playground/Stormbreaker/StormBreaker/StormBreaker/Assets/Textures/steelplate1_albedo.png");
 		Texture* texture1 = new Texture(texturepath1);
 		
 		Shader* tempShader1 = new Shader("Engine/Shader/VertexShader.glsl", "Engine/Shader/FragmentShader.glsl");
@@ -49,28 +49,28 @@ namespace Engine {
 		Material* sphereMaterial = new Material(texture1, tempShader1);
 
 		//Setup mesh for the object
-		std::string objpath("../Assets/obj_files/sphere.obj");
+		std::string objpath("D:/playground/Stormbreaker/StormBreaker/StormBreaker/Assets/Models/sphere.obj");
 		//Mesh mesh(positions, indices, new Texture(path));
 		Mesh* mesh = new Mesh(objpath, sphereMaterial);
 
-		std::string texturepath2("../Assets/Textures/meme.png");
-		Texture* texture2 = new Texture(texturepath2);
-		Shader* tempShader2 = new Shader("Engine/Shader/VertexShader.glsl", "Engine/Shader/FragmentShader.glsl");
-		Material* cubeMaterial = new Material(texture2, tempShader2);
+		//std::string texturepath2("../Assets/Textures/meme.png");
+		//Texture* texture2 = new Texture(texturepath2);
+		//Shader* tempShader2 = new Shader("Engine/Shader/VertexShader.glsl", "Engine/Shader/FragmentShader.glsl");
+		//Material* cubeMaterial = new Material(texture2, tempShader2);
 
-		std::string objpath2("../Assets/obj_files/cube.obj");
-		//Mesh mesh(positions, indices, new Texture(path));
-		Mesh* cubemesh = new Mesh(objpath2, cubeMaterial);
+		//std::string objpath2("../Assets/obj_files/cube.obj");
+		////Mesh mesh(positions, indices, new Texture(path));
+		//Mesh* cubemesh = new Mesh(objpath2, cubeMaterial);
 
 		m_meshes.push_back(mesh);
-		m_meshes.push_back(cubemesh);
+		//m_meshes.push_back(cubemesh);
 	}
 
 
 	Application::~Application()
 	{
 		delete m_Window;
-		delete m_ImGuiLayer;
+		//delete m_ImGuiLayer;
 		SB_ENGINE_INFO("I am here!!");
 		for (auto& mesh : m_meshes) delete mesh;
 		m_meshes.clear();
@@ -183,7 +183,7 @@ namespace Engine {
 			camera.MouseControl(m_Window->GetXchanged(), m_Window->GetYchanged());
 
 			m_renderer.Clear();
-			m_ImGuiLayer->Begin();
+			//m_ImGuiLayer->Begin();
 
 
 			//Translation stuff
@@ -228,15 +228,15 @@ namespace Engine {
 
 
 
-			m_ImGuiLayer->OnImGuiRender();
+			//m_ImGuiLayer->OnImGuiRender();
 
-			m_ImGuiLayer->End();
+			////m_ImGuiLayer->End();
 
 			m_Window->SwapBuffers();
 		}
 
 
-		m_ImGuiLayer->OnDetach();
+		////m_ImGuiLayer->OnDetach();
 
 		return;
 	}

@@ -18,7 +18,7 @@ namespace Engine {
 	private:
 		static Application* s_Instance;
 		Window* m_Window;
-		ImGuiLayer * m_ImGuiLayer;
+		//ImGuiLayer * m_ImGuiLayer;
 
 		//Demo stuff
 		Renderer m_renderer;

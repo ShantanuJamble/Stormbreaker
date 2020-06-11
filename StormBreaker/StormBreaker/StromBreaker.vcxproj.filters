@@ -152,9 +152,6 @@
     <ClInclude Include="Engine\Memory\STLMemoryInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sbmemory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -251,10 +248,13 @@
     <ClInclude Include="Engine\Renderer\UniformBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\sbmemory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Engine\Shader\VertexShader.glsl" />
     <None Include="Engine\Shader\FragmentShader.glsl" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
