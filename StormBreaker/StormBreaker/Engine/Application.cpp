@@ -29,6 +29,8 @@ namespace Engine {
 		//  - You may want to use something more advanced, like Visual Leak Detector
 		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
+
+
 		//SB_ASSERT(s_Instance == nullptr_t,"Application already exists");
 		s_Instance = this;
 		SB_GAME_INFO("Inititaitng memory manager.");
@@ -36,8 +38,8 @@ namespace Engine {
 		m_Window = new Window(1600, 900);
 		m_Window->Initialise();
 
-		//m_ImGuiLayer = new ImGuiLayer();
-		//m_ImGuiLayer->OnAttach();
+		m_ImGuiLayer = new ImGuiLayer();
+		m_ImGuiLayer->OnAttach();
 
 
 		//Setup material for the object
@@ -183,7 +185,7 @@ namespace Engine {
 			camera.MouseControl(m_Window->GetXchanged(), m_Window->GetYchanged());
 
 			m_renderer.Clear();
-			//m_ImGuiLayer->Begin();
+			m_ImGuiLayer->Begin();
 
 
 			//Translation stuff
@@ -227,17 +229,58 @@ namespace Engine {
 			m_renderer.Draw(*currentmesh->GetVertexArray(), *currentmesh->GetIndexBuffer(), *materialShader);
 
 
-
-			//m_ImGuiLayer->OnImGuiRender();
-
-			////m_ImGuiLayer->End();
+			{
+				for (Layer* layer : m_LayerStack)
+					layer->OnImGuiRender();
+			}
+			m_ImGuiLayer->End();
 
 			m_Window->SwapBuffers();
 		}
 
 
-		////m_ImGuiLayer->OnDetach();
+		m_ImGuiLayer->OnDetach();
 
 		return;
+	}
+
+
+
+	void Application::PushLayer(Layer* layer)
+	{
+		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
+	}
+
+	void Application::PushOverlay(Layer* layer)
+	{
+		m_LayerStack.PushOverlay(layer);
+		layer->OnAttach();
+	}
+
+
+	void Application::OnEvent(Event& e)
+	{
+	
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<WindowCloseEvent>(SB_BIND_EVENT_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(SB_BIND_EVENT_FN(Application::OnWindowResize));
+
+		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
+		{
+			if (e.Handled)
+				break;
+			(*it)->OnEvent(e);
+		}
+	}
+
+	bool Application::OnWindowClose(WindowCloseEvent& e)
+	{
+		return true;
+	}
+
+	bool Application::OnWindowResize(WindowResizeEvent& e)
+	{
+		return true;
 	}
 }

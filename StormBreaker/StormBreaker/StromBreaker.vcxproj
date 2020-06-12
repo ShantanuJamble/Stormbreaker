@@ -66,7 +66,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>SB_BUILD_LIB;SB_PLATFORM_WINDOWS;SB_DEBUG_BUILD;IMGUI_IMPL_OPENGL_LOADER_GLAD; _CRT_SECURE_NO_WARNINGS;</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\Engine\util;$(ProjectDir)\Engine;$(SolutionDir)vendor\include\KHR;$(SolutionDir)vendor\include\glad;$(SoluitionDir)vendor\include\GLFW;$(SolutionDir)vendor\include\spdlog;$(SolutionDir)vendor\include\;$(ProjectDir)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -90,6 +90,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>SB_BUILD_DLL;SB_PLATFORM_WINDOWS;IMGUI_IMPL_OPENGL_LOADER_GLAD; _CRT_SECURE_NO_WARNINGS;</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\Engine\util;$(ProjectDir)\Engine;$(SolutionDir)vendor\include\KHR;$(SolutionDir)vendor\include\glad;$(SoluitionDir)vendor\include\GLFW;$(SolutionDir)vendor\include\spdlog;$(SolutionDir)vendor\include\;$(ProjectDir)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,6 +142,7 @@
     <ClCompile Include="Engine\Renderer\Mesh.cpp" />
     <ClCompile Include="Engine\Renderer\Material.cpp" />
     <ClCompile Include="Engine\Renderer\UniformBuffer.cpp" />
+    <ClCompile Include="Engine\TestLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Application.h" />
@@ -189,6 +191,7 @@
     <ClInclude Include="Engine\sbmemory.h" />
     <ClInclude Include="Engine\Renderer\Texture.h" />
     <ClInclude Include="Engine\Renderer\UniformBuffer.h" />
+    <ClInclude Include="Engine\TestLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Shader\FragmentShader.glsl" />

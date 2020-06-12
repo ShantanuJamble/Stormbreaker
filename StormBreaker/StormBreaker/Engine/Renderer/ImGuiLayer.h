@@ -7,19 +7,19 @@
 #include "ImGui/imgui_impl_glfw.h"
 #include "Layer.h"
 
+namespace Engine {
+	class ImGuiLayer : public Engine::Layer
+	{
+	public:
+		ImGuiLayer();
+		~ImGuiLayer() = default;
 
-class ImGuiLayer : public Engine::Layer
-{
-public:
-	ImGuiLayer();
-	~ImGuiLayer() = default;
-
-	virtual void OnAttach() override;
-	virtual void OnDetach() override;
-	virtual void OnImGuiRender() override;
-
-	void Begin();
-	void End();
-};
-
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
+		virtual void OnImGuiRender() override;
+		virtual void OnEvent(Event& e) override;
+		void Begin();
+		void End();
+	};
+}
 #endif // ! IMGUILAYER

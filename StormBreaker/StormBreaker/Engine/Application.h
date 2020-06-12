@@ -2,7 +2,10 @@
 #define APPLICATION_H
 
 #include "Core.h"
+#include "framework.h"
 #include "Events/Event.h"
+#include "Events/ApplicationEvent.h"
+#include "LayerStack.h"
 #include "Renderer/WindowHandler.h"
 #include "Renderer/ImGuiLayer.h"
 #include "ImGui/SBImGuiWindow.h"
@@ -18,8 +21,8 @@ namespace Engine {
 	private:
 		static Application* s_Instance;
 		Window* m_Window;
-		//ImGuiLayer * m_ImGuiLayer;
-
+		ImGuiLayer * m_ImGuiLayer;
+		LayerStack m_LayerStack;
 		//Demo stuff
 		Renderer m_renderer;
 		std::vector<Mesh*> m_meshes;
@@ -32,6 +35,11 @@ namespace Engine {
 		virtual ~Application();
 		void Run();
 		inline const Window&  GetWindow() const { return *m_Window; }
+		void OnEvent(Event& e);
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* layer);
+		bool OnWindowClose(WindowCloseEvent& e);
+		bool OnWindowResize(WindowResizeEvent& e);
 	
 	
 	};

@@ -5,4 +5,7 @@
 
 #include "Engine/Entrypoint.h"
 #include "Engine/Log.h"
-#endif //ENGINE_F
+
+#include "Engine/TestLayer.h"
+
+#endif //ENGINE_H

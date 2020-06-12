@@ -3,9 +3,6 @@
 
 namespace Engine
 {
-	LayerStack::LayerStack()
-	{
-	}
 
 	LayerStack::~LayerStack()
 	{

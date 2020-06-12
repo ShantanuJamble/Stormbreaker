@@ -2,6 +2,7 @@
 #define LAYER_H
 
 #include "Core.h"
+#include "Events/Event.h"
 #include <string>
 
 namespace Engine {
@@ -13,9 +14,10 @@ namespace Engine {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(float dt) {}
 		virtual void OnImGuiRender() {}
-		virtual void OnEvent() {}
+		virtual void OnEvent(Event& event) {}
+	
 
 		inline const std::string& GetName() const { return m_DebugName; }
 	protected:
