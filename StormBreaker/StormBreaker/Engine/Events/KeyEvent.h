@@ -50,6 +50,21 @@ namespace Engine {
 
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
+
+
+	class KeyTypedEvent : public KeyEvent
+	{
+	public:
+		KeyTypedEvent(int keycode)
+			: KeyEvent(keycode) {}
+
+		std::string ToString() const override
+		{
+			return "KeyTypedEvent: ";
+		}
+
+		EVENT_CLASS_TYPE(KeyTyped)
+	};
 }
 
 #endif // !KEYEVENT_H

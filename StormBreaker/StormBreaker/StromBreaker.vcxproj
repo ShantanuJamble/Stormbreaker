@@ -134,6 +134,7 @@
     <ClCompile Include="Engine\Renderer\WindowHandler.cpp" />
     <ClCompile Include="Engine\util\ObjLoader.cpp" />
     <ClCompile Include="Engine\util\Timer.cpp" />
+    <ClCompile Include="Engine\Renderer\FrameBuffer.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Engine\Layer.cpp" />
     <ClCompile Include="Engine\LayerStack.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Engine\Events\KeyEvent.h" />
     <ClInclude Include="Engine\Events\MouseEvent.h" />
     <ClInclude Include="Engine\framework.h" />
+    <ClInclude Include="Engine\ImGUIIncludes.h" />
     <ClInclude Include="Engine\ImGui\imconfig.h" />
     <ClInclude Include="Engine\ImGui\imgui.h" />
     <ClInclude Include="Engine\ImGui\imgui_impl_glfw.h" />
@@ -192,6 +194,7 @@
     <ClInclude Include="Engine\Renderer\Texture.h" />
     <ClInclude Include="Engine\Renderer\UniformBuffer.h" />
     <ClInclude Include="Engine\TestLayer.h" />
+    <ClInclude Include="Engine\Renderer\FrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Shader\FragmentShader.glsl" />
