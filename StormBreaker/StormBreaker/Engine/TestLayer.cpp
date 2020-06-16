@@ -10,7 +10,7 @@ TestLayer::TestLayer()
 	m_shader = new Shader("Engine/Shader/VertexShader.glsl", "Engine/Shader/FragmentShader.glsl");
 	m_material = new Material(m_texture, m_shader);
 	//Setup mesh for the object
-	std::string objpath("D:/playground/Stormbreaker/StormBreaker/StormBreaker/Assets/Models/sphere.obj");
+	std::string objpath("Assets/Models/sphere.obj");
 	//Mesh mesh(positions, indices, new Texture(path));
 	m_testMesh = new Mesh(objpath, m_material);
 
