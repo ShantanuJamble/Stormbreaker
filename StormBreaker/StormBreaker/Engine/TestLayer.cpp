@@ -5,7 +5,7 @@
 TestLayer::TestLayer()
 	:Layer("Test Scene")
 {
-	std::string texturepath1("D:/playground/Stormbreaker/StormBreaker/StormBreaker/Assets/Textures/steelplate1_albedo.png");
+	std::string texturepath1("Assets/Textures/steelplate1_albedo.png");
 	m_texture = new Texture(texturepath1);
 	m_shader = new Shader("Engine/Shader/VertexShader.glsl", "Engine/Shader/FragmentShader.glsl");
 	m_material = new Material(m_texture, m_shader);
@@ -142,8 +142,8 @@ void TestLayer::OnImGuiRender()
 
 void TestLayer::OnEvent(Engine::Event& e)
 {
-	SB_ENGINE_WARN("Handling Camera input on test layer");
-	Engine::Window window = Engine::Application::GetInstance().GetWindow();
-	m_camera->KeyControl(window.GetKeys(),window.GetTimeDelta());
-	m_camera->MouseControl(window.GetXchanged(), window.GetYchanged());
+	SB_ENGINE_WARN("{0}", e.ToString());
+	//Engine::Window window = Engine::Application::GetInstance().GetWindow();
+	//m_camera->KeyControl(window.GetKeys(),window.GetTimeDelta());
+	//m_camera->MouseControl(window.GetXchanged(), window.GetYchanged());
 }
