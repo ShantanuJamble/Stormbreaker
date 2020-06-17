@@ -112,8 +112,8 @@ namespace Engine {
 
 	void Window::CreateCallback()
 	{
-		/*glfwSetKeyCallback(m_Window, KeyHandler);
-		glfwSetCursorPosCallback(m_Window, MouseHandler);*/
+		glfwSetKeyCallback(m_Window, KeyHandler);
+		/*glfwSetCursorPosCallback(m_Window, MouseHandler);*/
 		// Set GLFW callbacks
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
 		{
@@ -131,32 +131,10 @@ namespace Engine {
 
 		});
 
-		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+	/*	glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
-			Window* theWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
-
-			switch (action)
-			{
-			case GLFW_PRESS:
-			{
-				KeyPressedEvent event(static_cast<uint16_t>(key), 0);
-				(theWindow->GetEventCallback())(event);
-				break;
-			}
-			case GLFW_RELEASE:
-			{
-				KeyReleasedEvent event(static_cast<uint16_t>(key));
-				(theWindow->GetEventCallback())(event);
-				break;
-			}
-			case GLFW_REPEAT:
-			{
-				KeyPressedEvent event(static_cast<uint16_t>(key), 1);
-				(theWindow->GetEventCallback())(event);
-				break;
-			}
-			}
-		});
+			
+		});*/
 
 		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode)
 		{
@@ -208,21 +186,26 @@ namespace Engine {
 	{
 		Window* theWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
 
-		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		switch (action)
 		{
-			glfwSetWindowShouldClose(window, GL_TRUE);
+		case GLFW_PRESS:
+		{
+			KeyPressedEvent event(static_cast<uint16_t>(key), 0);
+			(theWindow->GetEventCallback())(event);
+			break;
 		}
-
-		if (key >= 0 && key <= 1024)
+		case GLFW_RELEASE:
 		{
-			if (action == GLFW_PRESS)
-			{
-				theWindow->m_keys[key] = true;
-			}
-			else if (action == GLFW_RELEASE)
-			{
-				theWindow->m_keys[key] = false;
-			}
+			KeyReleasedEvent event(static_cast<uint16_t>(key));
+			(theWindow->GetEventCallback())(event);
+			break;
+		}
+		case GLFW_REPEAT:
+		{
+			KeyPressedEvent event(static_cast<uint16_t>(key), 1);
+			(theWindow->GetEventCallback())(event);
+			break;
+		}
 		}
 
 	}

@@ -39,7 +39,7 @@ namespace Engine {
 		//m_Window->SetEventCallback(SB_BIND_EVENT_FN(Application::OnEvent));
 		m_ImGuiLayer = new ImGuiLayer();
 		PushLayer(m_ImGuiLayer);
-		m_ImGuiLayer->OnAttach();
+		//m_ImGuiLayer->OnAttach();
 
 	}
 
@@ -57,7 +57,7 @@ namespace Engine {
 
 	void Application::Run()
 	{
-		
+
 		float m_LastFrameTime = (float)glfwGetTime();
 		// Main loop
 		while (!m_Window->GetWindowShouldClose())
@@ -66,12 +66,7 @@ namespace Engine {
 			float dt = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
-			// Poll and handle events (inputs, window resize, etc.)
-			// You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
-			// - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
-			// - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application.
-			// Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
-			m_Window->PollEvents();
+
 
 			//if (m_Window->isKeyDown(GLFW_KEY_X))
 			//{
@@ -88,7 +83,7 @@ namespace Engine {
 			//	materialShader = currentmesh->GetMaterial()->GetShader();
 			//	materialShader->SetUniformBlock("Lights");
 			//}
-	
+
 			////Camera Input
 			//camera.KeyControl(m_Window->GetKeys(),dt);
 			//camera.MouseControl(m_Window->GetXchanged(), m_Window->GetYchanged());
@@ -98,16 +93,23 @@ namespace Engine {
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate(dt);
 
-			
 
 
-		
+
+
 			m_ImGuiLayer->Begin();
 			{
 				for (Layer* layer : m_LayerStack)
 					layer->OnImGuiRender();
 			}
 			m_ImGuiLayer->End();
+
+			// Poll and handle events (inputs, window resize, etc.)
+			// You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
+			// - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
+			// - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application.
+			// Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
+			m_Window->PollEvents();
 
 			m_Window->SwapBuffers();
 		}
@@ -135,7 +137,7 @@ namespace Engine {
 
 	void Application::OnEvent(Event& e)
 	{
-	
+
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(SB_BIND_EVENT_FN(Application::OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(SB_BIND_EVENT_FN(Application::OnWindowResize));
