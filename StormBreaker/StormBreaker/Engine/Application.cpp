@@ -20,15 +20,8 @@ namespace Engine {
 
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application() :scaling(glm::vec3(2.0f, 2.0f, 2.0f))
+	Application::Application() 
 	{
-#ifdef SB_DEBUG_BUILD
-		// Enable memory leak detection as a quick and dirty
-		// way of determining if we forgot to clean something up
-		//  - You may want to use something more advanced, like Visual Leak Detector
-		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-#endif
-
 
 		//SB_ASSERT(s_Instance == nullptr_t,"Application already exists");
 		s_Instance = this;
@@ -46,12 +39,11 @@ namespace Engine {
 
 	Application::~Application()
 	{
-		delete m_Window;
-		delete m_ImGuiLayer;
+		//delete m_ImGuiLayer;
 		SB_ENGINE_INFO("I am here!!");
-		for (auto& mesh : m_meshes) delete mesh;
-		m_meshes.clear();
 		sbmemory::MeoryManagerShutDown();
+		m_LayerStack.ClearStack();
+		delete m_Window;
 
 	}
 
@@ -113,11 +105,6 @@ namespace Engine {
 
 			m_Window->SwapBuffers();
 		}
-
-
-		m_ImGuiLayer->OnDetach();
-
-		return;
 	}
 
 

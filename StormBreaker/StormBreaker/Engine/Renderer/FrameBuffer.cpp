@@ -9,6 +9,8 @@ FrameBuffer::FrameBuffer(const FrameBufferData& spec)
 FrameBuffer::~FrameBuffer()
 {
 	glDeleteFramebuffers(1, &m_RendererID);
+	glDeleteFramebuffers(1, &m_ColorAttachment);
+	glDeleteFramebuffers(1, &m_DepthAttachment);
 }
 
 void FrameBuffer::Invalidate()

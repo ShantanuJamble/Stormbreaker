@@ -54,9 +54,7 @@ TestLayer::TestLayer()
 
 TestLayer::~TestLayer()
 {
-	delete m_camera;
-	delete m_testMesh;
-	delete m_frameBuffer;	
+	
 }
 
 void TestLayer::OnAttach()
@@ -80,6 +78,9 @@ void TestLayer::OnAttach()
 
 void TestLayer::OnDetach()
 {
+	delete m_camera;
+	delete m_testMesh;
+	delete m_frameBuffer;
 }
 
 void TestLayer::OnUpdate(float dt)

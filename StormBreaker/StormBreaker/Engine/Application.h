@@ -23,11 +23,6 @@ namespace Engine {
 		Window* m_Window;
 		ImGuiLayer * m_ImGuiLayer;
 		LayerStack m_LayerStack;
-		//Demo stuff
-		Renderer m_renderer;
-		std::vector<Mesh*> m_meshes;
-		//Imgui values
-		glm::vec3 scaling;
 	public:
 		static inline Application& GetInstance() { return *s_Instance; }
 		Application();

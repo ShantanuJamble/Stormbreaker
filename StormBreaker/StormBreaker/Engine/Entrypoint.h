@@ -1,9 +1,11 @@
 #ifndef Entrypoint_h
 #define Entrypoint_h
-
 #include "Core.h"
 #include "Application.h"
 #include "Log.h"
+#ifdef SB_DEBUG_BUILD
+#include "vld.h"
+#endif
 extern Engine::Application* Engine::CreateApplication();
 
 int main(int argc, char **argv)
