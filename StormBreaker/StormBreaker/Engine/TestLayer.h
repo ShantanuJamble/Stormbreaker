@@ -60,7 +60,7 @@ private:
 	float curAngle = 0.0f;
 	glm::mat4 m_model{ 1.0f };
 	glm::mat4 m_projection;
-	unsigned int m_bufferWidth, m_bufferHeight;
+	glm::vec2 m_viewportSize;
 
 };
 

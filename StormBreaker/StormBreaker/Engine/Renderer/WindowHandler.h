@@ -60,13 +60,13 @@ namespace Engine {
 		static void KeyHandler(GLFWwindow* window, int key, int code, int action, int mode);
 		//Mouse Handler
 		static void MouseHandler(GLFWwindow* window, double xPos, double yPos);
-
+		void OnViewPortResize(float width, float height);
 		bool* GetKeys() { return m_keys; };
 		inline bool isKeyDown(int code) const { return m_keys[code]; }
 		GLfloat GetXchanged();
 		GLfloat GetYchanged();
 		GLfloat GetTimeDelta();
-
+		
 		GLFWwindow* GetGLFWWindow() const { return m_Window; }
 
 	};

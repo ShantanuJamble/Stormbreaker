@@ -255,4 +255,11 @@ namespace Engine {
 
 		return m_deltaTime;
 	}
+
+	void Window::OnViewPortResize(float width, float height)
+	{
+		m_BufferWidth = width;
+		m_BufferHeight = height;
+		glViewport(0, 0, m_BufferWidth, m_BufferHeight);
+	}
 }

@@ -44,9 +44,10 @@ TestLayer::TestLayer()
 	//glm::mat4 ortho = glm::ortho(-1.6f, 1.6f, -0.9f, 0.9f);
 
 	FrameBufferData fb_data;
-	fb_data.Width = 1600;
-	fb_data.Height = 900;
+	fb_data.Width = 1200;
+	fb_data.Height = 720;
 	m_frameBuffer = new FrameBuffer (fb_data);
+	m_viewportSize = { fb_data.Width, fb_data.Height };
 	int a;
 }
 
@@ -70,9 +71,9 @@ void TestLayer::OnAttach()
 	materialShader->SetUniformBlock("Lights", 0);
 
 
-	m_bufferHeight = Engine::Application::GetInstance().GetWindow().GetBufferHeight();
-	m_bufferWidth = Engine::Application::GetInstance().GetWindow().GetBufferWidth();
-	m_projection = glm::perspective(45.0f, (GLfloat)m_bufferWidth / (GLfloat)m_bufferHeight, 0.1f, 100.0f);
+	m_viewportSize = { Engine::Application::GetInstance().GetWindow().GetBufferWidth(),
+						Engine::Application::GetInstance().GetWindow().GetBufferHeight() };
+	m_projection = glm::perspective(45.0f, (GLfloat)m_viewportSize.x / (GLfloat)m_viewportSize.y, 0.1f, 100.0f);
 
 }
 
@@ -136,8 +137,20 @@ void TestLayer::OnImGuiRender()
 
 	ImGui::Begin("ViewPort");
 	//ImGui::Text("Test Stats:");
+
+	ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+	if (m_viewportSize != *((glm::vec2*) & viewportPanelSize))
+	{
+		
+		m_viewportSize = { viewportPanelSize.x, viewportPanelSize.y };
+		//Should be moved to camera. 
+		//Engine::Application::GetInstance().GetWindow().OnViewPortResize(viewportPanelSize.x, viewportPanelSize.y);
+		m_projection = glm::perspective(45.0f, (GLfloat)m_viewportSize.x / (GLfloat)m_viewportSize.y, 0.1f, 100.0f);
+		m_frameBuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
+		//m_CameraController.OnResize(viewportPanelSize.x, viewportPanelSize.y);
+	}
 	uint32_t textureID = m_frameBuffer->GetColorAttachmentRendererID();
-	ImGui::Image((void*)textureID, ImVec2{ 1600, 900 });
+	ImGui::Image((void*)textureID, ImVec2{ viewportPanelSize.x, viewportPanelSize.y });
 	ImGui::End();
 }
 
