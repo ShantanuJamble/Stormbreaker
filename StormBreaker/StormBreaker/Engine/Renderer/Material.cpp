@@ -3,20 +3,23 @@
 
 Material::Material()
 	:m_albedoTexture(nullptr),
+	 m_normalTexture(nullptr),
 	 m_shader(nullptr)
 {
 	
 }
 
-Material::Material(Texture* albedo, Shader* shader)
+Material::Material(Texture* albedo, Texture* normal, Shader* shader)
 	:m_albedoTexture(albedo),
+	 m_normalTexture(normal),
 	 m_shader(shader)
 {
 
 }
 
-Material::Material(std::string& albedoTexturePath, Shader* shader)
+Material::Material(std::string& albedoTexturePath, std::string& normalTexturePath, Shader* shader)
 	:m_albedoTexture(new Texture(albedoTexturePath)),
+	 m_normalTexture(new Texture(normalTexturePath)),
 	 m_shader(shader)
 {
 
@@ -30,6 +33,8 @@ Material::~Material()
 			delete m_shader;
 		if (m_albedoTexture)
 			delete m_albedoTexture;
+		if (m_albedoTexture)
+			delete m_normalTexture;
 	}
 	catch (std::exception& e)
 	{
@@ -49,7 +54,9 @@ void Material::SetTexture(Texture* texture, TextureType type)
 		case  TextureType::ALBEDO :
 			m_albedoTexture = texture;
 			break;
-
+		case  TextureType::NORMAL:
+			m_normalTexture= texture;
+			break;
 		case TextureType::METALNESS:
 			break;
 
@@ -65,10 +72,11 @@ void Material::SetTexture(std::string& texturePath, TextureType type)
 	switch (type)
 	{
 	case  TextureType::ALBEDO:
-
 		m_albedoTexture = texture;
 		break;
-
+	case  TextureType::NORMAL:
+		m_normalTexture = texture;
+		break;
 	case TextureType::METALNESS:
 		break;
 
@@ -86,4 +94,16 @@ void Material::SetShader(Shader* shader)
 	}
 
 	m_shader = shader;
+}
+
+void Material::BindTextures() const
+{
+	m_albedoTexture->Bind(0);
+	m_normalTexture->Bind(1);
+}
+
+void Material::UnBindTextures() const
+{
+	m_albedoTexture->Unbind();
+	m_normalTexture->Unbind();
 }

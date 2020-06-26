@@ -19,7 +19,8 @@ struct Light
 	glm::vec3	Position;				//12
 	float		AmbientIntensity;		//4
 	glm::vec3   Color;					//12
-	float		padding1;				//4
+	float		padding;		        //4
+	
 };
 
 #endif

@@ -3,12 +3,16 @@
 #include <glm/mat4x4.hpp>
 
 TestLayer::TestLayer()
-	:Layer("Test Scene")
+	:Layer("Test Scene"),
+	m_lightBuffer(sizeof(Light)),
+	m_projection(glm::mat4(1))
 {
-	std::string texturepath1("Assets/Textures/steelplate1_albedo.png");
-	m_texture = new Texture(texturepath1);
+	std::string albedoTexturePath("Assets/Textures/steelplate1_albedo.png");
+	std::string normalTexturePath("Assets/Textures/steelplate1_normal.png");
+	m_albedoTexture = new Texture(albedoTexturePath);
+	m_normalTexture= new Texture(normalTexturePath);
 	m_shader = new Shader("Engine/Shader/VertexShader.glsl", "Engine/Shader/FragmentShader.glsl");
-	m_material = new Material(m_texture, m_shader);
+	m_material = new Material(m_albedoTexture,m_normalTexture, m_shader);
 	//Setup mesh for the object
 	std::string objpath("Assets/Models/sphere.obj");
 	//Mesh mesh(positions, indices, new Texture(path));
@@ -20,12 +24,16 @@ TestLayer::TestLayer()
 	m_directLight.AmbientIntensity = 2.0f;
 	m_directLight.Direction = glm::vec3(1, 0, 0);
 	m_directLight.Position = glm::vec3(1, 1, 0);
-	m_directLight.Color = glm::vec3(1, 1, 0);
+	m_directLight.Color = glm::vec4(1, 1, 0,1);
 	m_directLight.Type = 0;
-	m_directLight.padding1 = 0;
+	
 
 
 	SB_ENGINE_INFO("SIZEOF LIGHT = {0}, {1}, {2}", sizeof(int), sizeof(float), sizeof(m_directLight));
+
+	m_lightBuffer.BindBufferRange(0, sizeof(Light));
+	SB_ENGINE_INFO("{0}", reinterpret_cast<uintptr_t>((void*)&m_directLight));
+	m_lightBuffer.UpdateBufferSubData(0, sizeof(Light), (void*)&m_directLight);
 
 	//unsigned int uboLights;
 	//glGenBuffers(1, &uboLights);
@@ -60,15 +68,8 @@ TestLayer::~TestLayer()
 
 void TestLayer::OnAttach()
 {
-
-	UniformBuffer lightBlock(sizeof(Light));
-	lightBlock.BindBufferRange(0, sizeof(Light));
-	SB_ENGINE_INFO("{0}", reinterpret_cast<uintptr_t>((void*)&m_directLight));
-	lightBlock.UpdateBufferSubData(0, sizeof(Light), (void*)&m_directLight);
-
-	Texture* tmpTexture = m_testMesh->GetMaterial()->GetTexture();
-	Shader* materialShader = m_testMesh->GetMaterial()->GetShader();
-	materialShader->SetUniformBlock("Lights", 0);
+	//Setup Uniform blocks
+	m_shader->SetUniformBlock("Lights", 0);
 
 
 	m_viewportSize = { Engine::Application::GetInstance().GetWindow().GetBufferWidth(),
@@ -90,6 +91,14 @@ void TestLayer::OnUpdate(float dt)
 	m_frameBuffer->Bind();
 
 	m_renderer.Clear();
+
+	//Updating light
+	if (m_directLight.Color != m_lightColor)
+	{
+		m_directLight.Color = m_lightColor;
+		m_lightBuffer.UpdateBufferSubData(0, sizeof(Light), (void*)&m_directLight);
+	}
+
 	//Translation stuff
 	if (direction)
 	{
@@ -121,20 +130,24 @@ void TestLayer::OnUpdate(float dt)
 	m_shader->UseShader();
 	m_shader->SetMat4("u_Model", model);
 	m_shader->SetMat4("u_Projection", m_projection);
-	m_testMesh->GetMaterial()->GetTexture()->Bind();
+	m_testMesh->GetMaterial()->BindTextures();// GetTexture()->Bind();
 	m_shader->SetMat4("u_View", m_camera->CalculateViewMatrix());
-
+	//m_shader->SetUniformBlock("Lights", 0);
 	m_shader->SetInt("u_Texture", 0);
-
+	m_shader->SetInt("u_NormalMap", 1);
 	m_renderer.Draw(*m_testMesh->GetVertexArray(), *m_testMesh->GetIndexBuffer(), *m_shader);
 
-	m_frameBuffer->Unbind();
 	//frambuffer unbind
+	m_frameBuffer->Unbind();
 }
 
 void TestLayer::OnImGuiRender()
 {
+	ImGui::Begin("Settings");
 
+	ImGui::ColorEdit4("Direct Light Color", glm::value_ptr(m_lightColor));
+
+	ImGui::End();
 	ImGui::Begin("ViewPort");
 	//ImGui::Text("Test Stats:");
 
@@ -156,7 +169,7 @@ void TestLayer::OnImGuiRender()
 
 void TestLayer::OnEvent(Engine::Event& e)
 {
-	SB_ENGINE_WARN("{0}", e.ToString());
+	//SB_ENGINE_WARN("{0}", e.ToString());
 	//Engine::Window window = Engine::Application::GetInstance().GetWindow();
 	//m_camera->KeyControl(window.GetKeys(),window.GetTimeDelta());
 	//m_camera->MouseControl(window.GetXchanged(), window.GetYchanged());

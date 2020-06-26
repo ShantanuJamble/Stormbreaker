@@ -3,7 +3,7 @@
 #include "Renderer.h"
 #include "framework.h"
 
-enum TextureType { ALBEDO, ROUGHNESS, METALNESS };
+enum TextureType { ALBEDO, NORMAL, ROUGHNESS, METALNESS };
 
 class Texture
 {

@@ -34,20 +34,22 @@ public:
 	virtual void OnImGuiRender() override;
 	virtual void OnEvent(Engine::Event & e) override;
 private:
-	glm::vec4 m_lightColor = { 0.2f, 0.3f, 0.8f, 1.0f };
+	glm::vec3 m_lightColor = { 1.0f, 1.0f, 1.0f };
 
 	//Demo stuff
 	Renderer m_renderer;
 	std::vector<Mesh*> m_meshes;
-	glm::vec3 scaling;
-	Texture* m_texture;
+	//glm::vec3 scaling;
+	Texture* m_albedoTexture;
+	Texture* m_normalTexture;
 	Shader* m_shader;
 	FrameBuffer* m_frameBuffer;
 	Mesh* m_testMesh;
 	Light m_directLight;
+	UniformBuffer m_lightBuffer;
 	Camera* m_camera;
 	Material* m_material;
-
+	
 	//Animation stuff
 	float r = 0.0f;
 	float incr = 0.05f;

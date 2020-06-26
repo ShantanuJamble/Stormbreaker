@@ -73,10 +73,10 @@ void Shader::LinkShaders()
 {
 	//Link Shaders
 	m_programID = glCreateProgram();
-	GLCall(glAttachShader(m_programID, m_vertexShader.m_shaderId));
-	GLCall(glAttachShader(m_programID, m_fragmentShader.m_shaderId));
-	GLCall(glLinkProgram(m_programID));
-	GLCall(glValidateProgram(m_programID));
+	glAttachShader(m_programID, m_vertexShader.m_shaderId);
+	glAttachShader(m_programID, m_fragmentShader.m_shaderId);
+	glLinkProgram(m_programID);
+	glValidateProgram(m_programID);
 	//Print any linking errors
 	int success;
 	char infoLog[512];

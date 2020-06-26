@@ -53,7 +53,7 @@ void UniformBuffer::UpdateBufferData(const void* databuffer, const unsigned int&
 void UniformBuffer::UpdateBufferSubData(const unsigned int& offset, const unsigned int& buffersize, const void* databuffer)
 {
 
-	SB_ENGINE_INFO("{0}",reinterpret_cast<uintptr_t>(databuffer));
+	//SB_ENGINE_INFO("Updaing light buffer: {0}",reinterpret_cast<uintptr_t>(databuffer));
 	this->Bind();
 	glBufferSubData(GL_UNIFORM_BUFFER, offset, buffersize, databuffer);
 	this->UnBind();
