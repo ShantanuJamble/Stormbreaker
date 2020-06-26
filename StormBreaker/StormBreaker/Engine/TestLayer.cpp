@@ -14,17 +14,17 @@ TestLayer::TestLayer()
 	m_shader = new Shader("Engine/Shader/VertexShader.glsl", "Engine/Shader/FragmentShader.glsl");
 	m_material = new Material(m_albedoTexture,m_normalTexture, m_shader);
 	//Setup mesh for the object
-	std::string objpath("Assets/Models/sphere.obj");
+	std::string objpath("Assets/Models/cone.obj");
 	//Mesh mesh(positions, indices, new Texture(path));
 	m_testMesh = new Mesh(objpath, m_material);
 
 	//Camera
 	m_camera = new Camera(glm::vec3(0.0f, 0.0f, 7.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 0.01f);
-	
-	m_directLight.AmbientIntensity = 2.0f;
+	m_lightColor = { 1,0.5,0.7 };
+	m_directLight.AmbientIntensity = 0.1f;
 	m_directLight.Direction = glm::vec3(1, 0, 0);
-	m_directLight.Position = glm::vec3(1, 1, 0);
-	m_directLight.Color = glm::vec4(1, 1, 0,1);
+	m_directLight.Position = glm::vec3(0, 1, 0);
+	m_directLight.Color =m_lightColor;
 	m_directLight.Type = 0;
 	
 
@@ -132,6 +132,7 @@ void TestLayer::OnUpdate(float dt)
 	m_shader->SetMat4("u_Projection", m_projection);
 	m_testMesh->GetMaterial()->BindTextures();// GetTexture()->Bind();
 	m_shader->SetMat4("u_View", m_camera->CalculateViewMatrix());
+	m_shader->SetVec3("viewPos", m_camera->GetPostion());
 	//m_shader->SetUniformBlock("Lights", 0);
 	m_shader->SetInt("u_Texture", 0);
 	m_shader->SetInt("u_NormalMap", 1);
@@ -154,7 +155,7 @@ void TestLayer::OnImGuiRender()
 	ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 	if (m_viewportSize != *((glm::vec2*) & viewportPanelSize))
 	{
-		
+
 		m_viewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 		//Should be moved to camera. 
 		//Engine::Application::GetInstance().GetWindow().OnViewPortResize(viewportPanelSize.x, viewportPanelSize.y);
@@ -163,7 +164,7 @@ void TestLayer::OnImGuiRender()
 		//m_CameraController.OnResize(viewportPanelSize.x, viewportPanelSize.y);
 	}
 	uint32_t textureID = m_frameBuffer->GetColorAttachmentRendererID();
-	ImGui::Image((void*)textureID, ImVec2{ viewportPanelSize.x, viewportPanelSize.y });
+	ImGui::Image((void*)textureID, ImVec2{ viewportPanelSize.x, viewportPanelSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
 	ImGui::End();
 }
 
