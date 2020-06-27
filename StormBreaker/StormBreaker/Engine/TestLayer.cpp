@@ -14,16 +14,17 @@ TestLayer::TestLayer()
 	m_shader = new Shader("Engine/Shader/VertexShader.glsl", "Engine/Shader/FragmentShader.glsl");
 	m_material = new Material(m_albedoTexture,m_normalTexture, m_shader);
 	//Setup mesh for the object
-	std::string objpath("Assets/Models/cone.obj");
+	std::string objpath("Assets/Models/sphere.obj");
 	//Mesh mesh(positions, indices, new Texture(path));
 	m_testMesh = new Mesh(objpath, m_material);
 
 	//Camera
 	m_camera = new Camera(glm::vec3(0.0f, 0.0f, 7.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 0.01f);
-	m_lightColor = { 1,0.5,0.7 };
-	m_directLight.AmbientIntensity = 0.1f;
-	m_directLight.Direction = glm::vec3(1, 0, 0);
-	m_directLight.Position = glm::vec3(0, 1, 0);
+	m_lightColor = {1, 0, 0};
+	m_directLight.AmbientIntensity = .1f;
+	//This direction is useless, we need to calculate direction agian based on the obj position. 
+	m_directLight.Direction = glm::vec3(-1, 0, 0);
+	m_directLight.Position = glm::vec3(7, 0, 0);
 	m_directLight.Color =m_lightColor;
 	m_directLight.Type = 0;
 	
@@ -123,7 +124,7 @@ void TestLayer::OnUpdate(float dt)
 
 	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 	glm::mat4 model{ 1.0f };
-	//model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
+	model = glm::translate(model, glm::vec3(0.0f, triOffset,0.0f));
 	model = glm::rotate(model, CONVERT_TO_RADIANS(curAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 	model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 

@@ -39,34 +39,29 @@ vec4 Diffuse()
 
 void main()
 {
-
 	vec3 objectColor = vec3(texture(u_Texture, fsIn.v_texcoord));
-
 	//Ambient lighting
     vec3 ambientLight = light.ambientintensity * light.color;
 	vec3 ambient = ambientLight * objectColor;
 
-	//Diffuse lighting
+
+		// DIRECTIONAL LIGHT ////////////////////////////
+
+	// N dot L (Lambert / Diffuse) lighting
+	// Note: We need the direction TO the light
 	vec3 norm = normalize(vec3(texture(u_NormalMap, fsIn.v_texcoord)));
-	vec3 lightDir = normalize(light.position - fsIn.pos);  
-	float diff = max(dot(norm, light.direction), 0.0);
-	vec3 diffuse = diff * light.color;
+	float dirNdotL = dot(norm, -light.direction);
+	dirNdotL = clamp(dirNdotL,0.0,1.0); // Remember to CLAMP between 0 and 1
 
-	//vec3 diffuse = vec3(1.0,1.0,1.0);
-	
-
-	//Specular
-	float specularStrength = 0.5;
+	// Specular calc for reflections (Phong)
+	vec3 dirRefl = reflect(light.direction, norm);
 	vec3 viewDir = normalize(viewPos - fsIn.pos);
-	vec3 reflectDir = reflect(-light.direction, norm);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-	vec3 specular = specularStrength * spec * light.color; 
+	float dirSpec = pow(clamp(dot(dirRefl, viewDir),0.0,1.0), 32.0);
 
+	// Combine the surface and lighting
+	vec3 finalDirLight = objectColor * light.color * dirNdotL
+		+ dirSpec.rrr;
 
-
-	vec3 result = (ambient + diffuse + specular) * objectColor;
-
-
-	//Final Color
-	color = vec4(result, 1.0);
+		//Final Color
+	color = vec4(finalDirLight+ambientLight, 1.0);
 };

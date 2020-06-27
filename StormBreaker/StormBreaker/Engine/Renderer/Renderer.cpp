@@ -8,8 +8,9 @@
 
 void Renderer::Clear() const
 {
+	//Cornflower blue
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-	glClearColor(100, 149, 237, 0.7);
+	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 }
 
 

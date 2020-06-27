@@ -54,9 +54,9 @@ private:
 	float r = 0.0f;
 	float incr = 0.05f;
 
-	float trans_incr = 0.005f;
+	float trans_incr = 0.01f;
 	float triOffset = 0.0f;
-	float max_limit = 0.7f;
+	float max_limit = 1.f;
 	int direction = 1;
 
 	float curAngle = 0.0f;
