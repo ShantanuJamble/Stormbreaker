@@ -7,7 +7,7 @@ TestLayer::TestLayer()
 	m_lightBuffer(sizeof(Light)),
 	m_projection(glm::mat4(1))
 {
-	std::string albedoTexturePath("Assets/Textures/steelplate1_albedo.png");
+	std::string albedoTexturePath("Assets/Textures/test.png");
 	std::string normalTexturePath("Assets/Textures/steelplate1_normal.png");
 	m_albedoTexture = new Texture(albedoTexturePath);
 	m_normalTexture= new Texture(normalTexturePath);
@@ -21,10 +21,10 @@ TestLayer::TestLayer()
 	//Camera
 	m_camera = new Camera(glm::vec3(0.0f, 0.0f, 7.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 0.01f);
 	m_lightColor = {1, 0, 0};
-	m_directLight.AmbientIntensity = .1f;
+	m_directLight.AmbientIntensity = .01f;
 	//This direction is useless, we need to calculate direction agian based on the obj position. 
-	m_directLight.Direction = glm::vec3(-1, 0, 0);
-	m_directLight.Position = glm::vec3(7, 0, 0);
+	m_directLight.Direction = m_lightDir;
+	m_directLight.Position = glm::vec3(5, 2, 0);
 	m_directLight.Color =m_lightColor;
 	m_directLight.Type = 0;
 	
@@ -100,6 +100,11 @@ void TestLayer::OnUpdate(float dt)
 		m_lightBuffer.UpdateBufferSubData(0, sizeof(Light), (void*)&m_directLight);
 	}
 
+	if (m_directLight.Direction != m_lightDir)
+	{
+		m_directLight.Direction = m_lightDir;
+		m_lightBuffer.UpdateBufferSubData(0, sizeof(Light), (void*)&m_directLight);
+	}
 	//Translation stuff
 	if (direction)
 	{
@@ -124,9 +129,9 @@ void TestLayer::OnUpdate(float dt)
 
 	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 	glm::mat4 model{ 1.0f };
-	model = glm::translate(model, glm::vec3(0.0f, triOffset,0.0f));
-	model = glm::rotate(model, CONVERT_TO_RADIANS(curAngle), glm::vec3(0.0f, 1.0f, 0.0f));
-	model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+	//model = glm::translate(model, glm::vec3(0.0f, triOffset,0.0f));
+	//model = glm::rotate(model, CONVERT_TO_RADIANS(curAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(4.0f,4.0f, 4.0f));
 
 	m_shader->UseShader();
 	m_shader->SetMat4("u_Model", model);
@@ -139,6 +144,11 @@ void TestLayer::OnUpdate(float dt)
 	m_shader->SetInt("u_NormalMap", 1);
 	m_renderer.Draw(*m_testMesh->GetVertexArray(), *m_testMesh->GetIndexBuffer(), *m_shader);
 
+	/*model = glm::mat4{ 1.0f };
+	model = glm::translate(model, m_directLight.Position);
+	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+	m_shader->SetMat4("u_Model", model);
+	m_renderer.Draw(*m_testMesh->GetVertexArray(), *m_testMesh->GetIndexBuffer(), *m_shader);*/
 	//frambuffer unbind
 	m_frameBuffer->Unbind();
 }
@@ -148,7 +158,7 @@ void TestLayer::OnImGuiRender()
 	ImGui::Begin("Settings");
 
 	ImGui::ColorEdit4("Direct Light Color", glm::value_ptr(m_lightColor));
-
+	ImGui::SliderFloat3("Direct Light Direction", glm::value_ptr(m_lightDir),-1.0f, 1.0f);
 	ImGui::End();
 	ImGui::Begin("ViewPort");
 	//ImGui::Text("Test Stats:");

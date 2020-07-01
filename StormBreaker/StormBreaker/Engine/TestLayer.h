@@ -35,7 +35,7 @@ public:
 	virtual void OnEvent(Engine::Event & e) override;
 private:
 	glm::vec3 m_lightColor = { 1.0f, 1.0f, 1.0f };
-
+	glm::vec3 m_lightDir = { -1.0,0.0,0.0 };
 	//Demo stuff
 	Renderer m_renderer;
 	std::vector<Mesh*> m_meshes;
@@ -47,6 +47,7 @@ private:
 	Mesh* m_testMesh;
 	Light m_directLight;
 	UniformBuffer m_lightBuffer;
+
 	Camera* m_camera;
 	Material* m_material;
 	
@@ -56,7 +57,7 @@ private:
 
 	float trans_incr = 0.01f;
 	float triOffset = 0.0f;
-	float max_limit = 1.f;
+	float max_limit = 1.5f;
 	int direction = 1;
 
 	float curAngle = 0.0f;
