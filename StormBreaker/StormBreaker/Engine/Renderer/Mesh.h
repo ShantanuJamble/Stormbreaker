@@ -20,7 +20,7 @@ private:
 	//Supporting methods
 	void SetupMesh();
 	void ReadFromFile(std::string& file_path);
-
+	void CalculateTangents();
 	
 public:
 	Mesh(std::string& file_path,Material* material);

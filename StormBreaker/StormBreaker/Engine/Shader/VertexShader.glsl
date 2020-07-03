@@ -1,8 +1,10 @@
 #version 460 core
 
-layout(location = 0) in vec3 position;
-layout(location = 1) in vec2 texcoord;
-layout(location = 2) in vec3 normal;
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec2 texcoord;
+layout (location = 2) in vec3 normal;
+layout (location = 3) in vec3 tangent;
+layout (location = 4) in vec3 bitangent;
 
 //out vec4 vCol;
 //out vec2 v_texcoord;
@@ -16,6 +18,8 @@ out V_OUT {
 	vec4 vCol;
 	vec2 v_texcoord;
 	vec3 normal;
+	vec3 tangent;
+	vec3 bitangent;
 } vsOut;
 
 
@@ -25,5 +29,10 @@ void main()
 	vsOut.pos = vec3(u_Model * vec4(position, 1.0));
 	vsOut.vCol = vec4(clamp(position , 0.0f,1.0f),1.0f);
 	vsOut.v_texcoord = texcoord;
-	vsOut.normal = normal;
+
+	vec4 tmp = vec4(normal, 1.0f) * u_Model;
+	
+	vsOut.normal = mat3(transpose(inverse(u_Model))) * normal;// normalize(vec3(tmp));
+	vec4 tmpTangent =  vec4(tangent,1.0f) * u_Model;//vec3(tangent * vec4(position, 1.0));
+	vsOut.tangent = mat3(transpose(inverse(u_Model))) * tangent;
 };

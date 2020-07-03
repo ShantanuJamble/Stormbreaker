@@ -10,10 +10,10 @@ struct Vertex {
 	glm::vec2 TexCoords;
 	//Normal
 	glm::vec3 Normal;
-	////Tangent
-	//glm::vec3 Tangent;
-	////Bitangent
-	//glm::vec3 Bitangent;
+	//Tangent
+	glm::vec3 Tangent;
+	//Bitangent
+	glm::vec3 Bitangent;
 };
 
 #endif // !VERTEXLAYOUT_H
