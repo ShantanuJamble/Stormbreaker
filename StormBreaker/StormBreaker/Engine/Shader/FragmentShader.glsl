@@ -9,6 +9,7 @@ in V_OUT {
 	vec3 normal;
 	vec3 tangent;
 	vec3 bitangent;
+	mat3 TBN;
 } fsIn;
 
 struct Light
@@ -45,19 +46,30 @@ void main()
 	vec3 objectColor = texture(u_Texture, fsIn.v_texcoord).rgb;
 	vec3 normalFromMap = normalize(vec3(texture(u_NormalMap, fsIn.v_texcoord)));
 	vec3 lightDir = normalize(-light.direction);
+	
+	//Light position, camera position in tangent space
+
+	
+	vec3 lightPosInTangentSpace = fsIn.TBN * light.position;
+	vec3 camPosInTangentSpace   = fsIn.TBN * viewPos;
+	vec3 pixelPosInTangentSpace = fsIn.TBN * fsIn.pos;
+	vec3 normalInTangentSpace    = fsIn.TBN * normalFromMap;
+
+	lightDir = normalize(lightPosInTangentSpace - pixelPosInTangentSpace);
 
 	// ambient
 	vec3 ambient = light.ambientintensity * light.color * objectColor;
 
 	// diffuse 
 	vec3 norm = normalize(fsIn.normal);
+	norm = normalInTangentSpace;
 	// vec3 lightDir = normalize(light.position - FragPos);
 	//vec3 lightDir = normalize(-light.direction);
 	float diff = max(dot(norm, lightDir), 0.0);
 	vec3 diffuse = light.color * diff * objectColor;
 
 	// specular
-	vec3 viewDir = normalize(viewPos - fsIn.pos);
+	vec3 viewDir = normalize(camPosInTangentSpace - pixelPosInTangentSpace);
 	vec3 reflectDir = reflect(-lightDir, norm);
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 21);
 	vec3 specular = light.color * spec * objectColor;
@@ -65,7 +77,45 @@ void main()
 	vec3 result = ambient + diffuse + specular;
 	color = vec4(result, 1.0);
 
-	//// Create the matrix that will allow us to go from tangent space to world space
+	
+	
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//// Create the matrix that will allow us to go from tangent space to world space
 	//vec3 N = normalize(fsIn.normal);
 	//vec3 tmpTan = normalize(fsIn.tangent);
 	//vec3 T = normalize(tmpTan - N * dot(tmpTan, N));
@@ -114,6 +164,4 @@ void main()
 
 
 
-	
-};
 

@@ -14,17 +14,18 @@ TestLayer::TestLayer()
 	m_shader = new Shader("Engine/Shader/VertexShader.glsl", "Engine/Shader/FragmentShader.glsl");
 	m_material = new Material(m_albedoTexture,m_normalTexture, m_shader);
 	//Setup mesh for the object
-	std::string objpath("Assets/Models/cone.obj");
+	std::string objpath("Assets/Models/sphere.obj");
 	//Mesh mesh(positions, indices, new Texture(path));
 	m_testMesh = new Mesh(objpath, m_material);
 
 	//Camera
 	m_camera = new Camera(glm::vec3(0.0f, 0.0f, 7.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 0.01f);
-	m_lightColor = {0.5, 0.5, 0.5};
-	m_directLight.AmbientIntensity = .01f;
+	m_lightColor = {1, 1, 1};
+	m_lightDir = { 1.0,0.0,0.0 };
+	m_directLight.AmbientIntensity = .1f;
 	//This direction is useless, we need to calculate direction agian based on the obj position. 
 	m_directLight.Direction = m_lightDir;
-	m_directLight.Position = glm::vec3(0, 0, 0);
+	m_directLight.Position = glm::vec3(0.5, 2, 0);
 	m_directLight.Color =m_lightColor;
 	m_directLight.Type = 0;
 	
@@ -97,11 +98,18 @@ void TestLayer::OnUpdate(float dt)
 		m_lightBuffer.UpdateBufferSubData(0, sizeof(Light), (void*)&m_directLight);
 	}
 
-	if (m_directLight.Direction != m_lightDir)
+	if (m_directLight.Position != m_lightDir)
 	{
-		m_directLight.Direction = m_lightDir;
+		m_directLight.Position = m_lightDir;
 		m_lightBuffer.UpdateBufferSubData(0, sizeof(Light), (void*)&m_directLight);
 	}
+
+	if (m_directLight.AmbientIntensity != m_ambientIntensity)
+	{
+		m_directLight.AmbientIntensity = m_ambientIntensity;
+		m_lightBuffer.UpdateBufferSubData(0, sizeof(Light), (void*)&m_directLight);
+	}
+
 	//Translation stuff
 	if (direction)
 	{
@@ -130,7 +138,7 @@ void TestLayer::OnUpdate(float dt)
 	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 	glm::mat4 model{ 1.0f };
 	//model = glm::translate(model, glm::vec3(0.0f, triOffset,0.0f));
-	//model = glm::rotate(model, CONVERT_TO_RADIANS(curAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::rotate(model, CONVERT_TO_RADIANS(curAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 	model = glm::scale(model, glm::vec3(4.0f,4.0f, 4.0f));
 
 	m_shader->UseShader();
@@ -144,11 +152,11 @@ void TestLayer::OnUpdate(float dt)
 	m_shader->SetInt("u_NormalMap", 1);
 	m_renderer.Draw(*m_testMesh->GetVertexArray(), *m_testMesh->GetIndexBuffer(), *m_shader);
 
-	/*model = glm::mat4{ 1.0f };
+	model = glm::mat4{ 1.0f };
 	model = glm::translate(model, m_directLight.Position);
 	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 	m_shader->SetMat4("u_Model", model);
-	m_renderer.Draw(*m_testMesh->GetVertexArray(), *m_testMesh->GetIndexBuffer(), *m_shader);*/
+	m_renderer.Draw(*m_testMesh->GetVertexArray(), *m_testMesh->GetIndexBuffer(), *m_shader);
 	
 	//frambuffer unbind
 	m_frameBuffer->Unbind();
@@ -160,6 +168,7 @@ void TestLayer::OnImGuiRender()
 
 	ImGui::ColorEdit4("Direct Light Color", glm::value_ptr(m_lightColor));
 	ImGui::SliderFloat3("Direct Light Direction", glm::value_ptr(m_lightDir),-1.0f, 1.0f);
+	ImGui::SliderFloat("Light Ambient Intensity", &m_ambientIntensity, 0.1, 2.0);
 	ImGui::End();
 	ImGui::Begin("ViewPort");
 	//ImGui::Text("Test Stats:");

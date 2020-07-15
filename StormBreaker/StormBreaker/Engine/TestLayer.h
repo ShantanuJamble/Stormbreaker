@@ -35,7 +35,8 @@ public:
 	virtual void OnEvent(Engine::Event & e) override;
 private:
 	glm::vec3 m_lightColor = { 1.0f, 1.0f, 1.0f };
-	glm::vec3 m_lightDir = { 1.0,0.0,0.0 };
+	glm::vec3 m_lightDir = { 1.0,0.0,-1.0 };
+	float m_ambientIntensity = 0.1;
 	//Demo stuff
 	Renderer m_renderer;
 	std::vector<Mesh*> m_meshes;

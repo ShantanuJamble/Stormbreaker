@@ -20,6 +20,7 @@ out V_OUT {
 	vec3 normal;
 	vec3 tangent;
 	vec3 bitangent;
+	mat3 TBN;
 } vsOut;
 
 
@@ -31,8 +32,19 @@ void main()
 	vsOut.v_texcoord = texcoord;
 
 	vec4 tmp = vec4(normal, 1.0f) * u_Model;
-	
 	vsOut.normal = mat3(transpose(inverse(u_Model))) * normal;// normalize(vec3(tmp));
+	
+	
 	vec4 tmpTangent =  vec4(tangent,1.0f) * u_Model;//vec3(tangent * vec4(position, 1.0));
 	vsOut.tangent = mat3(transpose(inverse(u_Model))) * tangent;
+
+
+	mat3 normalMatrix = transpose(inverse(mat3(u_Model)));
+	vec3 T = normalize(normalMatrix * tangent);
+	vec3 N = normalize(normalMatrix * normal);
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+
+	mat3 TBN = transpose(mat3(T, B, N));
+	vsOut.TBN = TBN;
 };
