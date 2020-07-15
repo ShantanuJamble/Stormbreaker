@@ -66,6 +66,10 @@ private:
 	glm::mat4 m_projection;
 	glm::vec2 m_viewportSize;
 
+
+	//Flags for input and update events
+	float m_isLayerFocused;
+	float m_isLayerHoverd;
 };
 
 #endif //TEST_LAYER_H

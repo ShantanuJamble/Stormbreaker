@@ -6,6 +6,9 @@
 #include <glm\gtc\matrix_transform.hpp>
 
 #include "framework.h"
+#include "Events/Event.h"
+#include "Events/KeyEvent.h"
+#include "Events/MouseEvent.h"
 
 class Camera
 {
@@ -16,20 +19,26 @@ private:
 	glm::vec3 m_Right;
 	glm::vec3 m_WorldUp;
 
-	GLfloat m_Yaw;
-	GLfloat m_Pitch;
+	float m_Yaw;
+	float m_Pitch;
+	float m_lastX;
+	float m_lastY;
+	float m_isFirstMove;
 
-	GLfloat m_MoveSpeed;
-	GLfloat m_TurnSpeed;
+	float m_MoveSpeed;
+	float m_TurnSpeed;
 
-	void Update();
+	void UpdateCameraVectors();
 
 public:
 	Camera();
 	Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLfloat startPitch, GLfloat startMoveSpeed, GLfloat startTurnSpeed);
 
-	void KeyControl(bool* keys, GLfloat deltaTime);
-	void MouseControl(GLfloat xChange, GLfloat yChange);
+	void OnUpdate(float dt);
+
+	void OnEvent(Engine::Event &e);
+	bool OnMouseMove(Engine::MouseMovedEvent& e);
+	bool OnMouseScroll(Engine::MouseScrolledEvent& e);
 
 	glm::mat4 CalculateViewMatrix();
 	const glm::vec3& GetPostion() const { return m_Position; };

@@ -5,7 +5,9 @@
 TestLayer::TestLayer()
 	:Layer("Test Scene"),
 	m_lightBuffer(sizeof(Light)),
-	m_projection(glm::mat4(1))
+	m_projection(glm::mat4(1)),
+	m_isLayerFocused(false),
+	m_isLayerHoverd(false)
 {
 	std::string albedoTexturePath("Assets/Textures/rock.jpg");
 	std::string normalTexturePath("Assets/Textures/rockNormals.jpg");
@@ -89,7 +91,10 @@ void TestLayer::OnDetach()
 
 void TestLayer::OnUpdate(float dt)
 {
+	//Camera Update
 
+	if(m_isLayerFocused)
+		m_camera->OnUpdate(dt);
 
 	//Updating light
 	if (m_directLight.Color != m_lightColor)
@@ -172,7 +177,8 @@ void TestLayer::OnImGuiRender()
 	ImGui::End();
 	ImGui::Begin("ViewPort");
 	//ImGui::Text("Test Stats:");
-
+	m_isLayerFocused = ImGui::IsWindowFocused();
+	m_isLayerHoverd = ImGui::IsWindowHovered();
 	ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 	if (m_viewportSize != *((glm::vec2*) & viewportPanelSize))
 	{
@@ -191,8 +197,6 @@ void TestLayer::OnImGuiRender()
 
 void TestLayer::OnEvent(Engine::Event& e)
 {
-	//SB_ENGINE_WARN("{0}", e.ToString());
-	//Engine::Window window = Engine::Application::GetInstance().GetWindow();
-	//m_camera->KeyControl(window.GetKeys(),window.GetTimeDelta());
-	//m_camera->MouseControl(window.GetXchanged(), window.GetYchanged());
+	if(m_isLayerHoverd)
+		m_camera->OnEvent(e);
 }
