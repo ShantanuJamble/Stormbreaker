@@ -171,9 +171,28 @@ void TestLayer::OnImGuiRender()
 {
 	ImGui::Begin("Settings");
 
-	ImGui::ColorEdit4("Direct Light Color", glm::value_ptr(m_lightColor));
-	ImGui::SliderFloat3("Direct Light Direction", glm::value_ptr(m_lightDir),-1.0f, 1.0f);
-	ImGui::SliderFloat("Light Ambient Intensity", &m_ambientIntensity, 0.1, 2.0);
+	ImGui::Text("Light Color:  ");
+	ImGui::SameLine();
+	ImGui::ColorEdit4("", glm::value_ptr(m_lightColor));
+	ImGui::NewLine();
+
+	ImGui::Text("Light Position:  ");
+	ImGui::SameLine();
+	ImGui::SliderFloat3("", glm::value_ptr(m_lightDir),-1.0f, 1.0f);
+	ImGui::NewLine();
+
+	ImGui::Text("Light Ambient Intensity:  ");
+	ImGui::SameLine();
+	ImGui::SliderFloat("", &m_ambientIntensity, 0.1, 2.0);
+	ImGui::NewLine();
+
+	ImGui::Text("Textures");
+	ImGui::NewLine();
+	ImGui::Image((void*)m_material->GetAlbedoTexture()->GetRenderId(), ImVec2{ 100.f,100.f });
+	ImGui::NewLine();
+	ImGui::Image((void*)m_material->GetNormalMapTexture()->GetRenderId(), ImVec2{ 100.f,100.f });
+
+
 	ImGui::End();
 	ImGui::Begin("ViewPort");
 	//ImGui::Text("Test Stats:");
@@ -188,7 +207,6 @@ void TestLayer::OnImGuiRender()
 		//Engine::Application::GetInstance().GetWindow().OnViewPortResize(viewportPanelSize.x, viewportPanelSize.y);
 		m_projection = glm::perspective(45.0f, (GLfloat)m_viewportSize.x / (GLfloat)m_viewportSize.y, 0.1f, 100.0f);
 		m_frameBuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
-		//m_CameraController.OnResize(viewportPanelSize.x, viewportPanelSize.y);
 	}
 	uint32_t textureID = m_frameBuffer->GetColorAttachmentRendererID();
 	ImGui::Image((void*)textureID, ImVec2{ viewportPanelSize.x, viewportPanelSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
@@ -197,6 +215,6 @@ void TestLayer::OnImGuiRender()
 
 void TestLayer::OnEvent(Engine::Event& e)
 {
-	if(m_isLayerHoverd)
+	if(m_isLayerFocused)
 		m_camera->OnEvent(e);
 }

@@ -28,7 +28,8 @@ public:
 	void SetTexture(std::string& texturePath, TextureType type);
 	void SetShader(Shader* shader);
 
-	inline Texture* GetTexture() const { return m_albedoTexture; }
+	inline Texture* GetAlbedoTexture() const { return m_albedoTexture; }
+	inline Texture* GetNormalMapTexture() const { return m_normalTexture; }
 	inline Shader* GetShader() const { return m_shader; }
 
 	void BindTextures() const;
