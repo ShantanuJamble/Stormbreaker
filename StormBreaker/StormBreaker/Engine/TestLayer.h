@@ -21,6 +21,9 @@
 #include "Renderer/Camera.h"
 #include "Application.h"
 #include <glm/vec3.hpp>
+
+#include "ImGuiFileUtil/ImGuiFileBrowser.h"
+
 class TestLayer : public Engine::Layer
 {
 public:
@@ -70,6 +73,13 @@ private:
 	//Flags for input and update events
 	float m_isLayerFocused;
 	float m_isLayerHoverd;
+
+	//Testing file dialog
+	static bool open;
+	static ImGui::FileBrowser fileDialog;
 };
+
+
+
 
 #endif //TEST_LAYER_H

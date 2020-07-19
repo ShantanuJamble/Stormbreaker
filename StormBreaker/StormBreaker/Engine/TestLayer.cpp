@@ -2,6 +2,31 @@
 #include "Log.h"
 #include <glm/mat4x4.hpp>
 
+
+bool TestLayer::open = true;
+
+ImGui::FileBrowser TestLayer::fileDialog;
+//void drawGui()
+//{
+//	// open Dialog Simple
+//	if (ImGui::Button("Open File Dialog"))
+//		igfd::ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".cpp,.h,.hpp", ".");
+//
+//	// display
+//	if (igfd::ImGuiFileDialog::Instance()->FileDialog("ChooseFileDlgKey"))
+//	{
+//		// action if OK
+//		if (igfd::ImGuiFileDialog::Instance()->IsOk == true)
+//		{
+//			std::string filePathName = igfd::ImGuiFileDialog::Instance()->GetFilepathName();
+//			std::string filePath = igfd::ImGuiFileDialog::Instance()->GetCurrentPath();
+//			// action
+//		}
+//		// close
+//		igfd::ImGuiFileDialog::Instance()->CloseDialog("ChooseFileDlgKey");
+//	}
+//}
+
 TestLayer::TestLayer()
 	:Layer("Test Scene"),
 	m_lightBuffer(sizeof(Light)),
@@ -192,6 +217,22 @@ void TestLayer::OnImGuiRender()
 	ImGui::NewLine();
 	ImGui::Image((void*)m_material->GetNormalMapTexture()->GetRenderId(), ImVec2{ 100.f,100.f });
 
+	
+	fileDialog.SetTitle("title");
+	fileDialog.SetTypeFilters({ ".h", ".cpp" });
+
+	// open file dialog when user clicks this button
+	if (ImGui::Button("open file dialog"))
+		fileDialog.Open();
+
+	fileDialog.Display();
+
+	if (fileDialog.HasSelected())
+	{
+		std::cout << "Selected filename" << fileDialog.GetSelected().string() << std::endl;
+		fileDialog.ClearSelected();
+	}
+
 
 	ImGui::End();
 	ImGui::Begin("ViewPort");
@@ -218,3 +259,5 @@ void TestLayer::OnEvent(Engine::Event& e)
 	if(m_isLayerFocused)
 		m_camera->OnEvent(e);
 }
+
+

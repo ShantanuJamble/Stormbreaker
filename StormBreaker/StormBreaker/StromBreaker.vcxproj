@@ -114,6 +114,8 @@
   <ItemGroup>
     <ClCompile Include="Engine\Application.cpp" />
     <ClCompile Include="Engine\Core\Input.cpp" />
+    <ClCompile Include="Engine\ImGuiFileUtil\CustomFont.cpp" />
+    <ClCompile Include="Engine\ImGuiFileUtil\ImGuiFileDialog.cpp" />
     <ClCompile Include="Engine\ImGui\imgui.cpp" />
     <ClCompile Include="Engine\ImGui\imgui_demo.cpp" />
     <ClCompile Include="Engine\ImGui\imgui_draw.cpp" />
@@ -159,6 +161,10 @@
     <ClInclude Include="Engine\Events\KeyEvent.h" />
     <ClInclude Include="Engine\Events\MouseEvent.h" />
     <ClInclude Include="Engine\framework.h" />
+    <ClInclude Include="Engine\ImGuiFileUtil\CustomFont.h" />
+    <ClInclude Include="Engine\ImGuiFileUtil\ImGuiFileBrowser.h" />
+    <ClInclude Include="Engine\ImGuiFileUtil\ImGuiFileDialog.h" />
+    <ClInclude Include="Engine\ImGuiFileUtil\ImGuiFileDialogConfig.h" />
     <ClInclude Include="Engine\ImGUIIncludes.h" />
     <ClInclude Include="Engine\ImGui\imconfig.h" />
     <ClInclude Include="Engine\ImGui\imgui.h" />
