@@ -67,21 +67,33 @@ void Material::SetTexture(Texture* texture, TextureType type)
 
 void Material::SetTexture(std::string& texturePath, TextureType type)
 {
-	
-	Texture* texture = new Texture(texturePath);
-	switch (type)
-	{
-	case  TextureType::ALBEDO:
-		m_albedoTexture = texture;
-		break;
-	case  TextureType::NORMAL:
-		m_normalTexture = texture;
-		break;
-	case TextureType::METALNESS:
-		break;
+	Texture* texture = nullptr;
+	try {
+		switch (type)
+		{
+		case  TextureType::ALBEDO:
+			if(m_albedoTexture)
+				delete m_albedoTexture;
+			texture = new Texture(texturePath);
+			m_albedoTexture = texture;
+			break;
+		case  TextureType::NORMAL:
+			if (m_normalTexture)
+				delete m_normalTexture;
+			texture = new Texture(texturePath);
+			m_normalTexture = texture;
+			break;
+		case TextureType::METALNESS:
+			break;
 
-	case TextureType::ROUGHNESS:
-		break;
+		case TextureType::ROUGHNESS:
+			break;
+		}
+	}
+	catch (std::exception& e)
+	{
+		SB_ENGINE_ERROR("ERROR: Failed to create {0} texture. \n {1}", type, e.what());
+		return;
 	}
 }
 

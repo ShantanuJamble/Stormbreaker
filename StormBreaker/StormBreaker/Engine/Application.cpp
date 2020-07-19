@@ -27,8 +27,8 @@ namespace Engine {
 		s_Instance = this;
 		SB_GAME_INFO("Inititaitng memory manager.");
 		sbmemory::MemoryManagetInit();
-		m_Window = new Window(1600, 900, SB_BIND_EVENT_FN(Application::OnEvent));
-		m_Window->Initialise();
+		m_Window = new Window("StormBreaker",1600, 900, SB_BIND_EVENT_FN(Application::OnEvent));
+		//m_Window->Initialise();
 		//m_Window->SetEventCallback(SB_BIND_EVENT_FN(Application::OnEvent));
 		m_ImGuiLayer = new ImGuiLayer();
 		PushLayer(m_ImGuiLayer);

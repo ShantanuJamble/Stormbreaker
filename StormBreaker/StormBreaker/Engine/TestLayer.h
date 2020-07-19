@@ -75,8 +75,10 @@ private:
 	float m_isLayerHoverd;
 
 	//Testing file dialog
-	static bool open;
+	bool m_selectingAlbedoTexture;
+	bool m_selectingNormalTexture;
 	static ImGui::FileBrowser fileDialog;
+	std::string m_fileDialogTitle;
 };
 
 

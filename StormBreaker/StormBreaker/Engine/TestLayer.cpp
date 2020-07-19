@@ -3,36 +3,20 @@
 #include <glm/mat4x4.hpp>
 
 
-bool TestLayer::open = true;
 
 ImGui::FileBrowser TestLayer::fileDialog;
-//void drawGui()
-//{
-//	// open Dialog Simple
-//	if (ImGui::Button("Open File Dialog"))
-//		igfd::ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".cpp,.h,.hpp", ".");
-//
-//	// display
-//	if (igfd::ImGuiFileDialog::Instance()->FileDialog("ChooseFileDlgKey"))
-//	{
-//		// action if OK
-//		if (igfd::ImGuiFileDialog::Instance()->IsOk == true)
-//		{
-//			std::string filePathName = igfd::ImGuiFileDialog::Instance()->GetFilepathName();
-//			std::string filePath = igfd::ImGuiFileDialog::Instance()->GetCurrentPath();
-//			// action
-//		}
-//		// close
-//		igfd::ImGuiFileDialog::Instance()->CloseDialog("ChooseFileDlgKey");
-//	}
-//}
+
 
 TestLayer::TestLayer()
 	:Layer("Test Scene"),
 	m_lightBuffer(sizeof(Light)),
 	m_projection(glm::mat4(1)),
 	m_isLayerFocused(false),
-	m_isLayerHoverd(false)
+	m_isLayerHoverd(false),
+	m_selectingAlbedoTexture(false),
+	m_selectingNormalTexture(false)
+
+
 {
 	std::string albedoTexturePath("Assets/Textures/rock.jpg");
 	std::string normalTexturePath("Assets/Textures/rockNormals.jpg");
@@ -85,7 +69,9 @@ TestLayer::TestLayer()
 	fb_data.Height = 720;
 	m_frameBuffer = new FrameBuffer (fb_data);
 	m_viewportSize = { fb_data.Width, fb_data.Height };
-	int a;
+	
+
+	
 }
 
 
@@ -214,22 +200,61 @@ void TestLayer::OnImGuiRender()
 	ImGui::Text("Textures");
 	ImGui::NewLine();
 	ImGui::Image((void*)m_material->GetAlbedoTexture()->GetRenderId(), ImVec2{ 100.f,100.f });
-	ImGui::NewLine();
-	ImGui::Image((void*)m_material->GetNormalMapTexture()->GetRenderId(), ImVec2{ 100.f,100.f });
-
-	
-	fileDialog.SetTitle("title");
-	fileDialog.SetTypeFilters({ ".h", ".cpp" });
-
+	ImGui::SameLine();
 	// open file dialog when user clicks this button
-	if (ImGui::Button("open file dialog"))
+	if (ImGui::Button("Select Albedo Texture"))
+	{
+		m_selectingAlbedoTexture = true;
+		
+		m_fileDialogTitle = "Select Albedo Texture";
 		fileDialog.Open();
 
+
+	}
+
+	ImGui::NewLine();
+	ImGui::Image((void*)m_material->GetNormalMapTexture()->GetRenderId(), ImVec2{ 100.f,100.f });
+	ImGui::SameLine();
+
+	if (ImGui::Button("Select Normal Texture"))
+	{
+		m_selectingNormalTexture = true;
+		m_fileDialogTitle = "Select Normal Texture";
+		fileDialog.Open();
+	}
+	
+
+
+
+	fileDialog.SetTitle(m_fileDialogTitle);
+	fileDialog.SetTypeFilters({ ".png", ".jpeg",".jpg", ".bmp" });
+
+	
+	
+	
 	fileDialog.Display();
 
 	if (fileDialog.HasSelected())
 	{
-		std::cout << "Selected filename" << fileDialog.GetSelected().string() << std::endl;
+		std::string selectedPath = fileDialog.GetSelected().string();
+		
+		if (m_selectingAlbedoTexture)
+		{
+			SB_ENGINE_INFO("Updating Albedo texture to {0}", selectedPath.c_str());
+			m_selectingAlbedoTexture = false;
+
+			//updating material
+
+			m_material->SetTexture(selectedPath, TextureType::ALBEDO);
+		}
+
+		if (m_selectingNormalTexture)
+		{
+			SB_ENGINE_WARN("Updating Normal texture to {0}", selectedPath.c_str());
+			m_selectingNormalTexture = false;
+			m_material->SetTexture(selectedPath, TextureType::NORMAL);
+		}
+
 		fileDialog.ClearSelected();
 	}
 

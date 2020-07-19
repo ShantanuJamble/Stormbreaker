@@ -3,7 +3,7 @@
 #include "OpenGLErrorHandler.h"
 
 namespace Engine {
-	Window::Window()
+	Window::Window(const char* windowTitle)
 	{
 		m_Width = 800;
 		m_Height = 600;
@@ -14,9 +14,11 @@ namespace Engine {
 
 		//Setting up openGL error handler
 		glfwSetErrorCallback(&GLErrorHandler::glfwError);
+
+		Initialise(windowTitle);
 	}
 
-	Window::Window(GLint windowWidth, GLint windowHeight, const EventCallbackFn& callback)
+	Window::Window(const char* windowTitle,GLint windowWidth, GLint windowHeight, const EventCallbackFn& callback)
 	{
 		m_Width = windowWidth;
 		m_Height = windowHeight;
@@ -28,9 +30,10 @@ namespace Engine {
 
 		//Setting up openGL error handler
 		glfwSetErrorCallback(&GLErrorHandler::glfwError);
+		Initialise(windowTitle);
 	}
 
-	Window::Window(GLint windowWidth, GLint windowHeight)
+	Window::Window(const char* windowTitle,GLint windowWidth, GLint windowHeight)
 	{
 		m_Width = windowWidth;
 		m_Height = windowHeight;
@@ -41,10 +44,11 @@ namespace Engine {
 
 		//Setting up openGL error handler
 		glfwSetErrorCallback(&GLErrorHandler::glfwError);
+		Initialise(windowTitle);
 	}
 
 
-	int Window::Initialise()
+	int Window::Initialise(const char* windowTitle)
 	{
 		if (!glfwInit())
 		{
@@ -63,7 +67,7 @@ namespace Engine {
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 		// Create the window
-		m_Window = glfwCreateWindow(m_Width, m_Height, "Test Window", NULL, NULL);
+		m_Window = glfwCreateWindow(m_Width, m_Height, windowTitle, NULL, NULL);
 		if (!m_Window)
 		{
 			printf("Error creating GLFW window!");

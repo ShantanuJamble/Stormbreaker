@@ -33,12 +33,12 @@ namespace Engine {
 		GLfloat m_deltaTime;
 		GLfloat m_lastTime;
 	public:
-		Window();
+		Window(const char* windowTitle);
 
-		Window(GLint windowWidth, GLint windowHeight);
-		Window(GLint windowWidth, GLint windowHeight, const EventCallbackFn& callback);
+		Window(const char* windowTitle,GLint windowWidth, GLint windowHeight);
+		Window(const char* windowTitle,GLint windowWidth, GLint windowHeight, const EventCallbackFn& callback);
 
-		int Initialise();
+		int Initialise(const char* windowTitle);
 
 		inline GLint GetBufferWidth()  const { return m_BufferWidth; }
 		inline GLint GetBufferHeight() const { return m_BufferHeight; }
