@@ -15,6 +15,8 @@
 #include "ImGUIIncludes.h"
 #include "Renderer/Mesh.h"
 #include "Renderer/Renderer.h"
+#include "Renderer/SkyboxTexture.h"
+#include "Renderer/SkyboxMaterial.h"
 #include "Renderer/FrameBuffer.h"
 #include "Renderer/Light.h"
 #include "Renderer/UniformBuffer.h"
@@ -46,15 +48,17 @@ private:
 	//glm::vec3 scaling;
 	Texture* m_albedoTexture;
 	Texture* m_normalTexture;
-	Shader* m_shader;
+	SkyboxTexture* m_skyboxTexture;
+
+	Shader* m_shader, *m_skyboxShader;
 	FrameBuffer* m_frameBuffer;
-	Mesh* m_testMesh;
+	Mesh* m_testMesh, *m_skyboxMesh;
 	Light m_directLight;
 	UniformBuffer m_lightBuffer;
 
 	Camera* m_camera;
 	Material* m_material;
-	
+	SkyboxMaterial* m_skyboxMaterial;
 	//Animation stuff
 	float r = 0.0f;
 	float incr = 0.05f;
@@ -79,6 +83,10 @@ private:
 	bool m_selectingNormalTexture;
 	static ImGui::FileBrowser fileDialog;
 	std::string m_fileDialogTitle;
+
+	//gameloop stats
+	float m_fps;
+	float m_dt;
 };
 
 

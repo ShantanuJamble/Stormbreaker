@@ -1,7 +1,8 @@
 #include "TestLayer.h"
 #include "Log.h"
 #include <glm/mat4x4.hpp>
-
+#include <vector>
+#include <string>
 
 
 ImGui::FileBrowser TestLayer::fileDialog;
@@ -14,7 +15,9 @@ TestLayer::TestLayer()
 	m_isLayerFocused(false),
 	m_isLayerHoverd(false),
 	m_selectingAlbedoTexture(false),
-	m_selectingNormalTexture(false)
+	m_selectingNormalTexture(false),
+	m_fps(0),
+	m_dt(0)
 
 
 {
@@ -26,9 +29,29 @@ TestLayer::TestLayer()
 	m_material = new Material(m_albedoTexture,m_normalTexture, m_shader);
 	//Setup mesh for the object
 	std::string objpath("Assets/Models/sphere.obj");
-	//Mesh mesh(positions, indices, new Texture(path));
 	m_testMesh = new Mesh(objpath, m_material);
 
+
+
+	/*****
+	 Skybox setup
+	*****/
+	std::vector<std::string> faces
+	{
+		"Assets/Textures/skybox/right.jpg",
+		"Assets/Textures/skybox/left.jpg",
+		"Assets/Textures/skybox/top.jpg",
+		"Assets/Textures/skybox/bottom.jpg",
+		"Assets/Textures/skybox/front.jpg",
+		"Assets/Textures/skybox/back.jpg"
+	};
+	m_skyboxTexture = new SkyboxTexture();
+	m_skyboxTexture->LoadCubeMab(faces);
+	m_skyboxShader = new Shader("Engine/Shader/Skybox_vertexShader.glsl", "Engine/Shader/Skybox_fragment.glsl");
+	m_skyboxMaterial = new SkyboxMaterial(m_skyboxTexture, m_skyboxShader);
+	//Mesh mesh(positions, indices, new Texture(path));
+	std::string skyboxMeshPath("Assets/Models/cube.obj");
+	m_skyboxMesh = new Mesh(skyboxMeshPath, nullptr);
 	//Camera
 	m_camera = new Camera(glm::vec3(0.0f, 0.0f, 7.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 0.01f);
 	m_lightColor = {1, 1, 1};
@@ -98,10 +121,15 @@ void TestLayer::OnDetach()
 	delete m_camera;
 	delete m_testMesh;
 	delete m_frameBuffer;
+	delete m_skyboxMesh;
+	delete m_skyboxMaterial;
+	delete m_skyboxShader;
 }
 
 void TestLayer::OnUpdate(float dt)
 {
+	m_dt = dt;
+
 	//Camera Update
 
 	if(m_isLayerFocused)
@@ -157,7 +185,7 @@ void TestLayer::OnUpdate(float dt)
 	model = glm::rotate(model, CONVERT_TO_RADIANS(curAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 	model = glm::scale(model, glm::vec3(4.0f,4.0f, 4.0f));
 
-	m_shader->UseShader();
+	m_shader->UseShader();// TODO: This is being called in renderer.draw again. Needs to be optimized.
 	m_shader->SetMat4("u_Model", model);
 	m_shader->SetMat4("u_Projection", m_projection);
 	m_testMesh->GetMaterial()->BindTextures();// GetTexture()->Bind();
@@ -167,14 +195,32 @@ void TestLayer::OnUpdate(float dt)
 	m_shader->SetInt("u_Texture", 0);
 	m_shader->SetInt("u_NormalMap", 1);
 	m_renderer.Draw(*m_testMesh->GetVertexArray(), *m_testMesh->GetIndexBuffer(), *m_shader);
+	m_testMesh->GetMaterial()->UnBindTextures();// GetTexture()->Bind();
+
 
 	model = glm::mat4{ 1.0f };
 	model = glm::translate(model, m_directLight.Position);
 	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 	m_shader->SetMat4("u_Model", model);
 	m_renderer.Draw(*m_testMesh->GetVertexArray(), *m_testMesh->GetIndexBuffer(), *m_shader);
+
+	/***
+	Drawing sky
+	***/
+	model = glm::mat4{ 1.0f };
+	model = glm::translate(model, m_directLight.Position);
+	model = glm::scale(model, glm::vec3(100.0f, 100.0f, 100.0f));
+	m_skyboxShader->UseShader();
+	m_skyboxShader->SetMat4("view", m_camera->CalculateViewMatrix());
+	m_skyboxShader->SetMat4("projection", m_projection);
+	m_skyboxShader->SetMat4("model", model);
+    m_skyboxMaterial->BindTextures();
+	m_renderer.DrawSky(*m_skyboxMesh->GetVertexArray(), *m_skyboxMesh->GetIndexBuffer(), *m_skyboxShader);
+	m_skyboxMaterial->UnbindTextures();
+	
 	
 	//frambuffer unbind
+	
 	m_frameBuffer->Unbind();
 }
 
@@ -189,7 +235,7 @@ void TestLayer::OnImGuiRender()
 
 	ImGui::Text("Light Position:  ");
 	ImGui::SameLine();
-	ImGui::SliderFloat3("", glm::value_ptr(m_lightDir),-1.0f, 1.0f);
+	ImGui::SliderFloat3("", glm::value_ptr(m_lightDir),-4.0f, 4.0f);
 	ImGui::NewLine();
 
 	ImGui::Text("Light Ambient Intensity:  ");
@@ -260,6 +306,14 @@ void TestLayer::OnImGuiRender()
 
 
 	ImGui::End();
+	ImGui::Begin("Stats");
+	if (m_fps != 1.0f / m_dt)
+		m_fps = 1.0f / m_dt;
+	ImGui::Text("FPS: %d", int(m_fps));
+	ImGui::End();
+	//ImGui::Text("Test Stats:");
+
+
 	ImGui::Begin("ViewPort");
 	//ImGui::Text("Test Stats:");
 	m_isLayerFocused = ImGui::IsWindowFocused();

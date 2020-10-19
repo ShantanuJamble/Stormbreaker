@@ -48,7 +48,6 @@ void main()
 	vec3 lightDir = normalize(-light.direction);
 	
 	//Light position, camera position in tangent space
-
 	
 	vec3 lightPosInTangentSpace = fsIn.TBN * light.position;
 	vec3 camPosInTangentSpace   = fsIn.TBN * viewPos;
@@ -76,9 +75,6 @@ void main()
 
 	vec3 result = ambient + diffuse + specular;
 	color = vec4(result, 1.0);
-
-	
-	
 };
 
 
@@ -111,56 +107,6 @@ void main()
 
 
 
-
-
-
-
-//// Create the matrix that will allow us to go from tangent space to world space
-	//vec3 N = normalize(fsIn.normal);
-	//vec3 tmpTan = normalize(fsIn.tangent);
-	//vec3 T = normalize(tmpTan - N * dot(tmpTan, N));
-	//vec3 B = cross(T, N);
-	//mat3 TBN = mat3(T, B, N);
-
-	//// Overwrite the initial normal with the version from the
-	//// normal map, after we've converted to world space
-	//vec3 newNormal = normalize( normalFromMap* TBN);
-
-
-	////Ambient lighting
- //   vec3 ambientLight = light.ambientintensity * light.color;
-	//vec3 ambient = ambientLight * objectColor;
-
-	//	// DIRECTIONAL LIGHT ////////////////////////////
-
-	//// N dot L (Lambert / Diffuse) lighting
-	//// Note: We need the direction TO the light
-	//
-	//float dirNdotL = dot(newNormal, lightDir);
-	//dirNdotL = clamp(dirNdotL,0.0,1.0); // Remember to CLAMP between 0 and 1
-
-	//// Specular calc for reflections (Phong)
-
-	//vec3 dirRefl = reflect(-lightDir, newNormal);
-	//vec3 viewDir = normalize(viewPos - fsIn.pos);
-	//
-	//vec3 halfwayDir = normalize(lightDir + viewDir);
-	//float dirSpec = pow(max(dot(dirRefl, halfwayDir),0.0), 32.0);
-	////dirSpec = 0.3 * dirSpec; // assuming bright white light color
-	//
-	//
-	//
-	//
-	//// Combine the surface and lighting
-	//vec3 finalDirLight = objectColor * (light.color * dirNdotL)
-	//	+ objectColor *dirSpec.rrr;
-	////finalDirLight = clamp(finalDirLight,0.0,1.0);
-	//
-	//
-	////Final Color
-	//color = vec4(finalDirLight + ambient, 1.0);
-	//
-	////color = vec4(lightDir,1.0);
 
 
 

@@ -114,6 +114,7 @@
   <ItemGroup>
     <ClCompile Include="Engine\Application.cpp" />
     <ClCompile Include="Engine\Core\Input.cpp" />
+    <ClCompile Include="Engine\ECS\Systems\RenderSystem.cpp" />
     <ClCompile Include="Engine\ImGui\imgui.cpp" />
     <ClCompile Include="Engine\ImGui\imgui_demo.cpp" />
     <ClCompile Include="Engine\ImGui\imgui_draw.cpp" />
@@ -131,6 +132,8 @@
     <ClCompile Include="Engine\Renderer\OpenGLErrorHandler.cpp" />
     <ClCompile Include="Engine\Renderer\Renderer.cpp" />
     <ClCompile Include="Engine\Renderer\Shader.cpp" />
+    <ClCompile Include="Engine\Renderer\SkyboxMaterial.cpp" />
+    <ClCompile Include="Engine\Renderer\SkyboxTexture.cpp" />
     <ClCompile Include="Engine\Renderer\stb_image_implementation.cpp" />
     <ClCompile Include="Engine\Renderer\VertexArray.cpp" />
     <ClCompile Include="Engine\Renderer\VertexBuffer.cpp" />
@@ -152,7 +155,12 @@
     <ClInclude Include="Engine\Application.h" />
     <ClInclude Include="Engine\Core.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="Engine\Core\AssetManager.h" />
     <ClInclude Include="Engine\Core\Input.h" />
+    <ClInclude Include="Engine\ECS\Components\Component.h" />
+    <ClInclude Include="Engine\ECS\Components\RenderComponent.h" />
+    <ClInclude Include="Engine\ECS\Entity.h" />
+    <ClInclude Include="Engine\ECS\Systems\RenderSystem.h" />
     <ClInclude Include="Engine\Entrypoint.h" />
     <ClInclude Include="Engine\Events\ApplicationEvent.h" />
     <ClInclude Include="Engine\Events\Event.h" />
@@ -181,6 +189,9 @@
     <ClInclude Include="Engine\Renderer\OpenGLErrorHandler.h" />
     <ClInclude Include="Engine\Renderer\Renderer.h" />
     <ClInclude Include="Engine\Renderer\Shader.h" />
+    <ClInclude Include="Engine\Renderer\SkyboxMaterial.h" />
+    <ClInclude Include="Engine\Renderer\SkyboxTexture.h" />
+    <ClInclude Include="Engine\Renderer\stb_dds.h" />
     <ClInclude Include="Engine\Renderer\stb_image.h" />
     <ClInclude Include="Engine\Renderer\VertexArray.h" />
     <ClInclude Include="Engine\Renderer\VertexBuffer.h" />
@@ -202,7 +213,10 @@
     <ClInclude Include="Engine\Renderer\FrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Engine\ECS\Components\TransformComponent.h" />
     <None Include="Engine\Shader\FragmentShader.glsl" />
+    <None Include="Engine\Shader\Skybox_fragment.glsl" />
+    <None Include="Engine\Shader\Skybox_vertexShader.glsl" />
     <None Include="Engine\Shader\VertexShader.glsl" />
     <None Include="packages.config" />
   </ItemGroup>

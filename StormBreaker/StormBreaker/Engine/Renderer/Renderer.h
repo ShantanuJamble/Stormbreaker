@@ -7,12 +7,16 @@
 #include <vector>
 #include "Renderer/OpenGLErrorHandler.h"
 
+class SkyboxTexture;
+
+
 
 class Renderer
 {
 public:
 	void Clear() const;
 	void Draw(VertexArray const &va, IndexBuffer const &ib, Shader const &shader) const;
+	void DrawSky(VertexArray const& va, IndexBuffer const& ib, Shader const& shader) const;
 	void EnableFetures(unsigned int feature);
 };
 
