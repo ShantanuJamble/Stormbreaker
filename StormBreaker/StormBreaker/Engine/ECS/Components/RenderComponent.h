@@ -5,13 +5,16 @@
 #include "Renderer/Mesh.h"
 #include "Renderer/Material.h"
 
-struct RenderComponent : public Component
-{
-private:
-	Mesh* m_mesh;
-	Material* m_material;
-};
-
+namespace Engine {
+	namespace ecs {
+		struct RenderComponent : public Component
+		{
+		private:
+			Mesh* m_mesh;
+			Material* m_material;
+		};
+	}
+}
 
 
 #endif

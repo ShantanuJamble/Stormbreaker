@@ -3,8 +3,7 @@
 
 struct Component
 {
-public:
-	virtual Component* GetComponent() = 0;
+
 };
 
 #endif // ! COMPONENT_H

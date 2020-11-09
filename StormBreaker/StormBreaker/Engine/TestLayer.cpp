@@ -18,8 +18,6 @@ TestLayer::TestLayer()
 	m_selectingNormalTexture(false),
 	m_fps(0),
 	m_dt(0)
-
-
 {
 	std::string albedoTexturePath("Assets/Textures/rock.jpg");
 	std::string normalTexturePath("Assets/Textures/rockNormals.jpg");

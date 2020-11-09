@@ -34,7 +34,7 @@ void Renderer::DrawSky(VertexArray const& va, IndexBuffer const& ib, Shader cons
 	va.Bind();
 	ib.Bind();
 	glDrawArrays(GL_TRIANGLES, 0, 36);
-	glDepthMask(GL_TRUE);
+		glDepthMask(GL_TRUE);
 }
 
 void Renderer::EnableFetures(unsigned int feature)
