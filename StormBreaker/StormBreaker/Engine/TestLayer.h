@@ -8,6 +8,7 @@
 #include "Core.h"
 #include "framework.h"
 #include "Events/Event.h"
+
 #include "Events/ApplicationEvent.h"
 #include "LayerStack.h"
 #include "Renderer/WindowHandler.h"
@@ -23,6 +24,13 @@
 #include "Renderer/Camera.h"
 #include "Application.h"
 #include <glm/vec3.hpp>
+
+//Comp -> Entity ->System
+
+#include "Engine/ECS/Components/RenderComponent.h"
+#include "Engine/ECS/Entity.h"
+#include "Engine/ECS/Systems/RenderSystem.h"
+
 
 #include "ImGuiFileUtil/ImGuiFileBrowser.h"
 
@@ -45,6 +53,9 @@ private:
 	//Demo stuff
 	Renderer m_renderer;
 	std::vector<Mesh*> m_meshes;
+	Engine::ecs::Entity *m_testEntity;
+	Engine::ecs::RenderComponent *m_RenderComponent;
+	Engine::ecs::RenderSystem *m_renderSystem;
 	//glm::vec3 scaling;
 	Texture* m_albedoTexture;
 	Texture* m_normalTexture;

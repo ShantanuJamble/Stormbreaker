@@ -30,6 +30,12 @@ TestLayer::TestLayer()
 	m_testMesh = new Mesh(objpath, m_material);
 
 
+	//ECS test
+	m_RenderComponent = new Engine::ecs::RenderComponent(m_testMesh, m_material);
+	m_testEntity = new Engine::ecs::Entity("test entity", 1);
+	m_testEntity->AddComponent<Engine::ecs::RenderComponent>(m_RenderComponent);
+
+
 
 	/*****
 	 Skybox setup
@@ -122,6 +128,9 @@ void TestLayer::OnDetach()
 	delete m_skyboxMesh;
 	delete m_skyboxMaterial;
 	delete m_skyboxShader;
+	delete m_testEntity;
+	//delete m_RenderComponent;Entity will clear this.
+	//delete m_renderSystem; 
 }
 
 void TestLayer::OnUpdate(float dt)
@@ -177,7 +186,7 @@ void TestLayer::OnUpdate(float dt)
 	m_frameBuffer->Bind();
 
 	m_renderer.Clear();
-	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+	
 	glm::mat4 model{ 1.0f };
 	//model = glm::translate(model, glm::vec3(0.0f, triOffset,0.0f));
 	model = glm::rotate(model, CONVERT_TO_RADIANS(curAngle), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -310,6 +319,12 @@ void TestLayer::OnImGuiRender()
 	ImGui::Text("FPS: %d", int(m_fps));
 	ImGui::End();
 	//ImGui::Text("Test Stats:");
+
+	ImGui::Begin("Entity Test Window");
+	
+	ImGui::Text("Entity Label: %s",m_testEntity->GetEntityLabel());
+	ImGui::Text("Entity id: %d", m_testEntity->GetEntityID());
+	ImGui::End();
 
 
 	ImGui::Begin("ViewPort");

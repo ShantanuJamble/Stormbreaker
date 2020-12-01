@@ -12,8 +12,8 @@ namespace Engine {
 		class Entity
 		{
 		private:
-			std::string m_label; 
-			uint16_t m_id;
+			std::string m_label; // Needs to be autogen
+			uint16_t m_id; //Needs to be autogen
 			Transform* m_transform = nullptr;
 			RenderComponent* m_renderComponent = nullptr;
 
@@ -22,7 +22,6 @@ namespace Engine {
 			Entity(const char* label, const uint16_t id)
 				:m_label(label),
 				 m_id(id)
-
 			{
 				m_transform = new Transform();
 			}
@@ -46,9 +45,10 @@ namespace Engine {
 
 			inline const uint16_t GetEntityID() const  { return m_id; }
 			
+			inline const char* GetEntityLabel() const { return m_label.c_str(); }
 
 			template<typename F>
-			inline void AddComponent() {};
+			inline void AddComponent(F * = nullptr) {};
 
 
 			template<typename T>
@@ -57,7 +57,7 @@ namespace Engine {
 
 
 		template<>
-		inline void Entity::AddComponent<RenderComponent>()
+		inline void Entity::AddComponent<RenderComponent>(RenderComponent *rc)
 		{
 			if (m_renderComponent)
 			{
@@ -65,7 +65,10 @@ namespace Engine {
 			}
 			else
 			{
-				m_renderComponent = new RenderComponent();
+				if (rc)
+					m_renderComponent = rc;
+				else
+					SB_ENGINE_ERROR("FATAL : Incompatible RenderComponent passed to entityt {0}",m_label);
 			}
 		}
 
