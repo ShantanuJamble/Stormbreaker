@@ -67,12 +67,12 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>SB_BUILD_LIB;SB_PLATFORM_WINDOWS;SB_DEBUG_BUILD;IMGUI_IMPL_OPENGL_LOADER_GLAD; _CRT_SECURE_NO_WARNINGS;_WIN32</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Engine\util;$(ProjectDir)\Engine;$(SolutionDir)vendor\include\KHR;$(SolutionDir)vendor\include\glad;$(SoluitionDir)vendor\include\GLFW;$(SolutionDir)vendor\include\spdlog;$(SolutionDir)vendor\include\;$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Engine\util;$(ProjectDir)\Engine;$(SolutionDir)vendor\include\KHR;$(SolutionDir)vendor\include\glad;$(SoluitionDir)vendor\include\GLFW;$(SolutionDir)vendor\include\spdlog;$(SolutionDir)vendor\include\vld;$(SolutionDir)vendor\include\;$(ProjectDir)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\libs\assimp\Debug;$(SolutionDir)vendor\libs\GLFW\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\libs\assimp\Debug;$(SolutionDir)vendor\libs\GLFW\Debug;$(SolutionDir)vendor\libs\vld\Debug;$(SolutionDir)vendor\bin\vld;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;assimp-vc140-mt.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
