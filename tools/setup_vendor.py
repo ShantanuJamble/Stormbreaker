@@ -84,15 +84,15 @@ class GDriveDownloader:
 
 if __name__ == '__main__':
 
-	ASSET_FILE_ID = "1MibiR-59YDyeMXrKdxREv8tDXY4UDL_f"
-	VENDOR_WINDOW_ID = "1K6funGJKcaJOuOas6qUDLEqo4fd0VUlw"
+	ASSET_FILE_ID = "16pdg2UCJ96e53WO44xJdwhwr1R1Obyyw"
+	VENDOR_WINDOW_ID = "1nQfHr_nitHQ84cdf4iSmcunnmDdTxvFk"
 	VENDOR_LINUX_ID = "1mWyzqTZAGRuzFfU-S2N1N6L927BzhbaN"
 	if platform.system() == 'Windows':
-		GDriveDownloader.download_file("vendor.zip",VENDOR_WINDOW_ID,"../StormBreaker/StormBreaker")
-		GDriveDownloader.download_file("assets.zip",ASSET_FILE_ID,"../StormBreaker/StormBreaker")
+		GDriveDownloader.download_file("vendor.zip",VENDOR_WINDOW_ID,"../StormBreaker/")
+		GDriveDownloader.download_file("Assets.zip",ASSET_FILE_ID,"../StormBreaker/StormBreaker/")
 	elif platform.system() == 'Linux':
-		GDriveDownloader.download_file("vendor_linux.tar",VENDOR_LINUX_ID,"../StormBreaker/StormBreaker")
-		GDriveDownloader.download_file("assets.zip",ASSET_FILE_ID,"../StormBreaker/StormBreaker")
+		GDriveDownloader.download_file("vendor_linux.tar",VENDOR_LINUX_ID,"../StormBreaker/")
+		GDriveDownloader.download_file("Assets.zip",ASSET_FILE_ID,"../StormBreaker/StormBreaker")
 	else:
-		print "Unsupported platform"
+		print ("Unsupported platform")
 

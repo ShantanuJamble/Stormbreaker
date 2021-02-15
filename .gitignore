@@ -5,7 +5,7 @@
 
 #Ignoring vendor libs and includes
 StromBreaker/StromBreaker/vendor/*
-
+*.zip
 #Ignoring build files
 StromBreaker/build/*
 
