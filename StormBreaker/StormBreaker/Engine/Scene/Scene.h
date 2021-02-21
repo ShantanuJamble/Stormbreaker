@@ -6,7 +6,7 @@
 namespace engine
 {
 	class Entity;
-
+	class Event;
 
 
 	class Scene
@@ -17,8 +17,7 @@ namespace engine
 		friend class Entity;
 	public:
 		/**
-		* TODO: Need to add support to serialize and deserialize scenes.
-		* Additional methods to create/add/update entities in registry. 
+		* TODO: Need to add support to serialize and deserialize scenes. 
 		**/
 		Scene();
 		
@@ -28,7 +27,15 @@ namespace engine
 		//Methods
 
 		Entity CreateEntity();
-		void   RemoveEntity();
+		void   RemoveEntity(Entity& entity);
+
+
+		/****
+		*** Event Handlers
+		****/
+
+		void OnUpdate(float dt);
+		void OnEvent(Event& e);
 
 		/*****
 		*  Updating methods like OnRender(), OnCollision, should scene have it or the system? 
