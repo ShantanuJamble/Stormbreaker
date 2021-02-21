@@ -5,7 +5,7 @@
 
 
 
-namespace Engine {
+namespace engine {
 
 	class MouseMovedEvent : public Event
 	{

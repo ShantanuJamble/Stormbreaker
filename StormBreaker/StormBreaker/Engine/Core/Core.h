@@ -9,6 +9,17 @@ const float TO_RADIANS = 3.14159265f / 180.0f;
 
 #define CONVERT_TO_RADIANS(X) X*TO_RADIANS
 
+#ifdef SB_DEBUG_BUILD
+#define  SB_ASSERT
+#else
+#endif
+
+/***References***/
+
+#define REF std::shared_ptr
+#define WEAK_REF std::weak_ptr
+
+
 //#ifdef SB_DEBUG_BUILD
 //
 //	#define SB_ASSERT(x, ...) { if(!(x)) { SB_ENGINE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }

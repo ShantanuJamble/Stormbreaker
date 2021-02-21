@@ -16,7 +16,7 @@
 #include "Renderer/UniformBuffer.h"
 #include "Log.h"
 #include "Application.h"
-namespace Engine {
+namespace engine {
 
 	Application* Application::s_Instance = nullptr;
 

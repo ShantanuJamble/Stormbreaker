@@ -1,11 +1,11 @@
 #ifndef LAYERSTACK_H
 #define LAYERSTACK_H
-#include "Core.h"
+#include "Core/Core.h" 
 #include "Layer.h"
 
 #include <vector>
 
-namespace Engine {
+namespace engine {
 
 	class LayerStack
 	{

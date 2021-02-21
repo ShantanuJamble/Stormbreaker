@@ -6,7 +6,7 @@
 #include "framework.h"
 #include "Application.h"
 
-namespace Engine
+namespace engine
 {
 
 	class Input
@@ -22,6 +22,6 @@ namespace Engine
 
 }
 
-#define INPUT Engine::Input
+#define INPUT engine::Input
 
 #endif // ! INPUT_H

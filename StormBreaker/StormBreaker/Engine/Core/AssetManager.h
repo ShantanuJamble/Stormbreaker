@@ -10,7 +10,7 @@
 #include "Renderer/Texture.h"
 
 
-namespace Engine
+namespace engine
 {
 	class AssetManager
 	{

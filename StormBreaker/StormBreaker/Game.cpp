@@ -3,7 +3,7 @@
 #include <Engine.h>
 #include <iostream>
 
-class Game : public Engine::Application {
+class Game : public engine::Application {
 public:
 	Game()
 	{
@@ -12,7 +12,7 @@ public:
 	~Game() = default;
 };
 
-Engine::Application* Engine::CreateApplication()
+engine::Application* engine::CreateApplication()
 {
 		return new Game();
 }

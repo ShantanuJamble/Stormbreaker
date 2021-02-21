@@ -1,7 +1,7 @@
 #ifndef  POOL_ALLOCATOR_H
 #define  POOL_ALLOCATOR_H
 
-#include "../Core.h"
+#include "Core/Core.h"
 #include <cstdlib>
 
 namespace sbmemory {

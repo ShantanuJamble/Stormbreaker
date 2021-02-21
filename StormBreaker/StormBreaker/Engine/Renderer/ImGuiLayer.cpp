@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "ImGui/SBImGuiWindow.h"
 
-namespace Engine {
+namespace engine {
 	ImGuiLayer::ImGuiLayer()
 		: Layer("ImGuiLayer")
 	{

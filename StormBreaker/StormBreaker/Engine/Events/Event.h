@@ -1,12 +1,12 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-#include "Core.h"
+#include "Core/Core.h" 
 
 #include <string>
 #include <functional>
 
-namespace Engine {
+namespace engine {
 
 	// Reffering the Cherno's Events tutorial for this.
 

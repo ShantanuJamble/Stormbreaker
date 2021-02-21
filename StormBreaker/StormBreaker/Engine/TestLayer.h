@@ -5,7 +5,7 @@
 #include "glm/vec4.hpp"
 
 #include "Log.h"
-#include "Core.h"
+#include "Core/Core.h" 
 #include "framework.h"
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
@@ -26,7 +26,7 @@
 
 #include "ImGuiFileUtil/ImGuiFileBrowser.h"
 
-class TestLayer : public Engine::Layer
+class TestLayer : public engine::Layer
 {
 public:
 	TestLayer();
@@ -37,7 +37,7 @@ public:
 
 	virtual void OnUpdate(float dt) override;
 	virtual void OnImGuiRender() override;
-	virtual void OnEvent(Engine::Event & e) override;
+	virtual void OnEvent(engine::Event & e) override;
 private:
 	glm::vec3 m_lightColor = { 1.0f, 1.0f, 1.0f };
 	glm::vec3 m_lightDir = { 1.0,0.0,-1.0 };

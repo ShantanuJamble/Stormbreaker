@@ -2,7 +2,7 @@
 #define ALLOCATOR_HPP
 
 #include <cstddef>
-#include "Core.h"
+#include "Core/Core.h"
 #include "Log.h"
 
 namespace sbmemory {

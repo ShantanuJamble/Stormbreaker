@@ -1,5 +1,5 @@
 #include "Input.h"
-namespace Engine {
+namespace engine {
 
 	bool Input::IsKeyPressed(int32_t keyCode)
 	{

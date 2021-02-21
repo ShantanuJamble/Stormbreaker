@@ -9,7 +9,7 @@
 #include "Events/ApplicationEvent.h"
 #include "Events/KeyEvent.h"
 #include "Events/MouseEvent.h"
-namespace Engine {
+namespace engine {
 
 	using EventCallbackFn = std::function<void(Event&)>;
 	class Window

@@ -36,9 +36,9 @@ public:
 
 	void OnUpdate(float dt);
 
-	void OnEvent(Engine::Event &e);
-	bool OnMouseMove(Engine::MouseMovedEvent& e);
-	bool OnMouseScroll(Engine::MouseScrolledEvent& e);
+	void OnEvent(engine::Event &e);
+	bool OnMouseMove(engine::MouseMovedEvent& e);
+	bool OnMouseScroll(engine::MouseScrolledEvent& e);
 
 	glm::mat4 CalculateViewMatrix();
 	const glm::vec3& GetPostion() const { return m_Position; };

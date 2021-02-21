@@ -2,7 +2,7 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 
 
-namespace Engine {
+namespace engine {
 
 	std::shared_ptr<spdlog::logger> Log::m_EngineLogger;
 	std::shared_ptr<spdlog::logger> Log::m_GameLogger;

@@ -110,8 +110,8 @@ void TestLayer::OnAttach()
 	m_shader->SetUniformBlock("Lights", 0);
 
 
-	m_viewportSize = { Engine::Application::GetInstance().GetWindow().GetBufferWidth(),
-						Engine::Application::GetInstance().GetWindow().GetBufferHeight() };
+	m_viewportSize = { engine::Application::GetInstance().GetWindow().GetBufferWidth(),
+						engine::Application::GetInstance().GetWindow().GetBufferHeight() };
 	m_projection = glm::perspective(45.0f, (GLfloat)m_viewportSize.x / (GLfloat)m_viewportSize.y, 0.1f, 100.0f);
 
 }
@@ -333,7 +333,7 @@ void TestLayer::OnImGuiRender()
 	ImGui::End();
 }
 
-void TestLayer::OnEvent(Engine::Event& e)
+void TestLayer::OnEvent(engine::Event& e)
 {
 	if(m_isLayerFocused)
 		m_camera->OnEvent(e);

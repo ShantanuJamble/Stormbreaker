@@ -2,7 +2,7 @@
 #include "Log.h"
 #include "OpenGLErrorHandler.h"
 
-namespace Engine {
+namespace engine {
 	Window::Window(const char* windowTitle)
 	{
 		m_Width = 800;

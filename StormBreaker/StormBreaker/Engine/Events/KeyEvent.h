@@ -4,7 +4,7 @@
 #include "Event.h"
 
 
-namespace Engine {
+namespace engine {
 
 	class KeyEvent : public Event
 	{

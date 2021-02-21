@@ -1,18 +1,18 @@
 #ifndef Entrypoint_h
 #define Entrypoint_h
-#include "Core.h"
+#include "Core/Core.h" 
 #include "Application.h"
 #include "Log.h"
 #ifdef SB_DEBUG_BUILD
 #include "vld.h"
 #endif
-extern Engine::Application* Engine::CreateApplication();
+extern engine::Application* engine::CreateApplication();
 
 int main(int argc, char **argv)
 {
-	Engine::Log::Init();
+	engine::Log::Init();
 	SB_ENGINE_INFO("Logs reporting for duty.");
-	auto app = Engine::CreateApplication();
+	auto app = engine::CreateApplication();
 	app->Run();
 	delete app;
 }

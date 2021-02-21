@@ -1,7 +1,7 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include "Core.h"
+#include "Core/Core.h"
 #include "framework.h"
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
@@ -14,7 +14,7 @@
 #include <glm/vec3.hpp>
 //#include "ImGui/imgui.h"
 
-namespace Engine {
+namespace engine {
 	class Application
 	{
 

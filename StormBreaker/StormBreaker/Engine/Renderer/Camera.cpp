@@ -22,15 +22,15 @@ Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLf
 }
 
 
-void Camera::OnEvent(Engine::Event& e)
+void Camera::OnEvent(engine::Event& e)
 {
-	Engine::EventDispatcher dispatcher(e);
-	dispatcher.Dispatch<Engine::MouseScrolledEvent>(SB_BIND_EVENT_FN(Camera::OnMouseScroll));
-	dispatcher.Dispatch<Engine::MouseMovedEvent>(SB_BIND_EVENT_FN(Camera::OnMouseMove));
+	engine::EventDispatcher dispatcher(e);
+	dispatcher.Dispatch<engine::MouseScrolledEvent>(SB_BIND_EVENT_FN(Camera::OnMouseScroll));
+	dispatcher.Dispatch<engine::MouseMovedEvent>(SB_BIND_EVENT_FN(Camera::OnMouseMove));
 }
 
 
-bool Camera::OnMouseMove(Engine::MouseMovedEvent& e)
+bool Camera::OnMouseMove(engine::MouseMovedEvent& e)
 {
 	if (m_isFirstMove)
 	{
@@ -70,7 +70,7 @@ bool Camera::OnMouseMove(Engine::MouseMovedEvent& e)
 }
 
 
-bool Camera::OnMouseScroll(Engine::MouseScrolledEvent& e)
+bool Camera::OnMouseScroll(engine::MouseScrolledEvent& e)
 {
 
 	/*if (offset == 0) return;

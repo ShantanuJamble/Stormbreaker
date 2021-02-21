@@ -1,7 +1,7 @@
 #include "LayerStack.h"
 
 
-namespace Engine
+namespace engine
 {
 
 	LayerStack::~LayerStack()

@@ -1,6 +1,6 @@
 #ifndef MEMORYINTERFACE_H
 #define MEMORYINTERFACE_H
-#include "../Core.h"
+#include "Core/Core.h"
 #include <cstddef>
 namespace sbmemory
 {

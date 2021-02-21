@@ -1,11 +1,11 @@
 #ifndef LAYER_H
 #define LAYER_H
 
-#include "Core.h"
+#include "Core/Core.h" 
 #include "Events/Event.h"
 #include <string>
 
-namespace Engine {
+namespace engine {
 	class Layer
 	{
 	public:

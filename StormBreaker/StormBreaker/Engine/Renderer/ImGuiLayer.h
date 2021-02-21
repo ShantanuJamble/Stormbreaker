@@ -7,8 +7,8 @@
 #include "ImGui/imgui_impl_glfw.h"
 #include "Layer.h"
 
-namespace Engine {
-	class ImGuiLayer : public Engine::Layer
+namespace engine {
+	class ImGuiLayer : public engine::Layer
 	{
 	public:
 		ImGuiLayer();
