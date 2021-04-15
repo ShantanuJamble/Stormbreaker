@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include "Log.h"
+
 namespace util {
 	void LoadOBJ(const char* filePath,
 		std::vector<Vertex>& tmpVertices,      // Verts we're assembling

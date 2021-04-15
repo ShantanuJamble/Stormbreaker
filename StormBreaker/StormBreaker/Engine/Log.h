@@ -1,8 +1,8 @@
 #ifndef LOG_H
 #define LOG_H
 
-#include "Core/Core.h" 
 #include "spdlog/spdlog.h"
+#include "Core/Core.h"
 
 
 namespace engine {

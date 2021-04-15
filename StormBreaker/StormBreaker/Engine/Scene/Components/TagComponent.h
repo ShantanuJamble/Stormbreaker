@@ -1,5 +1,5 @@
-#ifndef COMPOENENTS_H
-#define COMPOENENTS_H
+#ifndef TAG_COMPOENENTS_H
+#define TAG_COMPOENENTS_H
 
 #include <glm/mat4x4.hpp>
 #include <string>
@@ -10,19 +10,24 @@ namespace engine
 	{
 		struct TagComponent
 		{
-			std::string m_label;
+			std::string tag;
 
 			TagComponent() = default;
 			TagComponent(TagComponent& other) = default;
 			TagComponent(const std::string& label)
-				:m_label(label)
+				:tag(label)
 			{
 
 			}
 			~TagComponent() = default;
-			std::string GetLabel() const { return m_label; }
-			void        SetLabel(const std::string& newLabel) { m_label = newLabel; }
+			std::string GetLabel() const { return tag; }
+			void        SetLabel(const std::string& newLabel) { tag = newLabel; }
+
+			operator std::string& () { return tag; }
+			operator const std::string& () const { return tag; }
+
 		};
+		
 	}
 }
 

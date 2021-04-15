@@ -1,9 +1,8 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "Core/Core.h"
-#include "Components/Components.h"
 #include "Scene.h"
+#include "Components/Components.h"
 #include "Log.h"
 #include <memory> //C++ memory lib
 
@@ -13,7 +12,9 @@ namespace engine
 	{
 	private:
 		entt::entity m_entityHandle{ entt::null };
-		REF<Scene> m_scene; //TODO Don't want to own the scene. Should be weak pointer. 
+		//TODO Don't want to own the scene. Should be weak pointer. 
+		//or may be can have scene id as a component? Doesn't feel clean that way though
+		std::shared_ptr<Scene> m_scene; 
 		
 		friend class Scene;
 
@@ -36,7 +37,7 @@ namespace engine
 			if (HasComponent<T>())
 			{
 				//Should get entity label here. would be easier to debug.
-				SB_ENGINE_ERROR("Entity doesn't have component!, {0} ", m_entityHandle);
+				SB_ENGINE_ERROR("Entity doesn't have component!, {0} ", (std::uint32_t)m_entityHandle);
 			};
 			return m_scene->m_SceneRegistry.emplace<T>(m_entityHandle, std::forward<Args>(args)...);
 		}
@@ -46,7 +47,7 @@ namespace engine
 		{
 			if (!HasComponent<T>())
 			{
-				SB_ENGINE_ERROR("Entity already has component!, {0} ", m_entityHandle);
+				SB_ENGINE_ERROR("Entity already has component!, {0} ", (std::uint32_t)m_entityHandle);
 			}
 			m_scene->m_SceneRegistry.remove<T>(m_entityHandle);
 		}
@@ -66,9 +67,6 @@ namespace engine
 		{
 			return *this == other;
 		}
-
-
-
 
 	};
 

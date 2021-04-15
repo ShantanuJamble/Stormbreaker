@@ -37,4 +37,4 @@ TimeDuration Timer::GetCurrentTime()
 	auto time = SteadyClock::now();
 	TimeDuration duration = time - startTime;
 	return duration;
-}
+	}

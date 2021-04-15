@@ -16,7 +16,7 @@ const float TO_RADIANS = 3.14159265f / 180.0f;
 
 /***References***/
 
-#define REF std::shared_ptr
+#define SHARED_REF std::shared_ptr
 #define WEAK_REF std::weak_ptr
 
 

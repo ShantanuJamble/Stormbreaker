@@ -21,4 +21,5 @@ public:
 	static TimeDuration GetCurrentTime();
 };
 
+
 #endif // TIMER_H_

@@ -3,8 +3,12 @@
 #include "Core/Core.h" 
 #include "Application.h"
 #include "Log.h"
+
 #ifdef SB_DEBUG_BUILD
 #include "vld.h"
+#pragma warning( push )
+#pragma warning( disable : 26812 26495 26819)
+
 #endif
 extern engine::Application* engine::CreateApplication();
 

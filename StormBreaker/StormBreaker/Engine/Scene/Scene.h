@@ -1,7 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <entt.hpp>
+#include "entt\entt.hpp"
 
 namespace engine
 {
@@ -19,10 +19,12 @@ namespace engine
 		/**
 		* TODO: Need to add support to serialize and deserialize scenes. 
 		**/
-		Scene();
+		Scene() = default;
 		
-		~Scene();
+		~Scene() = default;
 
+
+		
 
 		//Methods
 
@@ -48,6 +50,15 @@ namespace engine
 			//look into the views in entt;
 			return 1;
 		}
+
+
+		/****
+		* Scene save-load methods
+		****/
+
+		static bool LoadScene(std::string& filePath) {}
+
+		static bool SaveScene(Scene* scene, std::string& filePath) {}
 
 	};
 }
