@@ -15,8 +15,9 @@ namespace engine
 			SHARED_REF<Mesh> mesh;
 
 			MeshComponent() = default;
-			MeshComponent(MeshComponent& mesh) = default;
-			
+			MeshComponent(const MeshComponent& mesh) = default;
+			MeshComponent(MeshComponent&& other) = default;
+			MeshComponent& operator=(MeshComponent&& other) = default;
 			MeshComponent(const SHARED_REF<Mesh>& other_mesh)
 				:mesh(other_mesh)
 			{}
@@ -24,9 +25,6 @@ namespace engine
 			
 
 			SHARED_REF<Mesh> GetMesh() { return mesh; }
-
-			operator SHARED_REF<Mesh>& () { return mesh; }
-			operator const SHARED_REF<Mesh>& () const { return mesh; }
 		};
 
 		

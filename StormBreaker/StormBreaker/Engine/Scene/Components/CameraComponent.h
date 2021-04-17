@@ -12,7 +12,9 @@ namespace engine
 			Camera camera;
 
 			CameraComponent() = default;
-			CameraComponent(CameraComponent& otherCamera) = default;
+			CameraComponent(const CameraComponent& otherCamera) = default;
+			CameraComponent(CameraComponent&& other) = default;
+			CameraComponent& operator=(CameraComponent&& other) = default;
 
 			CameraComponent(const Camera& otherCamera)
 				:camera(otherCamera) {}
@@ -23,7 +25,7 @@ namespace engine
 			Camera& GetCamera() { return camera; }
 
 			operator Camera& () { return camera; }
-			operator const Camera& const () { return camera; }
+			operator const Camera& () const { return camera; }
 		};
 	}
 }

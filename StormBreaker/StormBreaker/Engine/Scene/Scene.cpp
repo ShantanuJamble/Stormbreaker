@@ -17,7 +17,7 @@ namespace engine {
 		entt::entity entt_entity = m_SceneRegistry.create();
 		Entity entity(entt_entity, this);
 		TagComponent labelComponent = entity.AddComponent<TagComponent>();
-		labelComponent.m_tag = "Test Entity";
+		labelComponent.tag = "Test Entity";
 
 		//entity.AddComponent<TransformComponent>(glm::mat4(1.0f));
 		return entity;

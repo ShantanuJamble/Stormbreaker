@@ -13,7 +13,10 @@ namespace engine {
 			glm::mat4 transform;
 
 			TransformComponent() = default;
-			TransformComponent(TransformComponent& ) = default;
+			TransformComponent(const TransformComponent& ) = default;
+
+			TransformComponent(TransformComponent&& other) = default;
+			TransformComponent& operator=(TransformComponent&& other) = default;
 
 			TransformComponent(glm::mat4& transform)
 				:transform(transform){}

@@ -13,7 +13,9 @@ namespace engine
 			std::string tag;
 
 			TagComponent() = default;
-			TagComponent(TagComponent& other) = default;
+			TagComponent(const TagComponent& other) = default;
+			TagComponent(TagComponent&& other) = default;
+			TagComponent& operator=(TagComponent && other) = default;
 			TagComponent(const std::string& label)
 				:tag(label)
 			{
@@ -23,8 +25,7 @@ namespace engine
 			std::string GetLabel() const { return tag; }
 			void        SetLabel(const std::string& newLabel) { tag = newLabel; }
 
-			operator std::string& () { return tag; }
-			operator const std::string& () const { return tag; }
+			
 
 		};
 		

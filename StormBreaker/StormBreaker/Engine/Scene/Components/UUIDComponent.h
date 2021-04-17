@@ -13,7 +13,9 @@ namespace engine
 			std::string uuid;
 
 			UUIDComponent() = default;
-			UUIDComponent(UUIDComponent& other) = default;
+			UUIDComponent(const UUIDComponent& other) = default;
+			UUIDComponent(UUIDComponent&& other) = default;
+			UUIDComponent& operator=(UUIDComponent&& other) = default;
 			UUIDComponent(const std::string& id)
 				:uuid(id)
 			{
