@@ -24,6 +24,9 @@
 #include "Application.h"
 #include <glm/vec3.hpp>
 
+#include "ECS/Scene.h"
+#include "ECS/Entity.h"
+
 #include "ImGuiFileUtil/ImGuiFileBrowser.h"
 
 class TestLayer : public engine::Layer
@@ -42,6 +45,12 @@ private:
 	glm::vec3 m_lightColor = { 1.0f, 1.0f, 1.0f };
 	glm::vec3 m_lightDir = { 1.0,0.0,-1.0 };
 	float m_ambientIntensity = 0.1;
+
+	//Scene setup
+
+	engine::Scene* m_scene;
+	
+
 	//Demo stuff
 	Renderer m_renderer;
 	std::vector<Mesh*> m_meshes;
@@ -52,7 +61,8 @@ private:
 
 	Shader* m_shader, *m_skyboxShader;
 	FrameBuffer* m_frameBuffer;
-	Mesh* m_testMesh, *m_skyboxMesh;
+	SHARED_REF<Mesh> m_testMesh;
+	Mesh *m_skyboxMesh;
 	Light m_directLight;
 	UniformBuffer m_lightBuffer;
 

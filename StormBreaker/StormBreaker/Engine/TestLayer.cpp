@@ -1,8 +1,10 @@
 #include "TestLayer.h"
 #include "Log.h"
+#include "ECS/Components/Components.h"
 #include <glm/mat4x4.hpp>
 #include <vector>
 #include <string>
+#include <memory>
 
 
 ImGui::FileBrowser TestLayer::fileDialog;
@@ -29,7 +31,16 @@ TestLayer::TestLayer()
 	m_material = new Material(m_albedoTexture,m_normalTexture, m_shader);
 	//Setup mesh for the object
 	std::string objpath("Assets/Models/sphere.obj");
-	m_testMesh = new Mesh(objpath, m_material);
+	m_testMesh = std::make_shared<Mesh>(objpath, m_material);
+
+
+	/**
+	* Entity Setup
+	*/
+	m_scene = new engine::Scene();
+	engine::Entity m_testEntity = (m_scene->CreateEntity());
+	m_testEntity.AddComponent<engine::MeshComponent>(m_testMesh);
+
 
 
 
@@ -101,7 +112,7 @@ TestLayer::TestLayer()
 
 TestLayer::~TestLayer()
 {
-	
+
 }
 
 void TestLayer::OnAttach()
@@ -119,11 +130,14 @@ void TestLayer::OnAttach()
 void TestLayer::OnDetach()
 {
 	delete m_camera;
-	delete m_testMesh;
+	//delete m_testMesh;
 	delete m_frameBuffer;
 	delete m_skyboxMesh;
 	delete m_skyboxMaterial;
 	delete m_skyboxShader;
+
+	//m_scene->RemoveEntity(m_testEntity);
+	delete m_scene;
 }
 
 void TestLayer::OnUpdate(float dt)

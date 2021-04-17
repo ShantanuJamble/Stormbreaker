@@ -126,13 +126,16 @@
     <ClCompile Include="Engine\Renderer\SkyboxMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Scene\Scene.cpp">
+    <ClCompile Include="Engine\ECS\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\util\SceneSerializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Scene\Entity.cpp">
+    <ClCompile Include="Engine\ECS\Entity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ECS\Systems\RenderSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -299,10 +302,10 @@
     <ClInclude Include="Engine\Renderer\SkyboxMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Scene\Scene.h">
+    <ClInclude Include="Engine\ECS\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Scene\Entity.h">
+    <ClInclude Include="Engine\ECS\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Core\Core.h">
@@ -311,22 +314,28 @@
     <ClInclude Include="Engine\util\SceneSerializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Scene\Components\TagComponent.h">
+    <ClInclude Include="Engine\ECS\Components\TagComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Scene\Components\Components.h">
+    <ClInclude Include="Engine\ECS\Components\Components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Scene\Components\TransformComponent.h">
+    <ClInclude Include="Engine\ECS\Components\TransformComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Scene\Components\UUIDComponent.h">
+    <ClInclude Include="Engine\ECS\Components\UUIDComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Scene\Components\MeshComponent.h">
+    <ClInclude Include="Engine\ECS\Components\MeshComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Scene\Components\CameraComponent.h">
+    <ClInclude Include="Engine\ECS\Components\CameraComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ECS\Systems\RenderSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ECS\Systems\BaseSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
